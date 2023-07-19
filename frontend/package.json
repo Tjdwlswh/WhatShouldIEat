@@ -50,7 +50,14 @@
       "last 1 safari version"
     ]
   },
+  "proxy": "http://localhost:4000/",
   "main": "index.js",
   "author": "[AI7/2반] 조성진 <tjdwls1286@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^8.45.0",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin": "^1.0.1",
+    "prettier": "^3.0.0"
+  }
 }
