@@ -1,7 +1,7 @@
 //회원가입 구현, redux와 componets 연결, props로 정보 전달
 //로그인, 회원가입후 뒤로가기 했을때 input값 초기화
 
-//백앤드와 연결후 email형식 관리리
+//백앤드와 연결후 email형식 관리
 
 import React,{ useEffect,useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
