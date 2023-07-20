@@ -1,7 +1,7 @@
 import { Router } from 'express';
-import { loginRequired } from '../middlewares/loginRequired';
 import { userService } from '../services/userService';
 import asyncHandler from '../utils/asyncHandler';
+import { localAuthenticate } from '../middlewares/passport/authenticate';
 
 const userRouter = Router();
 
@@ -32,22 +32,7 @@ userRouter.post(
   }),
 );
 
-userRouter.post(
-  '/login',
-  asyncHandler(async function (req, res, next) {
-    // req (request) 에서 데이터 가져오기
-    const { email, password } = req.body;
-
-    // 위 데이터를 이용하여 유저 db에서 유저 찾기
-    const user = await userService.getUser({ email, password });
-
-    if (user.errorMessage) {
-      throw new Error(user.errorMessage);
-    }
-
-    res.status(200).send(user);
-  }),
-);
+userRouter.post('/login', localAuthenticate);
 
 userRouter.get(
   '/users',

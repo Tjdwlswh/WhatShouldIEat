@@ -7,10 +7,10 @@ import AuthForm from '../components/auth/AuthForm';
 
 const RegisterForm = () => {
   const dispatch = useDispatch();
-  const { form } = useSelector((state) => ({
+  const { form } = useSelector(state => ({
     form: state.auth.register,
   }));
-  const onChange = (e) => {
+  const onChange = e => {
     const { value, name } = e.target;
     dispatch(
       changeField({
@@ -21,7 +21,7 @@ const RegisterForm = () => {
     );
   };
 
-  const onSubmit = (e) => {
+  const onSubmit = e => {
     e.preventDefault();
   };
 
@@ -29,14 +29,7 @@ const RegisterForm = () => {
     dispatch(initializeForm('register'));
   }, [dispatch]);
 
-  return (
-    <AuthForm
-      type="register"
-      form={form}
-      onChange={onChange}
-      onSubmit={onSubmit}
-    />
-  );
+  return <AuthForm type="register" form={form} onChange={onChange} onSubmit={onSubmit} />;
 };
 
 export default RegisterForm;

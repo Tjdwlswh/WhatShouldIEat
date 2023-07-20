@@ -7,11 +7,11 @@ import AuthForm from '../components/auth/AuthForm';
 
 const LoginForm = () => {
   const dispatch = useDispatch();
-  const { form } = useSelector((state) => ({
+  const { form } = useSelector(state => ({
     form: state.auth.login,
   }));
 
-  const onChange = (e) => {
+  const onChange = e => {
     const { value, name } = e.target;
     dispatch(
       changeField({
@@ -22,7 +22,7 @@ const LoginForm = () => {
     );
   };
 
-  const onSubmit = (e) => {
+  const onSubmit = e => {
     e.preventDefault();
   };
 
@@ -30,14 +30,7 @@ const LoginForm = () => {
     dispatch(initializeForm('login')); //아무것도 담겨있지 않은 login, 초기화
   }, [dispatch]);
 
-  return (
-    <AuthForm
-      type="login"
-      form={form}
-      onChange={onChange}
-      onSubmit={onSubmit}
-    ></AuthForm>
-  );
+  return <AuthForm type="login" form={form} onChange={onChange} onSubmit={onSubmit}></AuthForm>;
 };
 
 export default LoginForm;
