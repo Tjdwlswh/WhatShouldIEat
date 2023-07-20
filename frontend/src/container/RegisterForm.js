@@ -32,9 +32,9 @@ const RegisterForm = () => {
     
     const onSubmit = e => {
         e.preventDefault();
-        const {email, password, passwordConfirm, nickname, birthDate, gender} = form;
+        const {email, password, passwordConfirm, nickname} = form;
 
-        if([email, password, passwordConfirm, nickname, birthDate, gender].includes('')){
+        if([email, password, passwordConfirm, nickname].includes('')){
             setError('빈칸을 모두 입력하세요')
             return
         }
@@ -44,11 +44,9 @@ const RegisterForm = () => {
             dispatch(changeField({form:'register', key:"password", value:''}))
             dispatch(changeField({form:'register', key:'passwordConfirm', value:''}))
             dispatch(changeField({form:'register', key:'nickname', value:''}))
-            dispatch(changeField({form:'register', key:'birthDate', value:''}))
-            dispatch(changeField({form:'register', key:'gender', value:''}))
             return
         }
-        dispatch(register({email,password,nickname,birthDate,gender}))
+        dispatch(register({email,password,nickname}))
     }
 
     useEffect(()=>{

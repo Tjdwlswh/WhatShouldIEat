@@ -98,24 +98,6 @@ const AuthForm = ({type, form, onChange, onSubmit,error}) => {
                      />
                 )              
                 }
-                  {type === 'register' && (
-                    <StyleInput 
-                     name="birthDate"
-                     placeholder="생년월일"
-                     onChange={onChange}
-                     value={form.birthDate}
-                     />
-                )              
-                }
-                  {type === 'register' && (
-                    <StyleInput 
-                     name="gender"
-                     placeholder="성별"
-                     onChange={onChange}
-                     value={form.gender}
-                     />
-                )              
-                }
                 {error && <ErrorMessage>{error}</ErrorMessage>}
                 <ButtonWithMarginTop cyan={true} fullWidth={true} style={{marginTop: '1rem'}}>{text}</ButtonWithMarginTop>
              
