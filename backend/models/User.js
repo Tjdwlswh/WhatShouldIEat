@@ -1,8 +1,8 @@
 import Sequelize from 'sequelize';
 
 class User extends Sequelize.Model {
-  static init(sequelize) {
-    return super.init(
+  static initiate(sequelize) {
+    User.init(
       {
         email: {
           type: Sequelize.STRING(40),
@@ -22,7 +22,7 @@ class User extends Sequelize.Model {
           allowNull: false,
         },
         provider: {
-          type: Sequelize.STRING(10),
+          type: Sequelize.ENUM('local','kakao'),
           allowNull: false,
           defaultValue: 'local',
         },
@@ -57,6 +57,6 @@ class User extends Sequelize.Model {
       through: 'Follow',
     });
   }
-};
+}
 
 export default { User };
