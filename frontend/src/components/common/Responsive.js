@@ -8,7 +8,7 @@ margin : 0 auto;
 
 
 @media (max-width:1024px) {
-    width:786px;
+    width:1024px;
 }
 @media (max-width:768px) {
     width:100%;
