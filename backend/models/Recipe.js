@@ -1,9 +1,13 @@
 import { Sequelize } from 'sequelize';
 
 class Recipes extends Sequelize.Model {
-  static init(sequelize) {}
+  static initiate(sequelize) {
+    Recipes.init({
+      
+    })
+  }
 
-  static associate(sequelize) {}
+  static associate(db) {}
 }
 
 module.exports = Recipes;
