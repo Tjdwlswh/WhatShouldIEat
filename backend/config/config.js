@@ -11,6 +11,7 @@ const config = {
   password: env.DB_PWD,
   database: env.DB_NAME,
   dialect: 'mysql',
+  logging: false,
 };
 
 export { config };

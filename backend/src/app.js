@@ -1,14 +1,16 @@
 import express from 'express';
 import cookieParser from 'cookie-parser';
 import morgan from 'morgan';
-import path from 'path';
 import session from 'express-session';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import passport from 'passport';
 import { sequelize } from '../models/index.js';
 import { passportConfig } from '../passport/index.js';
-
+import { errorMiddleWare } from './middlewares/errorMiddleWare.js';
+import { imgUploadRouter } from './imgUploads/imgUploadRouter.js';
+import { userRouter } from './users/userRouter.js';
+import { followRouter } from './follows/followRouter.js';
 const app = express();
 
 dotenv.config();
@@ -16,6 +18,9 @@ passportConfig(); // 패스포트 설정
 
 app.use(cors());
 
+/************ 
+    DB연결
+*************/
 sequelize
   .sync({ force: false })
   .then(() => {
@@ -26,8 +31,6 @@ sequelize
   });
 //개발 중 로깅남겨주기
 app.use(morgan('dev'));
-// app.use(express.static(path.join(__dirname, 'public')));
-// app.use('/img', express.static(path.join(__dirname, 'uploads')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
@@ -47,14 +50,13 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.get('/', (req, res) => {
-  res.json({ message: 'hello world' });
+  res.send('Hello, #뭐해먹지?');
 });
-//에러처리 미들웨어
-app.use((err, req, res, next) => {
-  res.locals.message = err.message;
-  res.locals.error = process.env.NODE_ENV !== 'production' ? err : {};
-  res.status(err.status || 500);
-  res.render('error');
-});
+app.use(imgUploadRouter);
+
+app.use(userRouter);
+app.use(followRouter);
+
+app.use(errorMiddleWare);
 
 export { app };

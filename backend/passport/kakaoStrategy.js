@@ -1,7 +1,7 @@
 import passport from 'passport';
 import { Strategy as KakaoStrategy } from 'passport-kakao';
 
-// import User from '../models/schemas/User.js';
+import { User } from '../models/User.js';
 
 export const kakao = () => {
   passport.use(
@@ -16,10 +16,10 @@ export const kakao = () => {
           const exUser = await User.findOne({
             where: { Id: profile.id, provider: 'kakao' },
           });
-          if (exUser) {
+          if (exUser) {  //가입된 유저는 정보만 불러오기
             done(null, exUser);
-          } else {
-            const newUser = await User.create({
+          } else {  //신규유저는 User 생성
+            const newUser = await User.create({ 
               email: profile._json && profile._json.kakao_account_email,
               nickName: profile.displayName,
               kakaoId: profile.id,
