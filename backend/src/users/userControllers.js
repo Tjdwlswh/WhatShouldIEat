@@ -42,11 +42,23 @@ const userController = {
       });
     })(req, res, next); // 미들웨어 내의 미들웨어에는 (req, res, next)를 붙입니다.
   },
+  //카카오 로그인
+  signInKakao: async (req, res) => {
+    // const headers = req.headers['authorization'];
+    // const kakaoToken = headers.split(' ')[1];
+
+    const kakaoToken = 'UGSMtwDCR6mHKw0HY-2n58NdRqBF47LquCCKAPltCj1zmwAAAYmDafUb';
+
+    const accessInfo = await userService.signInKakao(kakaoToken);
+
+    return res.status(200).json({ userInfo: accessInfo });
+  },
+
   //카카오 로그인 성공 시 이동
   kakaoLogin: async (req, res) => {
     res.redirect('/');
   },
-
+  //팔로우
   follow: async (req, res, next) => {
     try {
       const user = await User.findOne({ where: { id: req.user.id } });

@@ -18,10 +18,10 @@ const UserModel = {
     const user = await db.User.findOne({ where: { email } });
     return user;
   },
-  findBynickName: async nickName => {
-    const nickCheck = await db.User.findOne({ where: { nickName } });
-    return nickCheck;
-  },
+  findByKakaoId: async kakaoId => {
+    const user = await db.User.findOne({ where: { kakaoId} });
+    return user;
+  }
 };
 
 export { UserModel };

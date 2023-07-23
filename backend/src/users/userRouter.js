@@ -17,10 +17,11 @@ userRouter.post('/register', isNotLoggedIn, imgUpload, userController.register);
 //local로그인
 userRouter.post('/login', isNotLoggedIn, userController.login);
 
-//카카오
-userRouter.get('/kakao', passport.authenticate('kakao'));
+//카카오 로그인
+// userRouter.get('/kakao', passport.authenticate('kakao'));
+userRouter.post('/kakao/login', userController.signInKakao);
 
-//로그인 성공 여부 callback 받음
+//카카오 로그인 성공 여부 callback
 userRouter.get(
   '/kakao/callback',
   passport.authenticate('kakao', {
