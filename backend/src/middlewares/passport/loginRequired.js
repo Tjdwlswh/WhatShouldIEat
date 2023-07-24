@@ -14,7 +14,7 @@ const loginRequired = (req, res, next) => {
       throw new Error(info);
     }
     if (user) {
-      req.currentUserId = user.id;
+      req.currentUserEmail = user.email;
     }
     next();
   })(req, res, next);

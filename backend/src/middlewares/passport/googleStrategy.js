@@ -1,7 +1,6 @@
-import passport from 'passport';
 import { Strategy } from 'passport-google-oauth20';
+import { UserModel } from '../../users/userModels.js';
 import JwtSign from '../../utils/jwtSign.js';
-// import User from '../models/schemas/User.js';
 
 const GoogleStrategy = new Strategy(
   {
@@ -11,32 +10,25 @@ const GoogleStrategy = new Strategy(
   },
   async (accessToken, refreshToken, profile, done) => {
     try {
-      const email = profile.email;
-      const provider = 'Google';
-
-      // const user = await getUserService(email);
-
-      // if (user) {
-      //   const { id, email, provider } = user;
-      // const { token } = JwtSign({ email, provider });
-      //   return done(null, { id, email, token });
-      // }
-
-      // await create({
-      //   email,
-      //   provider,
-      // });
-
-      // const savedUser = await getUserService(email);
-      // const { id } = savedUser;
+      const email = profile.emails[0].value;
+      const provider = profile.provider;
+      const nickName = email;
+      const profileImg = profile.photos[0].value;
 
       const { token, refreshToken } = JwtSign({ email, provider });
-      // await storeRefreshToken(id, refreshToken);
-
-      done(null, { token, refreshToken });
-      // done(null, false, { message: '가입되지 않은 회원입니다.' });
-      // done(null, profile);
+      const user = { token, refreshToken };
+      const exUser = await UserModel.upsert(
+        {
+          email,
+          nickName,
+          profileImg,
+          refreshToken,
+        },
+        email,
+      );
+      return done(null, user);
     } catch (err) {
+      console.log('user');
       done(err);
     }
   },

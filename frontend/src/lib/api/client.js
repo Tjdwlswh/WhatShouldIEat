@@ -1,5 +1,6 @@
 import axios from 'axios';
 
-const client = axios.create()
+const client = axios.create();
+client.defaults.withCredentials = true;
 
-export default client
+export default client;

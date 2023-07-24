@@ -23,12 +23,16 @@ class User extends Sequelize.Model {
           defaultValue: '1686823001485.png',
         },
         provider: {
-          type: Sequelize.ENUM('local', 'kakao'),
+          type: Sequelize.ENUM('local', 'kakao', 'google'),
           allowNull: false,
           defaultValue: 'local',
         },
         kakaoId: {
           type: Sequelize.STRING(30),
+          allowNull: true,
+        },
+        refreshToken: {
+          type: Sequelize.STRING(300),
           allowNull: true,
         },
       },

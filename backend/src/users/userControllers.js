@@ -1,5 +1,10 @@
+import {
+  googleAuthenticate,
+  googleCallbackAuthenticate,
+  localAuthenticate,
+  refreshAuthenticate,
+} from '../middlewares/passport/authenticate.js';
 import { userService } from './userService.js';
-import passport from 'passport';
 
 const userController = {
   //회원가입 -완료
@@ -24,24 +29,12 @@ const userController = {
     }
   },
   //local로그인 (이메일-비번사용)
-  login: async (req, res, next) => {
-    passport.authenticate('local', (authError, user, info) => {
-      if (authError) {
-        console.error(authError);
-        return next(authError);
-      }
-      if (!user) {
-        return res.redirect(`/?loginError=${info.message}`);
-      }
-      return req.login(user, loginError => {
-        if (loginError) {
-          console.error(loginError);
-          return next(loginError);
-        }
-        return res.redirect('/');
-      });
-    })(req, res, next); // 미들웨어 내의 미들웨어에는 (req, res, next)를 붙입니다.
-  },
+  login: localAuthenticate,
+
+  //google로그인
+  googleLogin: googleAuthenticate,
+  googleCallback: googleCallbackAuthenticate,
+
   //카카오 로그인
   signInKakao: async (req, res) => {
     // const headers = req.headers['authorization'];
@@ -74,12 +67,9 @@ const userController = {
       next(error);
     }
   },
-  //로그아웃
-  logout: async (req, res) => {
-    req.logout();
-    req.session.destroy();
-    res.redirect('/');
-  },
+
+  // 리프레시 토큰 검증
+  refreshToken: refreshAuthenticate,
 };
 
 export { userController };

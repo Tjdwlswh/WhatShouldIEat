@@ -1,11 +1,11 @@
 import { Strategy, ExtractJwt } from 'passport-jwt';
-// import userService from '../../services/userService.js';
+import { User } from '../../../models/User.js';
 import JwtSign from '../../utils/jwtSign.js';
 
 let RawRefreshToken = null;
 
 const cookieExtractor = req => {
-  const { refreshToken } = req.cookies;
+  const { refreshToken } = req.signedCookies;
   RawRefreshToken = refreshToken;
   return refreshToken;
 };
@@ -18,9 +18,8 @@ const JwtStrategy = new Strategy(
   },
   async (payload, done) => {
     try {
-      // const user = await userService.find();
-      // payload.email이 있는지 확인하는 코드 작성 필요
-      done();
+      const { email } = payload;
+      const user = await User.findOne({ where: { email } });
       if (user) {
         done(null, user);
       } else {
@@ -42,11 +41,10 @@ const RefreshJwtStrategy = new Strategy(
   },
   async (payload, done) => {
     try {
+      const { email, provider } = payload;
+      const user = await User.findOne({ where: { email } });
       if (user.refreshToken === RawRefreshToken) {
-        const { token } = JwtSign({
-          email: payload.email,
-          provider: payload.provider,
-        });
+        const { token } = JwtSign({ email, provider });
         user.token = token;
         done(null, user);
       } else {
@@ -56,7 +54,6 @@ const RefreshJwtStrategy = new Strategy(
       }
     } catch (error) {
       error.status = 404;
-      error.message = '회원 정보가 없습니다.';
       done(error, false);
     }
   },

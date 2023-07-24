@@ -19,9 +19,18 @@ const UserModel = {
     return user;
   },
   findByKakaoId: async kakaoId => {
-    const user = await db.User.findOne({ where: { kakaoId} });
+    const user = await db.User.findOne({ where: { kakaoId } });
     return user;
-  }
+  },
+
+  upsert: async (values, email) => {
+    try {
+      const user = await db.User.findOne({ where: { email } });
+      return await user.update(values);
+    } catch (err) {
+      return await user.create(values);
+    }
+  },
 };
 
 export { UserModel };

@@ -1,12 +1,7 @@
 import { Strategy } from 'passport-local';
-// import { userService } from '../../services/userService.js';
-import bcrypt from 'bcrypt';
+import { User } from '../../../models/User.js';
 import JwtSign from '../../utils/jwtSign.js';
-
-const user = {
-  email: 'asd',
-  password: 'testtest1234',
-};
+import bcrypt from 'bcrypt';
 
 const LocalStrategy = new Strategy(
   {
@@ -15,12 +10,13 @@ const LocalStrategy = new Strategy(
   },
   async (email, password, done) => {
     try {
-      // const user = await userService;
+      const provider = 'local';
+      const user = await User.findOne({ where: { email } });
+
       if (user) {
-        // const isMatch = await bcrypt.compare(password, user.password);
-        const isMatch = password === user.password;
+        const isMatch = await bcrypt.compare(password, user.password);
         if (isMatch) {
-          const { token, refreshToken } = JwtSign({ email, provider: 'Local' });
+          const { token, refreshToken } = JwtSign({ email, provider });
           user.token = token;
           user.refreshToken = refreshToken;
           return done(null, user);
@@ -31,6 +27,7 @@ const LocalStrategy = new Strategy(
         done(null, false, { message: '가입되지 않은 회원입니다.' });
       }
     } catch (error) {
+      console.log('error');
       done(error);
     }
   },
