@@ -1,25 +1,17 @@
-// import dotenv from 'dotenv';
+import dotenv from 'dotenv';
 
-// // // .env 파일의 설정 값을 불러옴
-// // dotenv.config();
+// .env 파일의 설정 값을 불러옴
+dotenv.config();
 
-// const env = process.env;
-
-// export const config = {
-//   username: 'root',
-//   password: env.DB_PASSWORD,
-//   database: env.DB_NAME,
-//   host: env.DB_HOST,
-//   port: env.DB_PORT,
-//   dialect: 'mysql',
-// };
+const env = process.env;
 
 const config = {
+  host: env.DB_HOST,
   username: 'root',
-  password: '',
-  database: 'team2',
-  host: '127.0.0.1',
+  password: env.DB_PWD,
+  database: env.DB_NAME,
   dialect: 'mysql',
+  logging: false,
 };
 
-export default config;
+export { config };

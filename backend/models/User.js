@@ -1,8 +1,8 @@
 import Sequelize from 'sequelize';
 
 class User extends Sequelize.Model {
-  static init(sequelize) {
-    return super.init(
+  static initiate(sequelize) {
+    User.init(
       {
         email: {
           type: Sequelize.STRING(40),
@@ -14,15 +14,16 @@ class User extends Sequelize.Model {
           allowNull: true,
         },
         nickName: {
-          type: Sequelize.STRING(15),
+          type: Sequelize.STRING(40),
           allowNull: false,
         },
         profileImg: {
           type: Sequelize.STRING(200),
-          allowNull: false,
+          allowNull: true,
+          defaultValue: '1686823001485.png',
         },
         provider: {
-          type: Sequelize.STRING(10),
+          type: Sequelize.ENUM('local', 'kakao'),
           allowNull: false,
           defaultValue: 'local',
         },
@@ -45,7 +46,7 @@ class User extends Sequelize.Model {
   }
 
   static associate(db) {
-    db.User.hasMany(db.Post);
+    // db.User.hasMany(db.Recipe);
     db.User.belongsToMany(db.User, {
       foreignKey: 'followingId',
       as: 'Followers',
@@ -59,4 +60,4 @@ class User extends Sequelize.Model {
   }
 }
 
-export default { User };
+export { User };

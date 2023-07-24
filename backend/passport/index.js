@@ -1,5 +1,5 @@
 import passport from 'passport';
-import User from '../models/schemas/User.js';
+import { User } from '../models/User.js';
 import { local } from './localStrategy.js';
 import { kakao } from './kakaoStrategy.js';
 
