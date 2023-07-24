@@ -1,10 +1,10 @@
 import { Router } from 'express';
-import passport from 'passport';
 import loginRequired from '../middlewares/passport/loginRequired.js';
 import { upload } from '../imgUploads/imgUploadRouter.js';
 import { userController } from './userControllers.js';
 import { followData } from '../middlewares/follow.js';
 import { imgUploadRouter } from '../imgUploads/imgUploadRouter.js';
+
 const userRouter = Router();
 const imgUpload = upload.single('profileImg');
 
@@ -18,23 +18,16 @@ userRouter.post('/auth/register', imgUpload, userController.register);
 userRouter.post('/auth/login', userController.login);
 
 //카카오 로그인
-// userRouter.get('/kakao', passport.authenticate('kakao'));
-userRouter.post('/kakao/login', userController.signInKakao);
+userRouter.get('/auth/kakao/login', userController.kakaoLogin);
+userRouter.get('/auth/kakao/callback', userController.kakaoCallback);
 
-//카카오 로그인 성공 여부 callback
-userRouter.get(
-  '/kakao/callback',
-  passport.authenticate('kakao', {
-    failureRedirect: '/?loginError=카카오로그인 실패',
-  }),
-  userController.kakaoLogin,
-);
+// google 로그인
+userRouter.get('/auth/google/login', userController.googleLogin);
+userRouter.get('/auth/google/callback', userController.googleCallback);
 
 // refrechToken 검증
 userRouter.get('/auth/refresh', userController.refreshToken);
 
-// google 로그인
-userRouter.get('/auth/google', userController.googleLogin);
-userRouter.get('/auth/google/callback', userController.googleCallback);
+userRouter.get('/auth/logout', loginRequired, userController.logout);
 
 export { userRouter };

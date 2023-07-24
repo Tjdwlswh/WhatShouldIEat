@@ -27,10 +27,6 @@ class User extends Sequelize.Model {
           allowNull: false,
           defaultValue: 'local',
         },
-        kakaoId: {
-          type: Sequelize.STRING(30),
-          allowNull: true,
-        },
         refreshToken: {
           type: Sequelize.STRING(300),
           allowNull: true,

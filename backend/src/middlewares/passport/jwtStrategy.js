@@ -1,5 +1,5 @@
 import { Strategy, ExtractJwt } from 'passport-jwt';
-import { User } from '../../../models/User.js';
+import { UserModel } from '../../users/userModels.js';
 import JwtSign from '../../utils/jwtSign.js';
 
 let RawRefreshToken = null;
@@ -19,7 +19,7 @@ const JwtStrategy = new Strategy(
   async (payload, done) => {
     try {
       const { email } = payload;
-      const user = await User.findOne({ where: { email } });
+      const user = await UserModel.findByEmail(email);
       if (user) {
         done(null, user);
       } else {
@@ -42,12 +42,15 @@ const RefreshJwtStrategy = new Strategy(
   async (payload, done) => {
     try {
       const { email, provider } = payload;
-      const user = await User.findOne({ where: { email } });
+      const user = await UserModel.findByEmail(email);
       if (user.refreshToken === RawRefreshToken) {
-        const { token } = JwtSign({ email, provider });
-        user.token = token;
-        done(null, user);
+        const { token, refreshToken } = JwtSign({ email, provider });
+        // DB 리프레시 토큰 갱신
+        user.refreshToken = refreshToken;
+        await user.save();
+        done(null, { token, refreshToken });
       } else {
+        const error = new Error();
         error.status = 401;
         error.message = '토큰이 일치하지 않습니다. 다시 로그인하세요.';
         done(error, false);
