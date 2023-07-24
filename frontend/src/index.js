@@ -3,40 +3,41 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { BrowserRouter } from 'react-router-dom';
-import { Provider } from 'react-redux';
-import rootReducer, { rootSaga } from './modules/index';
-import { configureStore } from '@reduxjs/toolkit';
-import createSagaMiddleware from 'redux-saga';
+import {BrowserRouter} from 'react-router-dom'
+import {Provider} from 'react-redux'
+import rootReducer,{rootSaga} from './modules/index';
+import {configureStore} from '@reduxjs/toolkit'
+import createSagaMiddleware from 'redux-saga'
 import { tempSetUser, check } from './modules/user';
 
-const sagaMiddleware = createSagaMiddleware();
-const store = configureStore({
-  reducer: rootReducer,
-  middleware: getDefaultMiddleware => getDefaultMiddleware().concat(sagaMiddleware),
-});
 
-function loadUser() {
-  try {
-    const user = localStorage.getItem('user');
-    if (!user) return;
-    store.dispatch(tempSetUser(JSON.parse(user)));
-    store.dispatch(check());
-  } catch (e) {
-    console.log('localStorage is not working');
-  }
+const sagaMiddleware = createSagaMiddleware()
+const store = configureStore({reducer : rootReducer,
+      middleware : (getDefaultMiddleware) => getDefaultMiddleware().concat(sagaMiddleware)})
+ 
+function loadUser(){
+   try {
+      const user = localStorage.getItem('user');
+      if(!user) return;
+      store.dispatch(tempSetUser(JSON.parse(user)))
+      store.dispatch(check())
+   } catch(e) {
+      console.log('localStorage is not working')
+   }
+   
 }
 
-sagaMiddleware.run(rootSaga);
-loadUser();
+sagaMiddleware.run(rootSaga)
+loadUser()
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <Provider store={store}>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-  </Provider>,
+<Provider store={store}>
+ <BrowserRouter>
+    <App />
+ </BrowserRouter>
+</Provider>
 );
 
 // If you want to start measuring performance in your app, pass a function

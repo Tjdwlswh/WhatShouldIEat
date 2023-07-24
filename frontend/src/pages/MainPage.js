@@ -1,12 +1,11 @@
-import HeaderContainer from '../container/common/HeaderContainer';
+import HeaderContainer from "../container/common/HeaderContainer"
 
 const MainPage = () => {
-  return (
+    return (
     <div>
-      <HeaderContainer />
-      <div>메인페이지</div>
-    </div>
-  );
-};
+       <HeaderContainer />
+       <div>메인페이지</div>
+    </div>)
+}
 
-export default MainPage;
+export default MainPage
