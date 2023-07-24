@@ -1,7 +1,13 @@
 import { Router } from 'express';
-import { userService } from '../services/userService';
-import asyncHandler from '../utils/asyncHandler';
-import { localAuthenticate } from '../middlewares/passport/authenticate';
+// import { userService } from '../services/userService';
+import asyncHandler from '../utils/asyncHandler.js';
+import {
+  refreshAuthenticate,
+  localAuthenticate,
+  googleAuthenticate,
+  googleCallbackAuthenticate,
+} from '../middlewares/passport/authenticate.js';
+import loginRequired from '../middlewares/passport/loginRequired.js';
 
 const userRouter = Router();
 
@@ -13,15 +19,13 @@ userRouter.post(
     }
 
     // req (request) 에서 데이터 가져오기
-    const { email, password, nickName, birthDate, gender } = req.body;
+    const { email, password, nickName } = req.body;
 
     // 위 데이터를 유저 db에 추가하기
     const newUser = await userService.addUser({
       email,
       password,
       nickName,
-      birthDate,
-      gender,
     });
 
     if (newUser.errorMessage) {
@@ -32,21 +36,32 @@ userRouter.post(
   }),
 );
 
+userRouter.get('/google', googleAuthenticate);
+userRouter.get('/google/callback', googleCallbackAuthenticate);
+
 userRouter.post('/login', localAuthenticate);
 
 userRouter.get(
   '/users',
+  // asyncHandler(async function (req, res, next) {
+  //   // 전체 사용자 목록을 얻음
+  //   const users = await userService.getUsers();
+  //   res.status(200).send(users);
+  // }),
+  // (req, res, next) => {
+  //   console.log('localAuthenticate', req.user);
+  // }
   loginRequired,
-  asyncHandler(async function (req, res, next) {
-    // 전체 사용자 목록을 얻음
-    const users = await userService.getUsers();
-    res.status(200).send(users);
-  }),
+  (req, res, next) => {
+    console.log('hi');
+    res.status(200).send('hi');
+  },
 );
+
+userRouter.get('/refresh', refreshAuthenticate);
 
 userRouter.get(
   '/user',
-  loginRequired,
   asyncHandler(async function (req, res, next) {
     // jwt토큰에서 추출된 사용자 id를 가지고 db에서 사용자 정보를 찾음.
     const userId = req.currentUserId;
@@ -64,7 +79,6 @@ userRouter.get(
 
 userRouter.put(
   '/user',
-  loginRequired,
   asyncHandler(async function (req, res, next) {
     // URI로부터 사용자 id를 추출함.
     const userId = req.params.id;
@@ -72,7 +86,6 @@ userRouter.put(
     const name = req.body.name ?? null;
     const email = req.body.email ?? null;
     const password = req.body.password ?? null;
-    const description = req.body.description ?? null;
 
     const toUpdate = { name, email, password, description };
 
@@ -89,7 +102,6 @@ userRouter.put(
 
 userRouter.get(
   '/users/:id',
-  loginRequired,
   asyncHandler(async function (req, res, next) {
     const userId = req.params.id;
 
@@ -103,7 +115,7 @@ userRouter.get(
   }),
 );
 
-userRouter.delete('/user/:id/withdraw', loginRequired, async (req, res, next) => {
+userRouter.delete('/user/:id/withdraw', async (req, res, next) => {
   const userId = req.currentUserId;
   const { id } = req.params;
 

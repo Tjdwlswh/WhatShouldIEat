@@ -1,10 +1,12 @@
-import { combineReducers } from 'redux';
-import auth from './auth';
+import HeaderContainer from '../container/common/HeaderContainer';
 
-//리듀서들 하나로 모아서 useSelector 이용
+const MainPage = () => {
+  return (
+    <div>
+      <HeaderContainer />
+      <div>메인페이지</div>
+    </div>
+  );
+};
 
-const rootReducer = combineReducers({
-  auth,
-});
-
-export default rootReducer;
+export default MainPage;

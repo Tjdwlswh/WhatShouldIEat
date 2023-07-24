@@ -1,10 +1,6 @@
-import { User } from '../db'; // from을 폴더(db) 로 설정 시, 디폴트로 index.js 로부터 import함.
-import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
-/*
-************************************************************************************
-                              Working in progress
-************************************************************************************
+// import { User } from '../db'; // from을 폴더(db) 로 설정 시, 디폴트로 index.js 로부터 import함.
+// import bcrypt from 'bcrypt';
+// import jwt from 'jsonwebtoken';
 
 // const addUser = async ({ email, nickName, password, birthDate, gender }) => {
 //   // 이메일 중복 확인
@@ -125,4 +121,4 @@ import jwt from 'jsonwebtoken';
 //   return { user };
 // };
 
-export { userService };
+// export { addUser, getUser, getUsers, setUser, getUserInfo, removeUser };

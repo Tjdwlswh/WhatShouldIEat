@@ -14,10 +14,12 @@
 //   dialect: 'mysql',
 // };
 
-export const config = {
+const config = {
   username: 'root',
-  password: '1234',
+  password: '',
   database: 'team2',
   host: '127.0.0.1',
   dialect: 'mysql',
 };
+
+export default config;
