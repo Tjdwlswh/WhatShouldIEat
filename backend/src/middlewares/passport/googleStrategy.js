@@ -16,7 +16,6 @@ const GoogleStrategy = new Strategy(
       const profileImg = profile.photos[0].value;
 
       const { token, refreshToken } = JwtSign({ email, provider });
-      const user = { token, refreshToken };
       const exUser = await UserModel.upsert(
         {
           email,
@@ -26,10 +25,10 @@ const GoogleStrategy = new Strategy(
         },
         email,
       );
-      return done(null, user);
+      return done(null, { token, refreshToken });
     } catch (err) {
       console.log('user');
-      done(err);
+      return done(err);
     }
   },
 );

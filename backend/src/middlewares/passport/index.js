@@ -1,9 +1,8 @@
 import passport from 'passport';
 import { LocalStrategy } from './localStrategy.js';
-// import { KakaoStrategy } from './kakaoStrategy.js';
+import { KakaoStrategy } from './kakaoStrategy.js';
 import { GoogleStrategy } from './googleStrategy.js';
 import { JwtStrategy, RefreshJwtStrategy } from './jwtStrategy.js';
-// import userService from '../../services/userService.js';
 
 const initializePassport = () => {
   // passport.serializeUser((user, done) => {
@@ -26,7 +25,7 @@ const initializePassport = () => {
   passport.use('refresh', RefreshJwtStrategy);
   passport.use(LocalStrategy);
   passport.use(GoogleStrategy);
-  // passport.use(KakaoStrategy);
+  passport.use(KakaoStrategy);
 
   return passport;
 };
