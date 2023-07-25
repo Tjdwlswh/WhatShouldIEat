@@ -19,6 +19,7 @@ const KakaoStrategy = new Strategy(
         {
           email,
           nickName,
+          provider,
           profileImg,
           refreshToken,
         },

@@ -34,12 +34,13 @@ const GoogleLoginButton = () => {
     ${buttonStyle}
   `;
 
-  const onClick = () => {
+  const handleClick = e => {
+    e.preventDefault();
     window.location.href = 'http://localhost:5000/auth/google/login';
   };
 
   return (
-    <GoogleButton onClick={onClick}>
+    <GoogleButton onClick={handleClick}>
       <Image src={process.env.PUBLIC_URL + '/assets/img/icons/google.png'} alt="구글 로그인 버튼" />
       <span>Google 계정으로 로그인</span>
     </GoogleButton>
