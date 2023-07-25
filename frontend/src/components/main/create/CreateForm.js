@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import Button from '../../common/Button';
-
+import palette from '../../../lib/styles/palette';
+import React, { useState, useCallback, useEffect } from 'react';
 //임시적으로 만들어 놓은 style
 
 const CreateBlock = styled.div`
@@ -12,6 +13,12 @@ const CreateBlock = styled.div`
     border-radius: 5px;
     margin: 1rem;
     width: 60%;
+  }
+
+  h4 {
+    color: ${palette.gray[8]};
+    margin-top: 0;
+    margin-bottom: 0.5rem;
   }
 
   .block {
@@ -32,18 +39,19 @@ const CreateBlock = styled.div`
     width: 70%;
   }
 
-  .plus {
-    padding: 0.5;
-    font-size: 0.5rem;
-    font-weight: bold;
-    border: 5px;
-    margin: 1rem;
-  }
-
   .btn {
     margin-top: 1rem;
     display: flex;
     justify-content: flex-end;
+  }
+`;
+
+const Tag = styled.div`
+  margin-right: 0.5rem;
+  color: ${palette.gray[7]};
+  cursor: pointer;
+  &:hover {
+    opacity: 0.5;
   }
 `;
 const Ingredient = styled.div`
@@ -56,23 +64,88 @@ const Ingredient = styled.div`
   margin-top: 1rem;
 `;
 
-const CreateForm = () => {
+// 하나만 랜더링 되도록 함
+
+const TagItem = React.memo(({ tag, onRemove }) => (
+  <Tag
+    onClick={() => {
+      onRemove(tag);
+    }}
+  >
+    #{tag}
+  </Tag>
+));
+
+const TagList = React.memo(({ tags, onRemove }) => (
+  <Ingredient>
+    {tags.map(tag => (
+      <TagItem key={tag} tag={tag} onRemove={onRemove} />
+    ))}
+  </Ingredient>
+));
+
+const CreateForm = ({ tags, onChangeTags }) => {
+  const [input, setInput] = useState('');
+  const [localTags, setLocalTags] = useState([]);
+
+  const insertTag = useCallback(
+    tag => {
+      if (!tag) return;
+      //공백이라면 추가하지 않음
+      if (localTags.includes(tag)) return;
+      //이미 똑같은 재료가 있다면 추가하지 않음
+
+      const nextTags = [...localTags, tag];
+      setLocalTags(nextTags);
+      onChangeTags(nextTags);
+    },
+    [localTags, onChangeTags],
+  );
+
+  const onRemove = useCallback(
+    tag => {
+      const nextTags = localTags.filter(t => t !== tag);
+      setLocalTags(nextTags);
+      onChangeTags(nextTags);
+    },
+    [localTags, onChangeTags],
+  );
+
+  const onChange = useCallback(e => {
+    setInput(e.target.value);
+  }, []);
+
+  const onSubmit = useCallback(
+    e => {
+      e.preventDefault();
+      insertTag(input.trim());
+      setInput('');
+    },
+    [input, insertTag],
+  );
+
+  useEffect(() => {
+    setLocalTags(tags);
+  }, [tags]);
+
   return (
     <CreateBlock>
       <div className="select">
-        <Ingredient>재료1</Ingredient>
-        <Ingredient>재료2</Ingredient>
-        <Ingredient>재료3</Ingredient>
-        <Ingredient>재료4</Ingredient>
-        <Ingredient>재료5</Ingredient>
+        <h4>선택한 재료</h4>
+        <TagList tags={localTags} onRemove={onRemove} />
         <div className="btn">
           <Button>레시피 만들기 버튼</Button>
         </div>
       </div>
       <div className="block">
-        <form className="box">
-          <input className="row" />
-          <Button>추가 버튼</Button>
+        <form className="box" onSubmit={onSubmit}>
+          <input
+            className="row"
+            placeholder="태그를 입력하세요"
+            value={input}
+            onChange={onChange}
+          />
+          <Button type="submit">추가 버튼</Button>
         </form>
       </div>
     </CreateBlock>
@@ -80,20 +153,3 @@ const CreateForm = () => {
 };
 
 export default CreateForm;
-
-/* 
-            1. UI를 만든다
-            <br />
-            2. form submit
-            <br />
-            3. input name, value onChange 자동완성기능은 filter 반복문 "마" 자만 나오는것 
-            <br />
-            4. button submit onclick = e.preventDefault
-            <br />
-            5. map 반복문으로 배열안에 추가된 value가 state에 있으면 선택한 재료라는 탭에 집어넣어준다 - useState 로 관리
-            5-1 리덕스로 state 관리해서 db에 보내준다
-            <br />
-            6. 선택한재료 라는 탭에 수정 or 삭제 버튼을 달아준다
-            <br />
-            7. 레시피 만들기 버튼 누르면 /recipe/make 라는 경로로 다음 화면으로 넘어간다
-             */
