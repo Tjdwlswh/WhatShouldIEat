@@ -31,11 +31,19 @@ const RegisterForm = () => {
     }
     
     const onSubmit = e => {
+
         e.preventDefault();
         const {email, password, passwordConfirm, nickname} = form;
+        const emailRegex = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
+
 
         if([email, password, passwordConfirm, nickname].includes('')){
             setError('빈칸을 모두 입력하세요')
+            return
+        }
+        
+        if(!email.match(emailRegex)){
+            setError("이메일 형식이 아닙니다")
             return
         }
 
