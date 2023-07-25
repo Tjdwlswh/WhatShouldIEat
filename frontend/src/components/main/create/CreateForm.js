@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import Button from '../../common/Button';
 import palette from '../../../lib/styles/palette';
 import React, { useState, useCallback, useEffect } from 'react';
-import CreateActionButtonContainer from './Actionbutton';
+import CreateActionButtonContainer from '../../../container/create/Actionbutton';
 //임시적으로 만들어 놓은 style
 
 const CreateBlock = styled.div`

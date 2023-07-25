@@ -1,7 +1,7 @@
 import styled from 'styled-components';
-import Button from '../../common/Button';
+import Button from '../../components/common/Button';
 import { useNavigate } from 'react-router-dom';
-import { createPost } from '../../../modules/create';
+import { createPost } from '../../modules/create';
 import { useDispatch, useSelector } from 'react-redux';
 import React, { useEffect } from 'react';
 
