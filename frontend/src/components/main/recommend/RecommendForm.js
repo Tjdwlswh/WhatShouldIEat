@@ -1,13 +1,7 @@
-import styled from "styled-components";
-
+import styled from 'styled-components';
 
 const RecommendForm = () => {
-    return(
-        <div>
-            추천 레시피
-        </div>
-    )
-    
-}
+  return <div>추천 레시피</div>;
+};
 
-export default RecommendForm
+export default RecommendForm;
