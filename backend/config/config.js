@@ -1,8 +1,3 @@
-import dotenv from 'dotenv';
-
-// .env 파일의 설정 값을 불러옴
-dotenv.config();
-
 const env = process.env;
 
 const config = {

@@ -1,9 +1,5 @@
 import bcrypt from 'bcrypt';
-import passport from 'passport';
-import axios from 'axios';
-import jwt from 'jsonwebtoken';
 import { UserModel } from './userModels.js';
-import { db } from '../../models/index.js';
 
 const userService = {
   addUser: async ({ email, password, nickName, profileImg }) => {
@@ -39,35 +35,13 @@ const userService = {
       }
     }
   },
-  signInKakao: async kakaoToken => {
-    const result = await axios.get('https://kapi.kakao.com/v2/user/me', {
-      headers: {
-        Authorization: `Bearer ${kakaoToken}`,
-      },
-    });
-    const { data } = result;
-    const kakaoId = data.id;
-    const nickName = data.properties.nickname;
-    const profileImg = data.properties.profile_image;
-    const email = data.kakao_account.email;
 
-    if (!kakaoId || !nickName || !email) {
-      throw new Error('KEY_ERROR', 400);
+  clearTokenInDB: async email => {
+    try {
+      const user = await UserModel.update({ refreshToken: null }, email);
+    } catch (err) {
+      throw new Error(err);
     }
-    const user = await UserModel.findByKakaoId(kakaoId);
-    if (!user) {
-      const newUser = {
-        kakaoId,
-        nickName,
-        email,
-        provider: 'kakao',
-        profileImg,
-      };
-      await UserModel.create(newUser);
-    }
-    const token = jwt.sign({ kakao_id: user.kakaoId }, process.env.JWT_SECRET);
-    console.log(token, user);
-    return [token, user];
   },
 };
 

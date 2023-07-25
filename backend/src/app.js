@@ -1,22 +1,17 @@
 import express from 'express';
 import cookieParser from 'cookie-parser';
 import morgan from 'morgan';
-import session from 'express-session';
-import dotenv from 'dotenv';
 import cors from 'cors';
-import passport from 'passport';
+import { initializePassport } from './middlewares/passport/index.js';
 import { sequelize } from '../models/index.js';
-import { passportConfig } from '../passport/index.js';
 import { errorMiddleWare } from './middlewares/errorMiddleWare.js';
 import { imgUploadRouter } from './imgUploads/imgUploadRouter.js';
 import { userRouter } from './users/userRouter.js';
 import { followRouter } from './follows/followRouter.js';
 const app = express();
+const passport = initializePassport();
 
-dotenv.config();
-passportConfig(); // 패스포트 설정
-
-app.use(cors());
+app.use(cors({ origin: true, credentials: true }));
 
 /************ 
     DB연결
@@ -35,27 +30,17 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 app.use(cookieParser(process.env.COOKIE_SECRET));
-app.use(
-  session({
-    resave: false,
-    saveUninitialized: false,
-    secret: process.env.COOKIE_SECRET,
-    cookie: {
-      httpOnly: true,
-      secure: false,
-    },
-  }),
-);
+// 쿠키 읽을때 req.signedCookie
+
 app.use(passport.initialize());
-app.use(passport.session());
 
 app.get('/', (req, res) => {
   res.send('Hello, #뭐해먹지?');
 });
-app.use(imgUploadRouter);
 
-app.use(userRouter);
-app.use(followRouter);
+// app.use('/auth', userRouter);
+
+app.use([imgUploadRouter, userRouter, followRouter]);
 
 app.use(errorMiddleWare);
 

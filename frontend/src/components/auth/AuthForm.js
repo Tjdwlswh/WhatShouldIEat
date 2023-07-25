@@ -2,6 +2,8 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import palette from '../../lib/styles/palette';
 import Button from '../common/Button';
+import KakaoLoginButton from '../button/KakaoLogin';
+import GoogleLoginButton from '../button/GoogleLogin';
 
 //회원가입 로그인 폼 웹디자인 컴포넌트
 
@@ -48,18 +50,25 @@ const textMap = {
   register: '회원가입',
 };
 
-const AuthForm = ({ type, form, onChange, onSubmit }) => {
+const ErrorMessage = styled.div`
+  color: red;
+  text-align: center;
+  font-size: 0.875rem;
+  margin-top: 1rem;
+`;
+
+const AuthForm = ({ type, form, onChange, onSubmit, error }) => {
   const text = textMap[type];
   return (
     <AuthFormBlock>
       <h3>{text}</h3>
       <form onSubmit={onSubmit}>
         <StyleInput
-          autoComplete="username"
-          name="username"
-          placeholder="아이디"
+          autoComplete="email"
+          name="email"
+          placeholder="이메일"
           onChange={onChange}
-          value={form.username}
+          value={form.email}
         />
 
         <StyleInput
@@ -70,7 +79,7 @@ const AuthForm = ({ type, form, onChange, onSubmit }) => {
           onChange={onChange}
           value={form.password}
         />
-        {text === 'register' && (
+        {type === 'register' && (
           <StyleInput
             autoComplete="new-password"
             name="passwordConfirm"
@@ -80,9 +89,24 @@ const AuthForm = ({ type, form, onChange, onSubmit }) => {
             value={form.passwordConfirm}
           />
         )}
+        {type === 'register' && (
+          <StyleInput
+            name="nickname"
+            placeholder="닉네임"
+            onChange={onChange}
+            value={form.nickname}
+          />
+        )}
+        {error && <ErrorMessage>{error}</ErrorMessage>}
         <ButtonWithMarginTop cyan={true} fullWidth={true} style={{ marginTop: '1rem' }}>
           {text}
         </ButtonWithMarginTop>
+        {type === 'login' && (
+          <>
+            <KakaoLoginButton />
+            <GoogleLoginButton />
+          </>
+        )}
       </form>
       <Footer>
         {type === 'login' ? <Link to="/register">회원가입</Link> : <Link to="/login">로그인</Link>}

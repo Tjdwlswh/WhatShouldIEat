@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest --setupFiles dotenv/config",
-    "start": "nodemon index.js  --exec babel-node"
+    "start": "nodemon --exec babel-node -r ./node_modules/dotenv/config index.js"
   },
   "type": "module",
   "author": "",
@@ -23,6 +23,8 @@
     "multer": "^1.4.5-lts.1",
     "mysql2": "^3.5.2",
     "passport": "^0.6.0",
+    "passport-google-oauth20": "^2.0.0",
+    "passport-jwt": "^4.0.1",
     "passport-kakao": "^1.0.1",
     "passport-local": "^1.0.0",
     "sequelize": "^6.32.1",

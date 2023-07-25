@@ -1,5 +1,16 @@
-const MainPage = () => {
-  return <div>메인페이지 읽기</div>;
-};
+import HeaderContainer from "../container/common/HeaderContainer"
+import MainTemplate from "../components/main/MainTemplate"
+import MainForm from "../components/main/MainForm"
 
-export default MainPage;
+const MainPage = () => {
+    return (
+    <div>
+       <HeaderContainer />
+       <MainTemplate>
+            <MainForm />
+       </MainTemplate>
+
+    </div>)
+}
+
+export default MainPage

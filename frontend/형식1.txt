@@ -1,0 +1,20 @@
+1.라우트 만들기
+
+CreateRecipe
+myRecipe
+RecommendRecipe
+ReviewRecipe
+2.페이지 만들기
+
+
+
+3.UI 구성하기
+
+
+4.리덕스 모듈 만들기
+
+
+5.UI와 리덕스모듈 연결하기
+
+
+6.value 를 api로 보내고 받아오기 
