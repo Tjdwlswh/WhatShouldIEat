@@ -8,11 +8,13 @@ margin : 0 auto;
 
 
 @media (max-width:1024px) {
-    width:786px;
+    width:100%;
 }
 @media (max-width:768px) {
     width:100%;
 }
+
+
 `
 
 const Responsive = ({children, ...rest}) => {

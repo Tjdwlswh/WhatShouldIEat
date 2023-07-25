@@ -33,6 +33,11 @@ const LoginForm = () =>{
     const onSubmit = e => {
         e.preventDefault();
         const {email,password} = form;
+        const emailRegex = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
+        if(!email.match(emailRegex)){
+            setError("이메일 형식이 아닙니다")
+            return
+        }
         dispatch(login({email, password}))
 
     }
