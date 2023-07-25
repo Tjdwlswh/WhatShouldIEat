@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import Button from '../../common/Button';
 import palette from '../../../lib/styles/palette';
 import React, { useState, useCallback, useEffect } from 'react';
+import CreateActionButtonContainer from './Actionbutton';
 //임시적으로 만들어 놓은 style
 
 const CreateBlock = styled.div`
@@ -84,7 +85,7 @@ const TagList = React.memo(({ tags, onRemove }) => (
   </Ingredient>
 ));
 
-const CreateForm = ({ tags, onChangeTags }) => {
+const CreateForm = ({ tags, onChangeTags, onPublish }) => {
   const [input, setInput] = useState('');
   const [localTags, setLocalTags] = useState([]);
 
@@ -134,7 +135,7 @@ const CreateForm = ({ tags, onChangeTags }) => {
         <h4>선택한 재료</h4>
         <TagList tags={localTags} onRemove={onRemove} />
         <div className="btn">
-          <Button>레시피 만들기 버튼</Button>
+          <CreateActionButtonContainer onClick={onPublish} />
         </div>
       </div>
       <div className="block">
