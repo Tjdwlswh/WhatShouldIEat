@@ -18,18 +18,22 @@ const MainTemplateBlock = styled.section`
 `;
 
 const Container = styled(Responsive)`
-     
-   
-    display: block;
-    
+  @media (min-width: 576px){
+
+    margin-right: auto;
+    margin-left: auto;
+ 
+}
 `;
 
 const FlexBox = styled.div`
+    @media (min-width:576px){
+ 
+    flex-wrap: wrap;
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-wrap: wrap;
-    
+}
 `;
 
 const MainTemplate = ({children}) => {

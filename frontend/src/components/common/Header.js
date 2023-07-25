@@ -18,14 +18,21 @@ const Wrapper = styled(Responsive)`
     align-items: center;
     justify-content: space-between;
     .logo {
-        font-size : 1.125rem;
+        font-size : 1.5rem;
         font-weight: 800;
         letter-spacing: 2px;
     }
+
+    .link {
+        font-size: 1.125rem;
+        font-weight: bold;
+    }
+
     .right {
         display: flex;
         align-items: center;
     }
+
 `
 
 const Spacer = styled.div`
@@ -46,6 +53,18 @@ const Header = ({user, onLogout}) => {
                     <Link to='/' className='logo'>
                         뭐해먹지?
                     </Link>
+                    <Link to='/create' className='link'>
+                        레시피 생성
+                    </Link>
+                    <Link to='/myrecipe' className='link'>
+                        나의 레시피
+                    </Link>
+                    <Link to='/recommend' className='link'>
+                        추천 레시피
+                    </Link>
+                    <Link to='/review' className='link'>
+                        후기 모아보기
+                    </Link>
                     {user ? (
                     <div className='right'>
                         <UserInfo>{user.email}</UserInfo>
@@ -55,6 +74,7 @@ const Header = ({user, onLogout}) => {
                             <Button to='/login'>로그인</Button>
                         </div>
                     )}
+                    
                 </Wrapper>
             </HeaderBlock>
             <Spacer />

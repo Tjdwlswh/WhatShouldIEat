@@ -1,10 +1,10 @@
 import styled from 'styled-components'
 import palette from '../../lib/styles/palette'
+import Button from '../common/Button';
 
 const StyleImgBox = styled.div`
     flex : 0 0 auto;
     width: 41.66667%;
-    display : block;
     box-sizing : border-box;
     padding-right: 1rem;
     padding-left : 1rem;
@@ -18,13 +18,13 @@ const StyleImgBox = styled.div`
         width: 100%;
         height: auto;
         vertical-align: middle; 
-          
-    }
-    img:hover{     
+        &:hover{     
         transition: transform 0.4s ease;
         transform : translateY(-3rem); 
     }
-`
+          
+    }
+`;
 
 const StyleForm = styled.div`
     text-align : left ;
@@ -32,8 +32,8 @@ const StyleForm = styled.div`
     padding-bottom : 7.5rem;
     flex : 0 0 auto;
     width:58.33333%;
-    display: block;
     box-sizing: border-box;
+    font-family: "Source Sans Pro","Open Sans",-apple-system,BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
     .logo{
         font-size: 1.88832rem;
         color : #F9FAFD;
@@ -41,8 +41,6 @@ const StyleForm = styled.div`
         line-height: 1;
         margin-top: 0;
         margin-bottom: 0.5rem;
-        font-family: "Source Sans Pro","Open Sans",-apple-system,BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
-
     }
     .description{
         color: #616161;
@@ -51,7 +49,6 @@ const StyleForm = styled.div`
         margin-bottom: 3rem;
         font-weight: 700;
         line-height: 1.2;
-        font-family: "Source Sans Pro","Open Sans",-apple-system,BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
     }
 `;
 
@@ -68,6 +65,7 @@ const WhiteBlock = styled.div`
     border-radius:0.5rem;
     text-align: center;
     box-sizing: border-box;
+   
     .card_body{
         flex:1 1 auto;
         padding : 1rem 1rem;
@@ -80,7 +78,7 @@ const WhiteBlock = styled.div`
         margin-bottom: 0;
         list-style: none;
     }
-    button{
+    .button{
         font-family: "Source Sans Pro","Open Sans",-apple-system,BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
         cursor: pointer;
         text-transform: none;
@@ -92,7 +90,8 @@ const WhiteBlock = styled.div`
         border: 1px solid transparent;
         outline: 0;
         width: 4rem;
-        height: 1.5rem;
+        box-sizing: border-box;
+        height: auto;
         .nav_link{
             background: none;
             border:1px solid transparent;
@@ -106,12 +105,68 @@ const WhiteBlock = styled.div`
          color: #F17228;
          background-color: rgba(241,114,40,0.15);
          border-color: rgba(0,0,0,0);
-         //버튼이 눌리면 active 클래스가 붙여지는 상태를 만들어줘야함    
+         //버튼이 눌리면 active 클래스가 붙여지는 이벤트를 만들어줘야함    
         }
     }
-`
+`;
 
-//버튼이 눌리면 active 클래스가 붙여지는 상태를 만들어줘야함
+const WhiteInputBlock = styled.div`
+    margin-top : 1rem;
+    box-sizing: border-box;
+    
+    .row {
+        align-items: center;   
+        display: flex;
+        flex-wrap: wrap;  
+        flex: 1 1 auto;
+    }
+    .col {
+       
+        width: 100%;
+        max-width: 100%;
+        padding : 0.5rem
+    }
+    .arrange {
+        width: 6rem;
+        padding : 0.5rem
+    }
+
+    
+`;
+const WhiteInput = styled.input`
+    padding: 0.5rem 2.2rem;
+    vertical-align: middle;
+    border: 0 solid #E0E0E0;
+    border-radius: 0.25rem;
+    width: 100%;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #424242;
+    background-color: #f5f5f5;
+   
+`
+const InputButton = styled.button`
+    width: 5rem;
+    color: #FFFEFE;
+    background-color: #F17228;
+    border-color: #F17228;
+    display: inline-block;
+    font-weight: 700;
+    line-height: 1.5;
+    text-align: center;
+    vertical-align: middle;
+    border: 1px solid transparent;
+    padding: 0.7rem ;
+    font-size: 0.6rem;
+    border-radius: 0.2rem;
+    @media (max-width: 576px){
+    .auto {
+    flex: 0 0 auto;
+    width: auto;
+}}
+    
+`
 
 const MainForm = () => {
     return(
@@ -123,26 +178,38 @@ const MainForm = () => {
             </StyleImgBox>
             <StyleForm>
                 <h1 className='logo'>
-                    Are you starving?
+                    요리하실려구요?
                 </h1>
                 <h1 className='description'>
-                    Within a few clicks, find meals that
-                    <br></br>
-                    are accessible near you
+                    무엇을 먹을지 고민하지 마시고
+                    <br />
+                    AI로 레시피를 생성하여 요리하세요!
                 </h1>
                 <WhiteBlock>
                     <div className='card_body' >
                         <nav>
                             <div className='nav_tabs'>
-                                <button className='nav_link active'>
-                                    Delivery
-                                </button>
-                                <button className='nav_link'>
-                                    Pickup
+                                <button className="button" >
+                                    Recipe
                                 </button>
                             </div>
                         </nav>
-                        <div></div>
+                        <WhiteInputBlock>
+                              
+                                <form className='row'>
+                                    <div className='col'>
+                                    <WhiteInput>
+
+                                    </WhiteInput>
+                                    </div>
+                                    <div className='arrange'>
+                                    <InputButton className='auto'>
+                                        Find Food
+                                    </InputButton>
+                                    </div>
+                                    </form>
+                            
+                        </WhiteInputBlock>
                     </div>
                 </WhiteBlock>
             </StyleForm>
