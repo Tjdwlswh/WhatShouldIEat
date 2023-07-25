@@ -4,7 +4,7 @@ import Responsive from "../../common/Responsive";
 const CreateTempBlock = styled.section`
     background-color: #eee;
     width: 100%;
-    padding-top: 3rem;
+    padding : 3rem;
 `
 
 const Container = styled(Responsive)`
@@ -19,10 +19,7 @@ const Container = styled(Responsive)`
 const FlexBox = styled.div`
     @media (min-width:576px){
  
-    flex-wrap: wrap;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+
 }
 `;
 

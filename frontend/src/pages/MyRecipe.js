@@ -1,6 +1,6 @@
 import HeaderContainer from "../container/common/HeaderContainer"
-import MyRecipeForm from "../components/main/recipe/MyRecipeForm"
-import MyRecipeTemp from "../components/main/recipe/MyRecipeTemp"
+import MyRecipeForm from "../components/main/myrecipe/MyRecipeForm"
+import MyRecipeTemp from "../components/main/myrecipe/MyRecipeTemp"
 
 
 const MyRecipe = () => {
