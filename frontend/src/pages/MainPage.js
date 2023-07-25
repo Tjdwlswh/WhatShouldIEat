@@ -1,16 +1,16 @@
-import HeaderContainer from "../container/common/HeaderContainer"
-import MainTemplate from "../components/main/MainTemplate"
-import MainForm from "../components/main/MainForm"
+import HeaderContainer from '../container/common/HeaderContainer';
+import MainTemplate from '../components/main/MainTemplate';
+import MainForm from '../components/main/MainForm';
 
 const MainPage = () => {
-    return (
+  return (
     <div>
-       <HeaderContainer />
-       <MainTemplate>
-            <MainForm />
-       </MainTemplate>
+      <HeaderContainer />
+      <MainTemplate>
+        <MainForm />
+      </MainTemplate>
+    </div>
+  );
+};
 
-    </div>)
-}
-
-export default MainPage
+export default MainPage;
