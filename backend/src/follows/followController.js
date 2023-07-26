@@ -1,21 +1,7 @@
-import { User } from '../../models/User.js';
+import { userService } from '../users/userService.js';
 // import { followService } from './followService.js';
 
 const followController = {
-  postFollow: async (req, res, next) => {
-    try {
-      const user = await User.findOne({ where: { id: req.currentUserId } });
-      if (user) {
-        await user.addFollowing(parseInt(req.params.id, 10));
-        res.send('success');
-      } else {
-        res.status(401).send('no user');
-      }
-    } catch (err) {
-      next(err);
-    }
-  },
-
   // const followerId = req.currentUserId; // jwt토큰 사용해서 req.currentUserId = userId; 지정필요!
   //   const followingId = req.params.id;
 

@@ -22,6 +22,7 @@ const KakaoStrategy = new Strategy(
           provider,
           profileImg,
           refreshToken,
+          provider: 'kakao',
         },
         email,
       );

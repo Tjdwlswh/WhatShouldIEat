@@ -13,7 +13,9 @@ const localAuthenticate = async (req, res, next) => {
 
     const { token, refreshToken } = user;
     setCookie(res, token, refreshToken);
-    res.status(200).send('로그인 성공');
+    // TODO:: user에게 필요한 정보만 보내주기
+    console.log('1', user.dataValues);
+    res.status(200).json({ user: user.dataValues, message: '로그인 성공' });
   })(req, res, next);
 };
 

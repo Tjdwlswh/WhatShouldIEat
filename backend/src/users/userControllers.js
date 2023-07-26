@@ -38,7 +38,7 @@ const userController = {
       res.clearCookie();
       const email = req.currentUserEmail;
       const result = await userService.clearTokenInDB(email);
-      res.status(200).send('로그아웃 성공');
+      res.status(200).json({ message: '로그아웃 성공' });
     } catch (err) {
       next(err);
     }
@@ -54,6 +54,22 @@ const userController = {
 
   // 리프레시 토큰 검증
   refreshToken: refreshAuthenticate,
+
+  //팔로우 신청
+  postFollow: async (req, res, next) => {
+    try {
+      //내가 팔로우 신청하면 내가 follower, 남은 following
+      console.log('req.user', req.user);
+      const followerId = req.user.id; //나
+      const followingId = req.params.id; //너
+
+      const result = await userService.addFollowing(followingId, followerId);
+
+      res.status(200).json({ result: '팔로우를 시작합니다.' });
+    } catch (err) {
+      next(err);
+    }
+  },
 };
 
 export { userController };
