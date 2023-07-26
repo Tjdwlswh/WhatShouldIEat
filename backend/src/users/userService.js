@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt';
 import { UserModel } from './userModels.js';
 import { db } from '../../models/index.js';
-import { ConflictException } from '../libs/httpException.js';
+import { ConflictException, NotFoundException } from '../libs/httpException.js';
 
 const userService = {
   addUser: async ({ email, password, nickName, profileImg }) => {
@@ -39,6 +39,20 @@ const userService = {
       throw new Error(err);
     }
   },
-};
+  addFollowing: async (followingId, followerId) => {
+    //내가 팔로우 신청하면 내가 follower, 남은 following
+    const user = await UserModel.findById(followerId);
+    if (!followingId) {
+      const errMessage = '팔로우할 사용자를 확인해주세요.';
+      throw new Error(errMessage);
+    }
+    if (!user) {
+      const errorMessage = 'Follower not found.';
+      throw new NotFoundException(errorMessage);
+    }
+    await user.addFollowing(parseInt(followingId, 10));
 
+    return;
+  },
+};
 export { userService };

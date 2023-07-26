@@ -28,6 +28,7 @@ userRouter.get('/auth/google/callback', userController.googleCallback);
 // refrechToken 검증
 userRouter.get('/auth/refresh', userController.refreshToken);
 
+// 로그아웃
 userRouter.get('/auth/logout', loginRequired, userController.logout);
 
 export { userRouter };
