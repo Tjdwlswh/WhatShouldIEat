@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import loginRequired from '../middlewares/passport/loginRequired.js';
 import { upload } from '../imgUploads/imgUploadRouter.js';
-import { recipeControllers } from './recipeController.js';
+import { recipeController } from './recipeController.js';
 
 const recipeRouter = Router();
 const imgUpload = upload.single('foodImg');
