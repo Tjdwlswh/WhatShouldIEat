@@ -1,11 +1,26 @@
 import client from './client';
 
-export const login = ({ email, password }) =>
-  client.post('http://localhost:5000/auth/login', { email, password });
+export const login = async ({ email, password }) => {
+  return await client.post('http://localhost:5000/auth/login', { email, password });
+};
 
-export const register = ({ email, password, nickname }) =>
-  client.post('/auth/register', { email, password, nickname });
+// ### token 만료 에러시 시동하도록
+const refreshAccessToken = refreshToken => {
+  client
+    .post('http://localhost:5000/auth/refresh', { refreshToken })
+    .then(response => {
+      // ###
+      // const expiresIn = JWT_EXPIRY_TIME - 60000;
+      // setRefreshTimer(expiresIn);
+    })
+    .catch(error => {
+      console.log(error);
+    });
+};
 
-export const check = () => client.get('/api/auth/check');
+export const register = async ({ email, password, nickName }) =>
+  client.post('http://localhost:5000/auth/register', { email, password, nickName });
 
-export const logout = () => client.post('/api/auth/logout');
+export const logout = async () => {
+  client.post('http://localhost:5000/auth/logout');
+};

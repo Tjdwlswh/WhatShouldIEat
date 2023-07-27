@@ -1,18 +1,16 @@
-import HeaderContainer from "../container/common/HeaderContainer"
-import CreateTemp from "../components/main/create/CreateTemp"
-import CreateForm from "../components/main/create/CreateForm"
+import HeaderContainer from '../container/common/HeaderContainer';
+import CreateTemp from '../components/main/create/CreateTemp';
+import CreateContainer from '../container/create/CreateContainer';
 
 const CreateRecipe = () => {
-    return(
-        <div>
-            <HeaderContainer />
-            <CreateTemp>
-                <CreateForm />
-            </CreateTemp>
-        </div>
-    )
-    }
+  return (
+    <div>
+      <HeaderContainer />
+      <CreateTemp>
+        <CreateContainer />
+      </CreateTemp>
+    </div>
+  );
+};
 
-
-    
-export default CreateRecipe
+export default CreateRecipe;

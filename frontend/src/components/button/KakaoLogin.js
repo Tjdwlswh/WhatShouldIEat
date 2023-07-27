@@ -35,12 +35,13 @@ const KakaoLoginButton = () => {
     ${buttonStyle}
   `;
 
-  const onClick = () => {
+  const handleClick = e => {
+    e.preventDefault();
     window.location.href = 'http://localhost:5000/auth/kakao/login';
   };
 
   return (
-    <KakaoButton onClick={onClick}>
+    <KakaoButton onClick={handleClick}>
       <Image
         src={process.env.PUBLIC_URL + '/assets/img/icons/kakao.png'}
         alt="카카오 로그인 버튼"
