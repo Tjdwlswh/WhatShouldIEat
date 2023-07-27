@@ -2,7 +2,7 @@
 //로그인, 회원가입후 뒤로가기 했을때 input값 초기화
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { changeField, initializeForm, login } from '../modules/auth';
+import { changeField, initializeForm, Login } from '../modules/auth';
 import AuthForm from '../components/auth/AuthForm';
 import { useNavigate } from 'react-router-dom';
 import { check } from '../modules/user';
@@ -18,6 +18,11 @@ const LoginForm = () => {
     user: state.user.user,
   }));
 
+  console.log(form)
+  console.log(auth)
+  console.log(authError)
+  console.log(user)
+
   const onChange = e => {
     const { value, name } = e.target;
     dispatch(
@@ -32,7 +37,7 @@ const LoginForm = () => {
   const onSubmit = e => {
     e.preventDefault();
     const { email, password } = form;
-    dispatch(login({ email, password }));
+    dispatch(Login({ email, password }));
   };
 
   useEffect(() => {
@@ -48,12 +53,12 @@ const LoginForm = () => {
     }
     if (auth) {
       console.log('로그인성공');
-      dispatch(check());
+      // dispatch(check()); //쿠키로
     }
-  }, [auth, authError, dispatch]);
-
+  }, [auth, authError, ]);
+  // dispatch
   useEffect(() => {
-    if (user) {
+    if (auth) {
       navigate('/');
       try {
         localStorage.setItem('user', JSON.stringify(user));
