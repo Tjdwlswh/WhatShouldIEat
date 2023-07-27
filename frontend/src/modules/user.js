@@ -7,9 +7,10 @@ import { createRequestSaga, createRequestActionTypes } from '../lib/createReques
 // const [CHECK, CHECK_SUCCESS, CHECK_FAILURE] = createRequestActionTypes('user/CHECK');
 
 const LOGOUT = 'user/LOGOUT';
+const SET_USER = 'user/SET_USER';
 const SET_TOKEN = 'user/SET_TOKEN';
 
-// export const tempSetUser = createAction(TEMP_SET_USER, user => user);
+export const setUser = createAction(SET_USER, user => user);
 // export const check = createAction(CHECK);
 export const logout = createAction(LOGOUT);
 // ###
@@ -54,10 +55,10 @@ const user = handleActions(
       ...state,
       token,
     }),
-    // [TEMP_SET_USER]: (state, { payload: user }) => ({
-    //   ...state,
-    //   user,
-    // }),
+    [SET_USER]: (state, { payload: user }) => ({
+      ...state,
+      user,
+    }),
     // [CHECK_SUCCESS]: (state, { payload: user }) => ({
     //   ...state,
     //   user,

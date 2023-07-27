@@ -8,7 +8,7 @@ import { Provider } from 'react-redux';
 import rootReducer, { rootSaga } from './modules/index';
 import { configureStore } from '@reduxjs/toolkit';
 import createSagaMiddleware from 'redux-saga';
-import { Cookies } from 'react-cookie';
+import { CookiesProvider } from 'react-cookie';
 
 const sagaMiddleware = createSagaMiddleware();
 const store = configureStore({
@@ -16,31 +16,15 @@ const store = configureStore({
   middleware: getDefaultMiddleware => getDefaultMiddleware().concat(sagaMiddleware),
 });
 
-const cookies = new Cookies();
-function loadUser() {
-  try {
-    console.log('index/loadUser');
-    // const token = cookies.get('token');
-    // if (token) {
-    //   스토어에 저장
-    // }
-    // const user = localStorage.getItem('user');
-    // if (!user) return;
-    // store.dispatch(tempSetUser(JSON.parse(user)));
-    // store.dispatch(check());
-  } catch (e) {
-    console.log('localStorage is not working');
-  }
-}
-
 sagaMiddleware.run(rootSaga);
-loadUser();
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Provider store={store}>
     <BrowserRouter>
-      <App />
+      <CookiesProvider>
+        <App />
+      </CookiesProvider>
     </BrowserRouter>
   </Provider>,
 );
