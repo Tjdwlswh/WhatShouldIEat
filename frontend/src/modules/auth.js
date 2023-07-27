@@ -28,7 +28,7 @@ export const register = createAction(REGISTER, ({ email, password, nickName }) =
   nickName,
 }));
 
-export const Login = createAction(LOGIN, ({ email, password }) => ({
+export const login = createAction(LOGIN, ({ email, password }) => ({
   email,
   password,
 }));
@@ -54,7 +54,6 @@ const initialState = {
   auth: null,
   authError: null,
 };
-
 
 const auth = handleActions(
   {

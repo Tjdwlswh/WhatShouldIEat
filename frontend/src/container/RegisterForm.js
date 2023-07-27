@@ -11,7 +11,7 @@ const RegisterForm = () => {
   const [error, setError] = useState(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { form, auth, authError, user } = useSelector( state => ({
+  const { form, auth, authError, user } = useSelector(state => ({
     form: state.auth.register,
     auth: state.auth.auth,
     authError: state.auth.authError,
@@ -74,12 +74,12 @@ const RegisterForm = () => {
     }
   }, [auth, authError, dispatch]);
 
-  useEffect(() => {
-    if (auth) {
-      console.log('check API 성공');
-      console.log(auth);
-    }
-  }, [auth]);
+  // useEffect(() => {
+  //   if (auth) {
+  //     console.log('check API 성공');
+  //     console.log(auth);
+  //   }
+  // }, [auth]);
 
   useEffect(() => {
     if (auth) {

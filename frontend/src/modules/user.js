@@ -3,14 +3,17 @@ import { takeLatest, call } from 'redux-saga/effects';
 import * as authAPI from '../lib/api/auth';
 import { createRequestSaga, createRequestActionTypes } from '../lib/createRequestSaga';
 
-const TEMP_SET_USER = 'user/TEMP_SET_USER'; //새로고침이후 임시로그인처리
+// const TEMP_SET_USER = 'user/TEMP_SET_USER'; //새로고침이후 임시로그인처리
 // const [CHECK, CHECK_SUCCESS, CHECK_FAILURE] = createRequestActionTypes('user/CHECK');
 
 const LOGOUT = 'user/LOGOUT';
+const SET_TOKEN = 'user/SET_TOKEN';
 
-export const tempSetUser = createAction(TEMP_SET_USER, user => user);
+// export const tempSetUser = createAction(TEMP_SET_USER, user => user);
 // export const check = createAction(CHECK);
 export const logout = createAction(LOGOUT);
+// ###
+export const setToken = createAction(SET_TOKEN, token => token);
 
 // const checkSaga = createRequestSaga(CHECK, authAPI.check);
 
@@ -26,7 +29,8 @@ function* logoutSaga() {
   try {
     yield call(authAPI.logout);
   } catch (e) {
-    console.log('localStorage is not working');
+    // console.log('localStorage is not working');
+    console.log(e);
   }
 }
 
@@ -41,11 +45,15 @@ export function* userSaga() {
 
 const initialState = {
   user: null,
-  checkError: null,
+  token: null,
 };
 
 const user = handleActions(
   {
+    [SET_TOKEN]: (state, { payload: token }) => ({
+      ...state,
+      token,
+    }),
     // [TEMP_SET_USER]: (state, { payload: user }) => ({
     //   ...state,
     //   user,
@@ -63,6 +71,7 @@ const user = handleActions(
     [LOGOUT]: state => ({
       ...state,
       user: null,
+      token: null,
     }),
   },
   initialState,

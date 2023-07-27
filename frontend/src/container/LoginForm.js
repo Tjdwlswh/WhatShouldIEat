@@ -2,26 +2,20 @@
 //로그인, 회원가입후 뒤로가기 했을때 input값 초기화
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { changeField, initializeForm, Login } from '../modules/auth';
+import { changeField, initializeForm, login } from '../modules/auth';
 import AuthForm from '../components/auth/AuthForm';
 import { useNavigate } from 'react-router-dom';
-import { check } from '../modules/user';
+// import { check } from '../modules/user';
 
 const LoginForm = () => {
   const [error, setError] = useState(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { form, auth, authError, user } = useSelector(state => ({
+  const { form, auth, authError } = useSelector(state => ({
     form: state.auth.login,
     auth: state.auth.auth,
     authError: state.auth.authError,
-    user: state.user.user,
   }));
-
-  console.log(form)
-  console.log(auth)
-  console.log(authError)
-  console.log(user)
 
   const onChange = e => {
     const { value, name } = e.target;
@@ -37,7 +31,7 @@ const LoginForm = () => {
   const onSubmit = e => {
     e.preventDefault();
     const { email, password } = form;
-    dispatch(Login({ email, password }));
+    dispatch(login({ email, password }));
   };
 
   useEffect(() => {
@@ -46,27 +40,16 @@ const LoginForm = () => {
 
   useEffect(() => {
     if (authError) {
-      console.log('오류발생');
-      console.log(authError);
       setError('로그인 실패');
+      console.log(authError);
       return;
     }
     if (auth) {
       console.log('로그인성공');
+      navigate('/');
       // dispatch(check()); //쿠키로
     }
-  }, [auth, authError, ]);
-  // dispatch
-  useEffect(() => {
-    if (auth) {
-      navigate('/');
-      try {
-        localStorage.setItem('user', JSON.stringify(user));
-      } catch (e) {
-        console.log('localStorage is not working');
-      }
-    }
-  }, [navigate, user]);
+  }, [auth, authError]);
 
   return (
     <AuthForm
