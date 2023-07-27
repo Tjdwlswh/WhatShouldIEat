@@ -91,10 +91,10 @@ const AuthForm = ({ type, form, onChange, onSubmit, error }) => {
         )}
         {type === 'register' && (
           <StyleInput
-            name="nickname"
+            name="nickName"
             placeholder="닉네임"
             onChange={onChange}
-            value={form.nickname}
+            value={form.nickName}
           />
         )}
         {error && <ErrorMessage>{error}</ErrorMessage>}

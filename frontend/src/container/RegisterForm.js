@@ -4,14 +4,14 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { changeField, initializeForm, register } from '../modules/auth';
 import AuthForm from '../components/auth/AuthForm';
-import { check } from '../modules/user';
+// import { check } from '../modules/user';
 import { useNavigate } from 'react-router-dom';
 
 const RegisterForm = () => {
   const [error, setError] = useState(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { form, auth, authError, user } = useSelector(state => ({
+  const { form, auth, authError, user } = useSelector( state => ({
     form: state.auth.register,
     auth: state.auth.auth,
     authError: state.auth.authError,
@@ -30,10 +30,10 @@ const RegisterForm = () => {
 
   const onSubmit = e => {
     e.preventDefault();
-    const { email, password, passwordConfirm, nickname } = form;
+    const { email, password, passwordConfirm, nickName } = form;
     const emailRegex = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
 
-    if ([email, password, passwordConfirm, nickname].includes('')) {
+    if ([email, password, passwordConfirm, nickName].includes('')) {
       setError('빈칸을 모두 입력하세요');
       return;
     }
@@ -47,10 +47,10 @@ const RegisterForm = () => {
       setError('비밀번호가 일치하지 않습니다.');
       dispatch(changeField({ form: 'register', key: 'password', value: '' }));
       dispatch(changeField({ form: 'register', key: 'passwordConfirm', value: '' }));
-      dispatch(changeField({ form: 'register', key: 'nickname', value: '' }));
+      dispatch(changeField({ form: 'register', key: 'nickName', value: '' }));
       return;
     }
-    dispatch(register({ email, password, nickname }));
+    dispatch(register({ email, password, nickName }));
   };
 
   useEffect(() => {
@@ -70,27 +70,27 @@ const RegisterForm = () => {
     if (auth) {
       console.log('회원가입 성공');
       console.log(auth);
-      dispatch(check());
+      // dispatch(check());
     }
   }, [auth, authError, dispatch]);
 
   useEffect(() => {
-    if (user) {
+    if (auth) {
       console.log('check API 성공');
-      console.log(user);
+      console.log(auth);
     }
-  }, [user]);
+  }, [auth]);
 
   useEffect(() => {
-    if (user) {
+    if (auth) {
       navigate('/');
       try {
-        localStorage.setItem('user', JSON.stringify(user));
+        localStorage.setItem('auth', JSON.stringify(user));
       } catch (e) {
         console.log('localStorage is not working');
       }
     }
-  }, [navigate, user]);
+  }, [navigate, auth]);
 
   return (
     <AuthForm type="register" form={form} onChange={onChange} onSubmit={onSubmit} error={error} />

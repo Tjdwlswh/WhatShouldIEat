@@ -1,13 +1,13 @@
 import HeaderContainer from '../container/common/HeaderContainer';
 import CreateTemp from '../components/main/create/CreateTemp';
-import CreateForm from '../components/main/create/CreateForm';
+import CreateContainer from '../container/create/CreateContainer';
 
 const CreateRecipe = () => {
   return (
     <div>
       <HeaderContainer />
       <CreateTemp>
-        <CreateForm />
+        <CreateContainer />
       </CreateTemp>
     </div>
   );
