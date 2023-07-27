@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 // import { check } from '../modules/user';
 
 const LoginForm = () => {
+  console.log('process.env.REACT_APP_DEV_BACK_URL', process.env.REACT_APP_DEV_BACK_URL);
   const [error, setError] = useState(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -49,7 +50,7 @@ const LoginForm = () => {
       navigate('/');
       // dispatch(check()); //쿠키로
     }
-  }, [auth, authError]);
+  }, [auth, authError, navigate]);
 
   return (
     <AuthForm

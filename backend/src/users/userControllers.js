@@ -37,7 +37,7 @@ const userController = {
     try {
       res.clearCookie();
       const email = req.currentUserEmail;
-      const result = await userService.clearTokenInDB(email);
+      await userService.clearTokenInDB(email);
       res.status(200).json({ message: '로그아웃 성공' });
     } catch (err) {
       next(err);
@@ -51,6 +51,16 @@ const userController = {
   //카카오 로그인
   kakaoLogin: kakaoAuthenticate,
   kakaoCallback: kakaoCallbackAuthenticate,
+
+  getUser: async (req, res, next) => {
+    try {
+      const email = req.currentUserEmail;
+      const user = await userService.user({ email });
+      res.status(200).json(user);
+    } catch (err) {
+      next(err);
+    }
+  },
 
   // 리프레시 토큰 검증
   refreshToken: refreshAuthenticate,

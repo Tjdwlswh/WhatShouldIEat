@@ -1,26 +1,35 @@
-import client from './client';
+import axios from 'axios';
 
-export const login = async ({ email, password }) => {
-  return await client.post('http://localhost:5000/auth/login', { email, password });
-};
+const client = axios.create({
+  baseURL: `${process.env.REACT_APP_DEV_BACK_URL}/auth`,
+  withCredentials: true,
+});
 
-// ### token 만료 에러시 시동하도록
-const refreshAccessToken = refreshToken => {
-  client
-    .post('http://localhost:5000/auth/refresh', { refreshToken })
-    .then(response => {
-      // ###
-      // const expiresIn = JWT_EXPIRY_TIME - 60000;
-      // setRefreshTimer(expiresIn);
-    })
-    .catch(error => {
-      console.log(error);
+const authAPI = {
+  login: async ({ email, password }) => {
+    return await client.post('/login', { email, password });
+  },
+
+  register: async ({ email, password, nickName }) => {
+    return await client.post('/register', { email, password, nickName });
+  },
+
+  getUser: async token => {
+    console.log('getUser', token);
+    return await client.get('/user', {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     });
+  },
+
+  logout: async () => {
+    return await client.post('/logout');
+  },
+
+  refresh: async () => {
+    return await client.post('/refresh');
+  },
 };
 
-export const register = async ({ email, password, nickName }) =>
-  client.post('http://localhost:5000/auth/register', { email, password, nickName });
-
-export const logout = async () => {
-  client.post('http://localhost:5000/auth/logout');
-};
+export default authAPI;

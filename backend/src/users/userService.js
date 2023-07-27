@@ -1,6 +1,5 @@
 import bcrypt from 'bcrypt';
 import { UserModel } from './userModels.js';
-import { db } from '../../models/index.js';
 import { ConflictException, NotFoundException } from '../libs/httpException.js';
 
 const userService = {
@@ -32,13 +31,22 @@ const userService = {
     return UserModel.create(newUser);
   },
 
+  user: async ({ email }) => {
+    // 유저 정보 조회
+    const { nickName, profileImg } = await UserModel.findByEmail(email);
+    const user = { email, nickName, profileImg };
+    return user;
+  },
+
   clearTokenInDB: async email => {
+    // db 리프레시토큰 제거
     try {
       const user = await UserModel.update({ refreshToken: null }, email);
     } catch (err) {
       throw new Error(err);
     }
   },
+
   addFollowing: async (followingId, followerId) => {
     //내가 팔로우 신청하면 내가 follower, 남은 following
     const user = await UserModel.findById(followerId);

@@ -6,10 +6,10 @@ from transformers import pipeline, PreTrainedTokenizerFast
 
 app = Flask(__name__)
 cors = CORS(app, resources={
-  r"/recipe/*": {"origin": "*"},
+  r"/ai/*": {"origin": "*"},
 })
 
-@app.route('/recipe',methods=['POST'])
+@app.route('/ai/recipe',methods=['POST'])
 def process():
     ingredients = request.json
     print(ingredients)
@@ -19,12 +19,10 @@ def process():
     return jsonify(recipe)
 
 def create_recipe(ingredients):
-    ingredient_sentence = '재료: ' + '|'.join(ingredients)
-
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
     tokenizer = PreTrainedTokenizerFast.from_pretrained("./tokenizer/")
     generator = pipeline('text-generation', model='./model/', tokenizer=tokenizer, device=device)
-    recipe = generator(ingredient_sentence, max_length=512)
+    recipe = generator(ingredients, max_length=512)
     return recipe
     
 

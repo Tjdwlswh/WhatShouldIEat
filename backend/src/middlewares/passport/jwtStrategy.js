@@ -1,6 +1,7 @@
 import { Strategy, ExtractJwt } from 'passport-jwt';
 import { UserModel } from '../../users/userModels.js';
 import JwtSign from '../../utils/jwtSign.js';
+import cookieParser from 'cookie-parser';
 
 let RawRefreshToken = null;
 
@@ -10,10 +11,18 @@ const cookieExtractor = req => {
   return refreshToken;
 };
 
+const signedCookieDecodeToJWT = req => {
+  const token = cookieParser.signedCookie(
+    req.headers['authorization'].split(' ')[1],
+    process.env.COOKIE_SECRET,
+  );
+  return token;
+};
+
 // used by loginRequired
 const JwtStrategy = new Strategy(
   {
-    jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+    jwtFromRequest: signedCookieDecodeToJWT,
     secretOrKey: process.env.JWT_ACCESS_KEY,
   },
   async (payload, done) => {

@@ -8,6 +8,7 @@ import { errorMiddleWare } from './middlewares/errorMiddleWare.js';
 import { imgUploadRouter } from './imgUploads/imgUploadRouter.js';
 import { userRouter } from './users/userRouter.js';
 import { followRouter } from './follows/followRouter.js';
+import { recipeRouter } from './recipes/recipeRouter.js';
 const app = express();
 const passport = initializePassport();
 
@@ -40,7 +41,7 @@ app.get('/', (req, res) => {
 
 // app.use('/auth', userRouter);
 
-app.use([imgUploadRouter, userRouter, followRouter]);
+app.use([imgUploadRouter, userRouter, followRouter, recipeRouter]);
 
 app.use(errorMiddleWare);
 

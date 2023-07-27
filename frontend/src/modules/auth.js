@@ -2,7 +2,7 @@ import { createAction, handleActions } from 'redux-actions';
 import { produce } from 'immer';
 import { createRequestSaga, createRequestActionTypes } from '../lib/createRequestSaga';
 import { takeLatest } from 'redux-saga/effects';
-import * as authAPI from '../lib/api/auth';
+import authAPI from '../lib/api/auth';
 
 //로그인, 회원가입 상태관리
 

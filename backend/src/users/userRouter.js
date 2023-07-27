@@ -25,6 +25,9 @@ userRouter.get('/auth/kakao/callback', userController.kakaoCallback);
 userRouter.get('/auth/google/login', userController.googleLogin);
 userRouter.get('/auth/google/callback', userController.googleCallback);
 
+// user 정보
+userRouter.get('/auth/user', loginRequired, userController.getUser);
+
 // refrechToken 검증
 userRouter.get('/auth/refresh', userController.refreshToken);
 
