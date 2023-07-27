@@ -46,7 +46,8 @@ class User extends Sequelize.Model {
   }
 
   static associate(db) {
-    // db.User.hasMany(db.Recipe);
+    db.User.hasMany(db.Recipe);
+    db.User.belongsToMany(db.Recipe, { through: 'Like' });
     db.User.belongsToMany(db.User, {
       foreignKey: 'followingId',
       as: 'Followers',
@@ -57,6 +58,7 @@ class User extends Sequelize.Model {
       as: 'Followings',
       through: 'Follow',
     });
+    db.User.hasMany(db.Comment, { foreignKey: 'commenterId', sourceKey: 'id' });
   }
 }
 

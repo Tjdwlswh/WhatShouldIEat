@@ -1,8 +1,8 @@
 import { Sequelize } from 'sequelize';
 
-class Ingredients extends Sequelize.Model {
+class Ingredient extends Sequelize.Model {
   static initiate(sequelize) {
-    Ingredients.init(
+    Ingredient.init(
       {
         ingredient: {
           type: Sequelize.STRING(40),
@@ -15,14 +15,15 @@ class Ingredients extends Sequelize.Model {
         underscored: false,
         modelName: 'Ingredient',
         tableName: 'ingredients',
-        paranoid: true,
         charset: 'utf8',
         collate: 'utf8_general_ci',
       },
     );
   }
 
-  static associate(db) {}
+  static associate(db) {
+    db.Ingredient.belongsToMany(db.Recipe, { through: 'RecipeIngredient' });
+  }
 }
 
-export { Ingredients };
+export { Ingredient };

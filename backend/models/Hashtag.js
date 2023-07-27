@@ -1,8 +1,8 @@
 import { Sequelize } from 'sequelize';
 
-class Hashtags extends Sequelize.Model {
+class Hashtag extends Sequelize.Model {
   static initiate(sequelize) {
-    Hashtags.init(
+    Hashtag.init(
       {
         tag: {
           type: Sequelize.STRING(40),
@@ -15,14 +15,15 @@ class Hashtags extends Sequelize.Model {
         underscored: false,
         modelName: 'Hashtag',
         tableName: 'hashtags',
-        paranoid: true,
         charset: 'utf8mb4',
         collate: 'utf8mb4_general_ci',
       },
     );
   }
 
-  static associate(db) {}
+  static associate(db) {
+    db.Hashtag.belongsToMany(db.Recipe, {through: 'RecipeHashtag'});
+  }
 }
 
-export { Hashtags };
+export { Hashtag };
