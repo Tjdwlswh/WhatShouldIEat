@@ -1,8 +1,8 @@
 import { Sequelize } from 'sequelize';
 
-class Comments extends Sequelize.Model {
+class Comment extends Sequelize.Model {
   static initiate(sequelize) {
-    Comments.init(
+    Comment.init(
       {
         comment: {
           type: Sequelize.TEXT,
@@ -15,14 +15,16 @@ class Comments extends Sequelize.Model {
         underscored: false,
         modelName: 'Comment',
         tableName: 'comments',
-        paranoid: true,
         charset: 'utf8mb4',
         collate: 'utf8mb4_general_ci',
       },
     );
   }
 
-  static associate(db) {}
+  static associate(db) {
+    db.Comment.belongsTo(db.User, { foreignKey: 'commenterId', targetKey: 'id' });
+    db.Comment.belongsTo(db.Recipe); // Comment모델에 recipeId 컬럼이 추가됨
+  }
 }
 
-export { Comments };
+export { Comment };
