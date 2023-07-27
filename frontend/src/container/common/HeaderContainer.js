@@ -8,8 +8,14 @@ const HeaderContainer = () => {
   const cookies = new Cookies();
   const dispatch = useDispatch();
   const accessToken = useSelector(state => state.user.token);
+  const { user } = useSelector(state => ({
+    user: state.user.user,
+  }));
+
+  //user 에서 accessToken 을 가져오고
 
   const token = cookies.get('token');
+  //cookies 에서 token을 받아오고
 
   useEffect(() => {
     if (token) dispatch(setToken(token));
@@ -21,9 +27,6 @@ const HeaderContainer = () => {
     console.log('accessToken', accessToken);
   }, [accessToken, dispatch]);
 
-  const { user } = useSelector(state => ({
-    user: state.user.user,
-  }));
   const onLogout = () => {
     dispatch(logout());
   };

@@ -85,7 +85,7 @@ const RegisterForm = () => {
     if (auth) {
       navigate('/');
       try {
-        localStorage.setItem('auth', JSON.stringify(user));
+        localStorage.setItem('auth', JSON.stringify(auth));
       } catch (e) {
         console.log('localStorage is not working');
       }
