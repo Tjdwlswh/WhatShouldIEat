@@ -6,10 +6,11 @@ import { Cookies } from 'react-cookie';
 
 // const TEMP_SET_USER = 'user/TEMP_SET_USER'; //새로고침이후 임시로그인처리
 // const [CHECK, CHECK_SUCCESS, CHECK_FAILURE] = createRequestActionTypes('user/CHECK');
+const cookies = new Cookies();
 
-const LOGOUT = 'user/LOGOUT';
 const SET_TOKEN = 'user/SET_TOKEN';
 const [GET_USER, GET_USER_SUCCESS, GET_USER_FAILURE] = createRequestActionTypes('user/GET_USER');
+const [LOGOUT, LOGOUT_SUCCESS, LOGOUT_FAILURE] = createRequestActionTypes('user/LOGOUT');
 
 // export const check = createAction(CHECK);
 export const logout = createAction(LOGOUT);
@@ -28,11 +29,24 @@ export const getUser = createAction(GET_USER, token => token);
 //   }
 // }
 
-function* logoutSaga() {
+function* logoutSaga(action) {
   try {
-    yield call(authAPI.logout);
-  } catch (e) {
-    console.log(e);
+    yield call(authAPI.logout, action.payload);
+    yield put({ type: LOGOUT_SUCCESS });
+  } catch (err) {
+    console.log('logoutSaga: ', err);
+    yield put({ type: LOGOUT_FAILURE, payload: err });
+  }
+}
+
+function* logoutFailureSaga(action) {
+  try {
+    yield call(authAPI.refresh);
+    const renewToken = cookies.get('token');
+    yield call(authAPI.logout, renewToken);
+    yield put({ type: LOGOUT_SUCCESS });
+  } catch (error) {
+    yield put({ type: LOGOUT_SUCCESS });
   }
 }
 
@@ -46,7 +60,6 @@ function* getUserSaga(action) {
 }
 
 function* getUserFailureSaga(action) {
-  const cookies = new Cookies();
   try {
     yield call(authAPI.refresh);
     const renewToken = cookies.get('token');
@@ -63,6 +76,7 @@ export function* userSaga() {
   yield takeLatest(GET_USER, getUserSaga); // GET_USER 액션을 감지하여 getUserSaga를 실행
   yield takeLatest(GET_USER_FAILURE, getUserFailureSaga);
   yield takeLatest(LOGOUT, logoutSaga);
+  yield takeLatest(LOGOUT_FAILURE, logoutFailureSaga);
 }
 
 const initialState = {
@@ -96,7 +110,7 @@ const user = handleActions(
       user: null,
       checkError: error,
     }),
-    [LOGOUT]: state => ({
+    [LOGOUT_SUCCESS]: state => ({
       ...state,
       user: null,
       token: null,

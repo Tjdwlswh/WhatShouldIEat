@@ -1,4 +1,4 @@
-import { recipeService } from './userService.js';
+import { recipeService } from './recipeService.js';
 
 const recipeController = {
   //나의레시피 생성

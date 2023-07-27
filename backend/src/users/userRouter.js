@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import loginRequired from '../middlewares/passport/loginRequired.js';
 import { upload } from '../imgUploads/imgUploadRouter.js';
-import { userController } from './userControllers.js';
+import { userController } from './userController.js';
 import { followData } from '../middlewares/follow.js';
 import { imgUploadRouter } from '../imgUploads/imgUploadRouter.js';
 

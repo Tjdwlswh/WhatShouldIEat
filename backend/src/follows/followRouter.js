@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import loginRequired from '../middlewares/passport/loginRequired.js';
-import { userController } from '../users/userControllers.js';
+import { userController } from '../users/userController.js';
 
 const followRouter = Router();
 
