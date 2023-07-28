@@ -14,6 +14,7 @@ const UserModel = {
     });
     return user;
   },
+  
   findById: async followerId => {
     const user = await db.User.findOne({ where: { id: followerId } });
     return user;

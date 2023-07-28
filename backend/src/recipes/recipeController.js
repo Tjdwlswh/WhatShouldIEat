@@ -1,4 +1,5 @@
-import { recipeService } from './userService.js';
+import { recipeService } from '../recipes/recipeService.js';
+import { hashtagService } from '../hashtags/hashtagService.js';
 
 const recipeController = {
   //나의레시피 생성
@@ -14,11 +15,14 @@ const recipeController = {
         tags,
         foodImg,
       });
-
-      if (newUser.errMessage) {
-        throw new Error(newUser.errMessage);
+      //해시태그 파싱 저장
+      if (tags) {
+        const newHashtags = await hashtagService.addHashtags(tags);
       }
-      return res.status(201).json(newUser);
+      if (newRecipe.errMessage) {
+        throw new Error(newRecipe.errMessage);
+      }
+      return res.status(201).json(newRecipe, newHashtags);
     } catch (err) {
       next(err);
     }

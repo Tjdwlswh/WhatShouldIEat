@@ -7,7 +7,7 @@ const recipeRouter = Router();
 const imgUpload = upload.single('foodImg');
 
 //나의레시피로 생성
-recipeRouter.post('/myrecipes', imgUpload, recipeController);
+recipeRouter.post('/myrecipes', imgUpload, recipeController.postMyrecipe);
 
 //인공지능 레시피 생성
 recipeRouter.post('/create_recipe', loginRequired, recipeController.createRecipe);

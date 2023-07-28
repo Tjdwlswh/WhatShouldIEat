@@ -1,5 +1,5 @@
 import { Strategy, ExtractJwt } from 'passport-jwt';
-import { UserModel } from '../../users/userModels.js';
+import { UserModel } from '../../users/userModel.js';
 import JwtSign from '../../utils/jwtSign.js';
 import cookieParser from 'cookie-parser';
 

@@ -1,5 +1,5 @@
 import { Strategy } from 'passport-local';
-import { UserModel } from '../../users/userModels.js';
+import { UserModel } from '../../users/userModel.js';
 import JwtSign from '../../utils/jwtSign.js';
 import bcrypt from 'bcrypt';
 

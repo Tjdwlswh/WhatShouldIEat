@@ -1,5 +1,5 @@
 import bcrypt from 'bcrypt';
-import { UserModel } from './userModels.js';
+import { UserModel } from './userModel.js';
 import { ConflictException, NotFoundException } from '../libs/httpException.js';
 
 const userService = {

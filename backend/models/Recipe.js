@@ -18,7 +18,7 @@ class Recipe extends Sequelize.Model {
         },
         tags: {
           type: Sequelize.STRING(200),
-          allowNull: false,
+          allowNull: true,
         },
         foodImg: {
           type: Sequelize.STRING(200),
