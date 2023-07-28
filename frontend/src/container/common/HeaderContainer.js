@@ -25,7 +25,7 @@ const HeaderContainer = () => {
     user: state.user.user,
   }));
   const onLogout = () => {
-    dispatch(logout());
+    dispatch(logout(accessToken));
   };
 
   return <Header user={user} onLogout={onLogout} />;

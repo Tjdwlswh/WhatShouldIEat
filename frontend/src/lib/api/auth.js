@@ -23,12 +23,16 @@ const authAPI = {
     });
   },
 
-  logout: async () => {
-    return await client.post('/logout');
+  logout: async token => {
+    return await client.get('/logout', {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
   },
 
   refresh: async () => {
-    return await client.post('/refresh');
+    return await client.get('/refresh');
   },
 };
 
