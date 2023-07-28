@@ -40,11 +40,11 @@ class Recipe extends Sequelize.Model {
 
   static associate(db) {
     db.Recipe.belongsTo(db.User); // 레시피 모델에 userId컬럼 추가됨
-    db.Recipe.belongsToMany(db.User, { through: 'Like' }); 
+    db.Recipe.belongsToMany(db.User, { through: 'Like' }); // through 옵션: 생성할 모델 이름 지정
 
-    db.Recipe.belongsToMany(db.Hashtag, { through: 'RecipeHashtag' }); //post.getHashtags, post.addHashtags
+    db.Recipe.belongsToMany(db.Hashtag, { through: 'RecipeHashtag' }); 
     db.Recipe.hasMany(db.Comment);
-    db.Recipe.belongsToMany(db.Ingredient, { through: 'recipeIngredient' });
+    db.Recipe.belongsToMany(db.Ingredient, { through: 'RecipeIngredient' });
   }
 }
 

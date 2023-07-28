@@ -7,7 +7,6 @@ const recipeController = {
     try {
       const { foodname, ingredients, recipe, tags } = req.body;
       const foodImg = req.file ? req.file.filename : undefined;
-
       const newRecipe = await recipeService.addRecipe({
         foodname,
         ingredients,
@@ -15,14 +14,10 @@ const recipeController = {
         tags,
         foodImg,
       });
-      //해시태그 파싱 저장
-      if (tags) {
-        const newHashtags = await hashtagService.addHashtags(tags);
-      }
       if (newRecipe.errMessage) {
         throw new Error(newRecipe.errMessage);
       }
-      return res.status(201).json(newRecipe, newHashtags);
+      return res.status(201).json(newRecipe);
     } catch (err) {
       next(err);
     }
