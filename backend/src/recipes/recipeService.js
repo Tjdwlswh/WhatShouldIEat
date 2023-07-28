@@ -36,6 +36,15 @@ const recipeService = {
 
     return splittedText;
   },
+  myRecipe: async (userId) => {
+    const myRecipe = await recipeModel.findMyRecipe(userId);
+
+    if (!myRecipe) {
+      const errMessage = '생성된 나의 레시피가 없습니다!';
+      throw new Error(errMessage);
+    }
+    return myRecipe;
+  }
 };
 
 export { recipeService };

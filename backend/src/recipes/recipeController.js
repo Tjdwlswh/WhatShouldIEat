@@ -37,8 +37,10 @@ const recipeController = {
   //나의 레시피 조회
   getMyrecipe: async (req, res, next) => {
     try {
-      //유저 정보를 받아서
-      const user = req.user;
+      // 레시피 테이블에서 UserId가 req.user.id 인것만 조회
+      const userId = req.user.id;
+      const myRecipe = await recipeService.myRecipe(userId);
+      return res.status(200).json(myRecipe);
     } catch (err) {
       next(err);
     }
