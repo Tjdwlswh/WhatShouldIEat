@@ -13,6 +13,7 @@ recipeRouter.post('/myrecipes', loginRequired, imgUpload, recipeController.postM
 recipeRouter.post('/create_recipe', loginRequired, recipeController.createRecipe);
 
 //나의 레시피 조회
+recipeRouter.get('/myrecipes', loginRequired, recipeController.getMyrecipe);
 
 //추천레시피 조회
 

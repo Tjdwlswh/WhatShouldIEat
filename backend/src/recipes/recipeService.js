@@ -4,8 +4,8 @@ import { hashtagModel } from '../hashtags/hashtagModel.js';
 import { createRecipe } from '../libs/api/recipeAPI.js';
 
 const recipeService = {
-  addRecipe: async ({ foodname, ingredients, recipe, tags, foodImg }) => {
-    const newRecipe = { foodname, ingredients, recipe, tags, foodImg };
+  addRecipe: async ({ foodname, ingredients, recipe, tags, foodImg, UserId }) => {
+    const newRecipe = { foodname, ingredients, recipe, tags, foodImg, UserId };
     const createdRecipe = await recipeModel.create(newRecipe);
 
     //1.ingridints테이블에 재료들 파싱해서 저장
