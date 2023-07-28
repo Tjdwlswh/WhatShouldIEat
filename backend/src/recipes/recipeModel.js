@@ -8,6 +8,16 @@ const recipeModel = {
   findMyRecipe: async userId => {
     return await db.Recipe.findAll({ where: { UserId: userId } });
   },
+  findOne: async recipeId => {
+    return await db.Recipe.findOne({
+      where: { id: recipeId },
+      // include: [
+      //   { model: db.User, attributes: ['id', 'nickName'] },
+      //   { model: db.User, through: 'Likeit', as: 'Likers', attributes: ['id'] },
+      // ],
+      // order: ['createdAt', 'DESC'],
+    });
+  },
 };
 
 export { recipeModel };

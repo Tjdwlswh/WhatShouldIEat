@@ -12,6 +12,9 @@ recipeRouter.post('/myrecipes', loginRequired, imgUpload, recipeController.postM
 //인공지능 레시피 생성
 recipeRouter.post('/create_recipe', loginRequired, recipeController.createRecipe);
 
+// 레시피에 좋아요 추가
+recipeRouter.post('/:recipeId/like', loginRequired, recipeController.postLike)
+
 //나의 레시피 조회
 recipeRouter.get('/myrecipes', loginRequired, recipeController.getMyrecipe);
 

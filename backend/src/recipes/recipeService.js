@@ -36,7 +36,18 @@ const recipeService = {
 
     return splittedText;
   },
-  myRecipe: async (userId) => {
+  addLike: async (recipeId, userId) => {
+    const recipe = await recipeModel.findOne(recipeId);
+    if (!recipe) {
+      const errMessage = '레시피를 찾을 수가 없습니다.';
+      throw new Error(errMessage);
+    }
+    //레시피에 Liker추가
+    const likeadd = await recipe.addLiker(userId);
+    console.log('123', recipe);
+    return recipe;
+  },
+  myRecipe: async userId => {
     const myRecipe = await recipeModel.findMyRecipe(userId);
 
     if (!myRecipe) {
@@ -44,7 +55,7 @@ const recipeService = {
       throw new Error(errMessage);
     }
     return myRecipe;
-  }
+  },
 };
 
 export { recipeService };

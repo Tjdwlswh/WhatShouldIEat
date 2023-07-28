@@ -34,6 +34,18 @@ const recipeController = {
       next(err);
     }
   },
+  //레시피에 좋아요 추가
+  postLike: async (req, res, next) => {
+    try {
+      const recipeId = req.params.recipeId;
+      const userId = req.user.id;
+      const recipe = await recipeService.addLike(recipeId, userId);
+
+      res.status(201).json(recipe);
+    } catch (err) {
+      next(err);
+    }
+  },
   //나의 레시피 조회
   getMyrecipe: async (req, res, next) => {
     try {
