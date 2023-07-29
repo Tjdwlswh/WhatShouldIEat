@@ -69,11 +69,11 @@ const userController = {
   postFollow: async (req, res, next) => {
     try {
       //내가 팔로우 신청하면 내가 follower, 남은 following
-      console.log('req.user', req.user);
       const followerId = req.user.id; //나
       const followingId = req.params.id; //너
 
-      const result = await userService.addFollowing(followingId, followerId);
+      // ⬇팔로우 신청하면 클라에 보내줘야할 자료에 맞게 바꿀수도 있음.
+      await userService.addFollowing(followingId, followerId);
 
       res.status(200).json({ result: '팔로우를 시작합니다.' });
     } catch (err) {

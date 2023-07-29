@@ -50,10 +50,6 @@ const userService = {
   addFollowing: async (followingId, followerId) => {
     //내가 팔로우 신청하면 내가 follower, 남은 following
     const user = await UserModel.findById(followerId);
-    if (!followingId) {
-      const errMessage = '팔로우할 사용자를 확인해주세요.';
-      throw new Error(errMessage);
-    }
     if (!user) {
       const errorMessage = 'Follower not found.';
       throw new NotFoundException(errorMessage);
