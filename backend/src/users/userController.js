@@ -36,7 +36,7 @@ const userController = {
   logout: async (req, res, next) => {
     try {
       res.clearCookie();
-      const email = req.currentUserEmail;
+      const { email } = req.user;
       await userService.clearTokenInDB(email);
       res.status(200).json({ message: '로그아웃 성공' });
     } catch (err) {
@@ -54,7 +54,7 @@ const userController = {
 
   getUser: async (req, res, next) => {
     try {
-      const email = req.currentUserEmail;
+      const { email } = req.user;
       const user = await userService.user({ email });
       res.status(200).json(user);
     } catch (err) {

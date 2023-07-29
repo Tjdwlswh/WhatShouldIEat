@@ -55,7 +55,11 @@ function* getUserSaga(action) {
     const response = yield call(authAPI.getUser, action.payload); // authAPI.getUser.getUser에 토큰을 전달
     yield put({ type: GET_USER_SUCCESS, payload: response.data }); // 성공 액션을 디스패치
   } catch (error) {
-    yield put({ type: GET_USER_FAILURE, payload: error }); // 에러 액션을 디스패치
+    if (error.response.data.error === 'TokenExpiredError: jwt expired') {
+      yield put({ type: GET_USER_FAILURE, payload: error }); // 에러 액션을 디스패치
+    } else {
+      console.log('회원정보 불러오기 실패');
+    }
   }
 }
 

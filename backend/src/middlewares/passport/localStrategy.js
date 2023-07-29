@@ -17,7 +17,7 @@ const LocalStrategy = new Strategy(
         const isMatch = await bcrypt.compare(password, user.password);
         if (isMatch) {
           const { token, refreshToken } = JwtSign({ email, provider });
-          await UserModel.update({ email, refreshToken }, email);
+          await UserModel.update({ refreshToken }, email);
           user.token = token;
           user.refreshToken = refreshToken;
           return done(null, user);

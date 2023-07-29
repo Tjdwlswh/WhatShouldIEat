@@ -15,7 +15,6 @@ const authAPI = {
   },
 
   getUser: async token => {
-    console.log('getUser', token);
     return await client.get('/user', {
       headers: {
         Authorization: `Bearer ${token}`,

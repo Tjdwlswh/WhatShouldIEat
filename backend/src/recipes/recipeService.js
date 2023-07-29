@@ -1,7 +1,7 @@
 import { recipeModel } from './recipeModel.js';
 import { ingredientModel } from '../ingredients/ingredientModel.js';
 import { hashtagModel } from '../hashtags/hashtagModel.js';
-import { createRecipe } from '../libs/api/recipeAPI.js';
+import { getAiRecipe } from '../libs/api/recipeAPI.js';
 
 const recipeService = {
   addRecipe: async ({ foodname, ingredients, recipe, tags, foodImg, UserId }) => {
@@ -22,7 +22,7 @@ const recipeService = {
 
     return createdRecipe;
   },
-  create: async ({ type, ingredients }) => {
+  createRecipe: async ({ type, ingredients }) => {
     let ingredient = `재료: $${ingredients.join('|')}`;
 
     if (type === 'fixed') {
@@ -30,7 +30,7 @@ const recipeService = {
     } else if (type === 'flexible') {
       ingredient += '|';
     }
-    const { generated_text } = await createRecipe(ingredient);
+    const { generated_text } = await getAiRecipe(ingredient);
     const splittedText = generated_text.split(/(재료: | 레시피: | 요리이름: )/);
     print(splittedText);
 

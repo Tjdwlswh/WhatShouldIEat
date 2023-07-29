@@ -24,11 +24,11 @@ const recipeController = {
     }
   },
   //인공지능 레시피 생성 요청
-  createRecipe: async (req, res, next) => {
+  createAiRecipe: async (req, res, next) => {
     try {
-      const { type, ingredients } = req.body;
+      const { type = 'flexible', ingredients } = req.body;
       console.log('ingredients', ingredients);
-      const recipe = await recipeService.create({ type, ingredients });
+      const recipe = await recipeService.getAiRecipe({ type, ingredients });
       res.status(200).json(recipe);
     } catch (err) {
       next(err);

@@ -15,7 +15,29 @@ userRouter.use(followData);
 userRouter.post('/auth/register', imgUpload, userController.register);
 
 //local로그인
-userRouter.post('/auth/login', userController.login);
+userRouter.post(
+  '/auth/login',
+  /*  #swagger.auto = false
+      #swagger.requestBody = {
+        content: {
+          "application/json": {
+            schema: { 
+              "type": "object",
+              "properties": {
+                "email": {
+                  "example": "test@test.com"
+                },
+                "password": {
+                  "example": "testtest1234"
+                }
+              }
+            }
+          }
+        }
+      }
+  */
+  userController.login,
+);
 
 //카카오 로그인
 userRouter.get('/auth/kakao/login', userController.kakaoLogin);
