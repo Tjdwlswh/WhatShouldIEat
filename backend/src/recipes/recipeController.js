@@ -27,8 +27,7 @@ const recipeController = {
   createAiRecipe: async (req, res, next) => {
     try {
       const { type = 'flexible', ingredients } = req.body;
-      console.log('ingredients', ingredients);
-      const recipe = await recipeService.getAiRecipe({ type, ingredients });
+      const recipe = await recipeService.createRecipe({ type, ingredients });
       res.status(200).json(recipe);
     } catch (err) {
       next(err);

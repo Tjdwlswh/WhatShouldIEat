@@ -11,10 +11,10 @@ const imgUpload = upload.single('profileImg');
 // 모든 템플릿에서 사용하는 라우터용 미들웨어
 userRouter.use(followData);
 
-//회원가입
+// 회원가입
 userRouter.post('/auth/register', imgUpload, userController.register);
 
-//local로그인
+// local로그인
 userRouter.post(
   '/auth/login',
   /*  #swagger.auto = false
@@ -39,7 +39,7 @@ userRouter.post(
   userController.login,
 );
 
-//카카오 로그인
+// 카카오 로그인
 userRouter.get('/auth/kakao/login', userController.kakaoLogin);
 userRouter.get('/auth/kakao/callback', userController.kakaoCallback);
 
