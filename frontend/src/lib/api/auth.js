@@ -15,7 +15,6 @@ const authAPI = {
   },
 
   getUser: async token => {
-    console.log('getUser', token);
     return await client.get('/user', {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -23,12 +22,16 @@ const authAPI = {
     });
   },
 
-  logout: async () => {
-    return await client.post('/logout');
+  logout: async token => {
+    return await client.get('/logout', {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
   },
 
   refresh: async () => {
-    return await client.post('/refresh');
+    return await client.get('/refresh');
   },
 };
 

@@ -1,5 +1,5 @@
 import { Strategy } from 'passport-kakao';
-import { UserModel } from '../../users/userModels.js';
+import { UserModel } from '../../users/userModel.js';
 import JwtSign from '../../utils/jwtSign.js';
 
 const KakaoStrategy = new Strategy(

@@ -22,7 +22,7 @@ class Hashtag extends Sequelize.Model {
   }
 
   static associate(db) {
-    db.Hashtag.belongsToMany(db.Recipe, {through: 'RecipeHashtag'});
+    db.Hashtag.belongsToMany(db.Recipe, { through: 'RecipeHashtag' });
   }
 }
 

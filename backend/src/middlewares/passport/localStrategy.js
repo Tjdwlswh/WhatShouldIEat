@@ -1,5 +1,5 @@
 import { Strategy } from 'passport-local';
-import { UserModel } from '../../users/userModels.js';
+import { UserModel } from '../../users/userModel.js';
 import JwtSign from '../../utils/jwtSign.js';
 import bcrypt from 'bcrypt';
 
@@ -17,7 +17,7 @@ const LocalStrategy = new Strategy(
         const isMatch = await bcrypt.compare(password, user.password);
         if (isMatch) {
           const { token, refreshToken } = JwtSign({ email, provider });
-          await UserModel.update({ email, refreshToken }, email);
+          await UserModel.update({ refreshToken }, email);
           user.token = token;
           user.refreshToken = refreshToken;
           return done(null, user);

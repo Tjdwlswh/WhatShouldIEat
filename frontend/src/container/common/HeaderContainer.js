@@ -13,19 +13,18 @@ const HeaderContainer = () => {
 
   useEffect(() => {
     if (token) dispatch(setToken(token));
-    console.log('setToken', token);
   }, [dispatch, token]);
 
   useEffect(() => {
     if (accessToken) dispatch(getUser(accessToken));
-    console.log('accessToken', accessToken);
   }, [accessToken, dispatch]);
 
   const { user } = useSelector(state => ({
     user: state.user.user,
   }));
+
   const onLogout = () => {
-    dispatch(logout());
+    dispatch(logout(accessToken));
   };
 
   return <Header user={user} onLogout={onLogout} />;
