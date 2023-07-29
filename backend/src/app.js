@@ -2,6 +2,8 @@ import express from 'express';
 import cookieParser from 'cookie-parser';
 import morgan from 'morgan';
 import cors from 'cors';
+import swaggerUi from 'swagger-ui-express';
+import swaggerFile from '../swagger-output.json' assert { type: 'json' };
 import { initializePassport } from './middlewares/passport/index.js';
 import { sequelize } from '../models/index.js';
 import { errorMiddleWare } from './middlewares/errorMiddleWare.js';
@@ -42,6 +44,7 @@ app.get('/', (req, res) => {
 // app.use('/auth', userRouter);
 
 app.use([imgUploadRouter, userRouter, followRouter, recipeRouter]);
+app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
 app.use(errorMiddleWare);
 
