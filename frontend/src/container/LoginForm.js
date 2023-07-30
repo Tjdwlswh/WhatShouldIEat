@@ -2,7 +2,7 @@
 //로그인, 회원가입후 뒤로가기 했을때 input값 초기화
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { changeField, initializeForm, login, clearAuth } from '../modules/auth';
+import { changeField, initializeForm, login } from '../modules/auth';
 import AuthForm from '../components/auth/AuthForm';
 import { useNavigate } from 'react-router-dom';
 // import { check } from '../modules/user';
@@ -45,12 +45,10 @@ const LoginForm = () => {
       return;
     }
     if (auth) {
-      console.log('로그인성공');
-      navigate('/');
-      dispatch(clearAuth());
+      console.log('로그인 성공');
       // dispatch(check()); //쿠키로
     }
-  }, [auth, authError, navigate, dispatch]);
+  }, [auth, authError, navigate]);
 
   return (
     <AuthForm
