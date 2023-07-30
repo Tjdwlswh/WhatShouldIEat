@@ -1,9 +1,8 @@
 import styled from 'styled-components';
 import palette from '../../lib/styles/palette';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useEffect } from 'react';
-import { useNavigate } from '../../../node_modules/react-router-dom/dist/index';
 
 //레이아웃 담당, 회색 배경, 중앙에 흰 div 박스, 홈 경로 /
 
