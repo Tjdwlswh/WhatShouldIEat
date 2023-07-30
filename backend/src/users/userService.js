@@ -31,11 +31,21 @@ const userService = {
     return UserModel.create(newUser);
   },
 
-  user: async ({ email }) => {
+  getUser: async ({ email }) => {
     // 유저 정보 조회
     const { nickName, profileImg } = await UserModel.findByEmail(email);
     const user = { email, nickName, profileImg };
     return user;
+  },
+
+  editUser: async ({ data, email }) => {
+    const editedUser = await UserModel.update(data, email);
+    return editedUser;
+  },
+
+  deleteUser: async ({ email }) => {
+    const removedUser = await UserModel.delete(email);
+    return removedUser;
   },
 
   clearTokenInDB: async email => {

@@ -48,7 +48,13 @@ userRouter.get('/auth/google/login', userController.googleLogin);
 userRouter.get('/auth/google/callback', userController.googleCallback);
 
 // user 정보
-userRouter.get('/auth/user', loginRequired, userController.getUser);
+userRouter.get('/auth/user', loginRequired, userController.getUserInfo);
+
+// user 정보수정
+userRouter.put('/auth/user', loginRequired, userController.editUserInfo);
+
+// 회원탈퇴
+userRouter.delete('/auth/user', loginRequired, userController.deleteAccount);
 
 // refrechToken 검증
 userRouter.get('/auth/refresh', userController.refreshToken);

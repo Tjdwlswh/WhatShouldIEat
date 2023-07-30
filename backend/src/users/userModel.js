@@ -14,7 +14,7 @@ const UserModel = {
     });
     return user;
   },
-  
+
   findById: async followerId => {
     const user = await db.User.findOne({ where: { id: followerId } });
     return user;
@@ -25,18 +25,36 @@ const UserModel = {
     return user;
   },
 
-  update: async (value, email) => {
-    const updatedUser = await db.User.update(value, { where: { email } });
+  update: async (data, email) => {
+    const updatedUser = await db.User.update(data, {
+      where: { email },
+      hooks: {
+        beforeUpdate: (instance, options) => {
+          // null값을 제외하고 업데이트
+          for (const [key, value] of Object.entries(data)) {
+            if (value === undefined) {
+              delete instance.dataValues[key];
+            }
+          }
+        },
+      },
+    });
     return updatedUser;
   },
 
   upsert: async (values, email) => {
+    // 유저 조회 후 없다면 생성, 있다면 업데이트
     try {
       const user = await db.User.findOne({ where: { email } });
       return await user.update(values);
     } catch (err) {
       return await db.User.create(values);
     }
+  },
+
+  delete: async email => {
+    const removedUser = await db.User.destroy({ where: { email } });
+    return removedUser;
   },
 };
 
