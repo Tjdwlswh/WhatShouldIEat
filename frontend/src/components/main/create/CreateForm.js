@@ -3,7 +3,7 @@ import Button from '../../common/Button';
 import palette from '../../../lib/styles/palette';
 import React, { useState, useCallback, useEffect } from 'react';
 import CreateActionButtonContainer from '../../../container/create/Actionbutton';
-//임시적으로 만들어 놓은 style
+
 
 const CreateBlock = styled.div`
   display: flex;
@@ -66,7 +66,16 @@ const Ingredient = styled.div`
   min-height: 300px;
 `;
 
-const checkInput = styled.div`
+const CheckInputbox = styled.div`
+  padding: 1rem;
+  margin-top: 3rem;
+  width: 100%;
+
+ .check{ margin-right : 0.5rem;};
+
+ label{
+  margin-right: 1rem;
+ }
 
 `
 
@@ -93,6 +102,7 @@ const TagList = React.memo(({ tags, onRemove }) => (
 const CreateForm = ({ tags, onChangeTags, onPublish }) => {
   const [input, setInput] = useState('');
   const [localTags, setLocalTags] = useState([]);
+  const [check, setCheck] = useState(true)
 
   const insertTag = useCallback(
     tag => {
@@ -152,7 +162,17 @@ const CreateForm = ({ tags, onChangeTags, onPublish }) => {
             onChange={onChange}
           />
           <Button type="submit">추가 버튼</Button>
-          <input type="checkbox"></input>
+         
+          <CheckInputbox>
+          <label>
+          <input type="checkbox" className='check'></input>
+          재료 고정
+          </label>
+          <label>
+          <input type="checkbox" className='check'></input>
+          재료 추가 기능
+          </label>
+          </CheckInputbox>
         </form>
       </div>
     </CreateBlock>

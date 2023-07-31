@@ -28,6 +28,7 @@ const CreateActionButtonContainer = () => {
     if (post) {
       const { _id, user } = post;
       navigate(`/${user.email}/${_id}`);
+      //nickname 으로 변경 가능
     }
     if (postError) {
       console.log(postError);
