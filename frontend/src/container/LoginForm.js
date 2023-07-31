@@ -8,7 +8,6 @@ import { useNavigate } from 'react-router-dom';
 // import { check } from '../modules/user';
 
 const LoginForm = () => {
-  console.log('process.env.REACT_APP_DEV_BACK_URL', process.env.REACT_APP_DEV_BACK_URL);
   const [error, setError] = useState(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -46,8 +45,8 @@ const LoginForm = () => {
       return;
     }
     if (auth) {
-      console.log('로그인성공');
-      navigate('/');
+      console.log('로그인 성공');
+      // dispatch(check()); //쿠키로
     }
   }, [auth, authError, navigate]);
 

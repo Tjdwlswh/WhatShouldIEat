@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 import palette from '../../lib/styles/palette';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
 
 //레이아웃 담당, 회색 배경, 중앙에 흰 div 박스, 홈 경로 /
 
@@ -33,6 +35,13 @@ const WhiteBox = styled.div`
 `;
 
 const AuthTemplate = ({ children }) => {
+  const navigate = useNavigate();
+  const user = useSelector(state => state.user.user);
+  useEffect(() => {
+    if (user) {
+      navigate('/');
+    }
+  }, [navigate, user]);
   return (
     <AuthTemplateBlock>
       <WhiteBox>

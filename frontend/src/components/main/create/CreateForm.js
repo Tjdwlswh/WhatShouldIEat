@@ -63,7 +63,12 @@ const Ingredient = styled.div`
   font-weight: bold;
   width: 100%;
   margin-top: 1rem;
+  min-height: 300px;
 `;
+
+const checkInput = styled.div`
+
+`
 
 // 하나만 랜더링 되도록 함
 
@@ -73,7 +78,7 @@ const TagItem = React.memo(({ tag, onRemove }) => (
       onRemove(tag);
     }}
   >
-    #{tag}
+    {tag}
   </Tag>
 ));
 
@@ -147,6 +152,7 @@ const CreateForm = ({ tags, onChangeTags, onPublish }) => {
             onChange={onChange}
           />
           <Button type="submit">추가 버튼</Button>
+          <input type="checkbox"></input>
         </form>
       </div>
     </CreateBlock>

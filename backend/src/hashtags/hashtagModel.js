@@ -5,12 +5,12 @@ const hashtagModel = {
   findOrCreate: async hashtags => {
     const result = await Promise.all(
       hashtags.map(tag => {
-        return db.Hashtag.findeOrCreate({
+        return db.Hashtag.findOrCreate({
           where: { tag: tag.slice(1).toLowerCase() },
         });
       }),
     );
-    return result;
+    return result;  
   },
 };
 

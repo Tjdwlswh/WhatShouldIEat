@@ -41,9 +41,10 @@ const Spacer = styled.div`
 const UserInfo = styled.div`
   font-weight: 800;
   margin-right: 1rem;
+  cursor: pointer;
 `;
 
-const Header = ({ user, onLogout }) => {
+const Header = ({ user, onLogout, handleEmailClick }) => {
   return (
     <>
       <HeaderBlock>
@@ -65,7 +66,7 @@ const Header = ({ user, onLogout }) => {
           </Link>
           {user ? (
             <div className="right">
-              <UserInfo>{user.email}</UserInfo>
+              <UserInfo onClick={handleEmailClick}>{user.email}</UserInfo>
               <Button onClick={onLogout}>로그아웃</Button>
             </div>
           ) : (

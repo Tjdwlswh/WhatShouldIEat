@@ -13,7 +13,7 @@ export function createRequestSaga(type, request) {
 
   return function* (action) {
     //action은 register(username, password) or login(username, password)
-    yield put(startLoading(type));
+    yield put(startLoading());
     try {
       const response = yield call(request, action.payload);
       yield put({
@@ -27,6 +27,6 @@ export function createRequestSaga(type, request) {
         error: true,
       });
     }
-    yield put(finishLoading(type));
+    yield put(finishLoading());
   };
 }

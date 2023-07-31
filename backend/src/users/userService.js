@@ -31,11 +31,21 @@ const userService = {
     return UserModel.create(newUser);
   },
 
-  user: async ({ email }) => {
+  getUser: async ({ email }) => {
     // 유저 정보 조회
     const { nickName, profileImg } = await UserModel.findByEmail(email);
     const user = { email, nickName, profileImg };
     return user;
+  },
+
+  editUser: async ({ data, email }) => {
+    const editedUser = await UserModel.update(data, email);
+    return editedUser;
+  },
+
+  deleteUser: async ({ email }) => {
+    const removedUser = await UserModel.delete(email);
+    return removedUser;
   },
 
   clearTokenInDB: async email => {
@@ -50,10 +60,6 @@ const userService = {
   addFollowing: async (followingId, followerId) => {
     //내가 팔로우 신청하면 내가 follower, 남은 following
     const user = await UserModel.findById(followerId);
-    if (!followingId) {
-      const errMessage = '팔로우할 사용자를 확인해주세요.';
-      throw new Error(errMessage);
-    }
     if (!user) {
       const errorMessage = 'Follower not found.';
       throw new NotFoundException(errorMessage);

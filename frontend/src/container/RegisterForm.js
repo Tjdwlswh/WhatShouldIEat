@@ -69,9 +69,10 @@ const RegisterForm = () => {
     if (auth) {
       console.log('회원가입 성공');
       console.log(auth);
+      navigate('/');
       // dispatch(check());
     }
-  }, [auth, authError, dispatch]);
+  }, [auth, authError, navigate]);
 
   // useEffect(() => {
   //   if (auth) {
@@ -79,17 +80,6 @@ const RegisterForm = () => {
   //     console.log(auth);
   //   }
   // }, [auth]);
-
-  useEffect(() => {
-    if (auth) {
-      navigate('/');
-      try {
-        localStorage.setItem('auth', JSON.stringify(auth.email));
-      } catch (e) {
-        console.log('localStorage is not working');
-      }
-    }
-  }, [navigate, auth]);
 
   return (
     <AuthForm type="register" form={form} onChange={onChange} onSubmit={onSubmit} error={error} />
