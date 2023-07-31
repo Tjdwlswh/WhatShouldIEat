@@ -8,7 +8,6 @@ import authAPI from '../lib/api/auth';
 
 const CHANGE_FIELD = 'auth/CHANGE_FIELD';
 const INITIALIZE_FORM = 'auth/INITIALIZE_FORM';
-const CLEAR_AUTH = 'auth/CLEAR_AUTH';
 
 const [REGISTER, REGISTER_SUCCESS, REGISTER_FAILURE] = createRequestActionTypes('auth/REGISTER');
 
@@ -33,8 +32,6 @@ export const login = createAction(LOGIN, ({ email, password }) => ({
   email,
   password,
 }));
-
-export const clearAuth = createAction(CLEAR_AUTH);
 
 const registerSaga = createRequestSaga(REGISTER, authAPI.register);
 const loginSaga = createRequestSaga(LOGIN, authAPI.login);
@@ -66,6 +63,8 @@ const auth = handleActions(
       }),
     [INITIALIZE_FORM]: (state, { payload: form }) => ({
       ...state,
+      auth: null,
+      authError: null,
       [form]: initialState[form],
     }),
     [REGISTER_SUCCESS]: (state, { payload: auth }) => ({
@@ -85,11 +84,6 @@ const auth = handleActions(
     [LOGIN_FAILURE]: (state, { payload: error }) => ({
       ...state,
       authError: error,
-    }),
-    [CLEAR_AUTH]: state => ({
-      ...state,
-      authError: null,
-      auth: null,
     }),
   },
   initialState,

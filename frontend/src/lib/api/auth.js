@@ -1,21 +1,16 @@
-import axios from 'axios';
-
-const client = axios.create({
-  baseURL: `${process.env.REACT_APP_DEV_BACK_URL}/auth`,
-  withCredentials: true,
-});
+import client from './client';
 
 const authAPI = {
   login: async ({ email, password }) => {
-    return await client.post('/login', { email, password });
+    return await client.post('/auth/login', { email, password });
   },
 
   register: async ({ email, password, nickName }) => {
-    return await client.post('/register', { email, password, nickName });
+    return await client.post('/auth/register', { email, password, nickName });
   },
 
   getUser: async token => {
-    return await client.get('/user', {
+    return await client.get('/auth/user', {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -23,7 +18,7 @@ const authAPI = {
   },
 
   logout: async token => {
-    return await client.get('/logout', {
+    return await client.get('/auth/logout', {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -31,7 +26,7 @@ const authAPI = {
   },
 
   refresh: async () => {
-    return await client.get('/refresh');
+    return await client.get('/auth/refresh');
   },
 };
 

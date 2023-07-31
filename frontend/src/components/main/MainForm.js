@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import palette from '../../lib/styles/palette';
 import Button from '../common/Button';
+import { accentColor } from '../../constants/config';
 
 const StyleImgBox = styled.div`
   flex: 0 0 auto;
@@ -168,9 +169,8 @@ const WhiteInput = styled.input`
 `;
 const InputButton = styled.button`
   width: 5rem;
-  color: #fffefe;
-  background-color: #f17228;
-  border-color: #f17228;
+  color: white;
+  background-color: ${accentColor};
   display: inline-block;
   font-weight: 700;
   line-height: 1.5;

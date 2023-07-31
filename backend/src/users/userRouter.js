@@ -11,10 +11,10 @@ const imgUpload = upload.single('profileImg');
 // 모든 템플릿에서 사용하는 라우터용 미들웨어
 userRouter.use(followData);
 
-//회원가입
+// 회원가입
 userRouter.post('/auth/register', imgUpload, userController.register);
 
-//local로그인
+// local로그인
 userRouter.post(
   '/auth/login',
   /*  #swagger.auto = false
@@ -39,7 +39,7 @@ userRouter.post(
   userController.login,
 );
 
-//카카오 로그인
+// 카카오 로그인
 userRouter.get('/auth/kakao/login', userController.kakaoLogin);
 userRouter.get('/auth/kakao/callback', userController.kakaoCallback);
 
@@ -48,7 +48,13 @@ userRouter.get('/auth/google/login', userController.googleLogin);
 userRouter.get('/auth/google/callback', userController.googleCallback);
 
 // user 정보
-userRouter.get('/auth/user', loginRequired, userController.getUser);
+userRouter.get('/auth/user', loginRequired, userController.getUserInfo);
+
+// user 정보수정
+userRouter.put('/auth/user', loginRequired, userController.editUserInfo);
+
+// 회원탈퇴
+userRouter.delete('/auth/user', loginRequired, userController.deleteAccount);
 
 // refrechToken 검증
 userRouter.get('/auth/refresh', userController.refreshToken);

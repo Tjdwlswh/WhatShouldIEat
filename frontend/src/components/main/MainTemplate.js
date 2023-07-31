@@ -4,11 +4,12 @@
 
 import styled from 'styled-components';
 import Responsive from '../common/Responsive';
+import { mainColor } from '../../constants/config';
 
 const MainTemplateBlock = styled.section`
   position: relative;
   display: block;
-  background-color: #ffb30e !important;
+  background-color: ${mainColor} !important;
   padding-top: 3rem;
   padding-bottom: 3rem;
   overflow: hidden;

@@ -1,6 +1,8 @@
-import styled, { css } from 'styled-components';
+import { useDispatch } from 'react-redux';
+import styled from 'styled-components';
+import { startLoading } from '../../modules/loading';
 
-const buttonStyle = css`
+const GoogleButton = styled.button`
   border: none;
   border-radius: 4px;
   background-color: #ffffff;
@@ -30,12 +32,10 @@ const Image = styled.img`
 `;
 
 const GoogleLoginButton = () => {
-  const GoogleButton = styled.button`
-    ${buttonStyle}
-  `;
-
+  const dispatch = useDispatch();
   const handleClick = e => {
     e.preventDefault();
+    dispatch(startLoading());
     window.location.href = 'http://localhost:5000/auth/google/login';
   };
 

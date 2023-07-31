@@ -23,18 +23,22 @@ const recipeService = {
     return createdRecipe;
   },
   createRecipe: async ({ type, ingredients }) => {
-    let ingredient = `재료: $${ingredients.join('|')}`;
+    let ingredient = `재료: ${ingredients.join('|')}`;
 
     if (type === 'fixed') {
       ingredient += ' 요리이름:';
     } else if (type === 'flexible') {
       ingredient += '|';
     }
-    const { generated_text } = await getAiRecipe(ingredient);
+    const { data } = await getAiRecipe(ingredient);
+    const { generated_text } = data[0];
     const splittedText = generated_text.split(/(재료: | 레시피: | 요리이름: )/);
-    print(splittedText);
-
-    return splittedText;
+    const recipe = {
+      요리이름: splittedText[4],
+      재료: splittedText[2],
+      레시피: splittedText[6],
+    };
+    return recipe;
   },
   addLike: async (recipeId, userId) => {
     const recipe = await recipeModel.findOne(recipeId);
