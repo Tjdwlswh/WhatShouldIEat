@@ -86,6 +86,7 @@ export function* userSaga() {
 
 const initialState = {
   user: null,
+  checkError:null,
   token: null,
   checkError : null,
 };

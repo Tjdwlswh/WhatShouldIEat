@@ -27,7 +27,6 @@ const HeaderContainer = () => {
 
   const onLogout = () => {
     dispatch(logout(accessToken));
-
   };
 
   const handleEmailClick = e => {
