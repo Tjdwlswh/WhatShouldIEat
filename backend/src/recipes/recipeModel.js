@@ -12,9 +12,10 @@ const recipeModel = {
         {
           model: db.User,
           as: 'Likers',
-          attributes: ['id'], 
+          attributes: ['id'],
         },
       ],
+      order: [['createdAt', 'DESC']],
     });
   },
   findOne: async recipeId => {
