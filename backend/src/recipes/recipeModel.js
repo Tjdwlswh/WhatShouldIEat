@@ -21,11 +21,10 @@ const recipeModel = {
   findOne: async recipeId => {
     return await db.Recipe.findOne({
       where: { id: recipeId },
-      // include: [
-      //   { model: db.User, attributes: ['id', 'nickName'] },
-      //   { model: db.User, through: 'Likeit', as: 'Likers', attributes: ['id'] },
-      // ],
-      // order: ['createdAt', 'DESC'],
+      include: [
+        { model: db.User, attributes: ['nickName'] },
+        { model: db.User, as: 'Likers', attributes: ['id'] },
+      ],
     });
   },
 };

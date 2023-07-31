@@ -60,12 +60,19 @@ const recipeService = {
     //Likers배열 -> likeCount로
     const recipesJSON = myRecipe.map(recipe => {
       const recipeData = recipe.toJSON();
-      recipeData.likeCount = recipe.Likers.length; 
-      delete recipeData.Likers; 
+      recipeData.likeCount = recipe.Likers.length;
+      delete recipeData.Likers;
       return recipeData;
     });
 
     return recipesJSON;
+  },
+  getRecipe: async recipeId => {
+    const recipe = await recipeModel.findOne(recipeId);
+    const recipeData = recipe.toJSON();
+    recipeData.likeCount = recipe.Likers.length;
+    delete recipeData.Likers;
+    return recipeData;
   },
 };
 

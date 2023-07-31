@@ -39,7 +39,7 @@ const recipeController = {
       const recipeId = req.params.recipeId;
       const userId = req.user.id;
       const likePlusOne = await recipeService.addLike(recipeId, userId);
-      
+
       res.status(201).json(likePlusOne);
     } catch (err) {
       next(err);
@@ -51,12 +51,22 @@ const recipeController = {
       // 레시피 테이블에서 UserId가 req.user.id 인것만 조회
       const userId = req.user.id;
       const myRecipe = await recipeService.myRecipe(userId);
-      
+
       return res.status(200).json(myRecipe);
     } catch (err) {
       next(err);
     }
   },
   //상세 레피시 조회
+  getRecipe: async (req, res, next) => {
+    try {
+      const recipeId = req.params.recipeId;
+      const recipe = await recipeService.getRecipe(recipeId);
+      
+      return res.status(200).json(recipe);
+    } catch (err) {
+      next(err);
+    }
+  },
 };
 export { recipeController };

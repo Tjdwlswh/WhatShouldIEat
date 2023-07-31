@@ -18,6 +18,9 @@ recipeRouter.post('/:recipeId/like', loginRequired, recipeController.postLike);
 //나의 레시피 목록조회
 recipeRouter.get('/myrecipes', loginRequired, recipeController.getMyrecipe);
 
+//상세 레시피 조회
+recipeRouter.get('/recipes/:recipeId', recipeController.getRecipe);
+
 //추천레시피 조회
 
 //나의레시피 수정
