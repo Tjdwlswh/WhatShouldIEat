@@ -35,7 +35,7 @@ const recipeService = {
     const splittedText = generated_text.split(/(재료: | 레시피: | 요리이름: )/);
     const recipe = {
       요리이름: splittedText[4],
-      재료: splittedText[2],
+      재료: splittedText[2].split('|'),
       레시피: splittedText[6],
     };
     return recipe;
