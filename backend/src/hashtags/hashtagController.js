@@ -1,7 +1,5 @@
-import {hashtagService} from './hashtagService.js';
+import { hashtagService } from './hashtagService.js';
 
-const hashtagController = {
-  //create: 
-}
+const hashtagController = {};
 
-export {hashtagController};
+export { hashtagController };
