@@ -11,11 +11,10 @@ const RegisterForm = () => {
   const [error, setError] = useState(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { form, auth, authError, user } = useSelector(state => ({
+  const { form, auth, authError } = useSelector(state => ({
     form: state.auth.register,
     auth: state.auth.auth,
     authError: state.auth.authError,
-    user: state.user.user,
   }));
   const onChange = e => {
     const { value, name } = e.target;
@@ -85,7 +84,7 @@ const RegisterForm = () => {
     if (auth) {
       navigate('/');
       try {
-        localStorage.setItem('auth', JSON.stringify(user));
+        localStorage.setItem('auth', JSON.stringify(auth.email));
       } catch (e) {
         console.log('localStorage is not working');
       }

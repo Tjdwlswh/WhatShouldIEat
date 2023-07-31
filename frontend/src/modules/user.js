@@ -54,6 +54,7 @@ function* getUserFailureSaga(action) {
     yield put(getUser(renewToken));
   } catch (error) {
     yield put(logout());
+    localStorage.removeItem('user');
   }
 }
 
@@ -68,6 +69,7 @@ export function* userSaga() {
 const initialState = {
   user: null,
   token: null,
+  checkError : null,
 };
 
 const user = handleActions(
@@ -75,6 +77,7 @@ const user = handleActions(
     [SET_TOKEN]: (state, { payload: token }) => ({
       ...state,
       token,
+      
     }),
     // [CHECK_SUCCESS]: (state, { payload: user }) => ({
     //   ...state,

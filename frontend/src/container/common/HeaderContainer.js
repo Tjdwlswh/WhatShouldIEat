@@ -26,6 +26,11 @@ const HeaderContainer = () => {
   }));
   const onLogout = () => {
     dispatch(logout());
+      try {
+          localStorage.removeItem('auth');
+       } catch (e) {
+         console.log('localStorage is not working');
+        }
   };
 
   return <Header user={user} onLogout={onLogout} />;

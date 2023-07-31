@@ -48,7 +48,6 @@ const LoginForm = () => {
     if (auth) {
       console.log('로그인성공');
       navigate('/');
-      // dispatch(check()); //쿠키로
     }
   }, [auth, authError, navigate]);
 
