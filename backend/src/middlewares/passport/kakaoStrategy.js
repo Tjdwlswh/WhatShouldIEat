@@ -11,7 +11,7 @@ const KakaoStrategy = new Strategy(
     try {
       const email = profile._json.kakao_account.email;
       const provider = profile.provider;
-      const nickName = profile._json.properties.nickname;
+      const nickName = email;
       const profileImg = profile._json.properties.profile_image;
 
       const { token, refreshToken } = JwtSign({ email, provider });
@@ -21,6 +21,7 @@ const KakaoStrategy = new Strategy(
           nickName,
           provider,
           profileImg,
+          socialToken: accessToken,
           refreshToken,
         },
         email,
