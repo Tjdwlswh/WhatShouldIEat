@@ -2,6 +2,7 @@ import { recipeModel } from './recipeModel.js';
 import { ingredientModel } from '../ingredients/ingredientModel.js';
 import { hashtagModel } from '../hashtags/hashtagModel.js';
 import { getAiRecipe } from '../libs/api/recipeAPI.js';
+import { commentModel } from '../comments/commentModel.js';
 
 const recipeService = {
   addRecipe: async ({ foodname, ingredients, recipe, tags, foodImg, UserId }) => {
@@ -47,18 +48,33 @@ const recipeService = {
       throw new Error(errMessage);
     }
     //레시피에 Liker추가
-    const likeadd = await recipe.addLiker(userId);
-    console.log('123', recipe);
-    return recipe;
+    const likePlusOne = await recipe.addLikers(userId);
+    return likePlusOne;
   },
   myRecipe: async userId => {
+    //user의 id로 나의 레시피 조회
     const myRecipe = await recipeModel.findMyRecipe(userId);
-
+    //생성된 나의 레시피가 없다면 빈 배열로 리턴하기
     if (!myRecipe) {
-      const errMessage = '생성된 나의 레시피가 없습니다!';
-      throw new Error(errMessage);
+      return (myRecipe = []);
     }
-    return myRecipe;
+    //Likers배열 -> likeCount로
+    const recipesJSON = myRecipe.map(recipe => {
+      const recipeData = recipe.toJSON();
+      recipeData.likeCount = recipe.Likers.length;
+      delete recipeData.Likers;
+      return recipeData;
+    });
+
+    return recipesJSON;
+  },
+  getRecipe: async recipeId => {
+    const recipe = await recipeModel.findOne(recipeId);
+    // 좋아요 카운트로 바꾸기
+    const recipeData = recipe.toJSON();
+    recipeData.likeCount = recipe.Likers.length;
+    delete recipeData.Likers;
+    return recipeData;
   },
 };
 
