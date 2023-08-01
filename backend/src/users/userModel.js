@@ -26,19 +26,12 @@ const UserModel = {
   },
 
   update: async (data, email) => {
-    const updatedUser = await db.User.update(data, {
-      where: { email },
-      hooks: {
-        beforeUpdate: (instance, options) => {
-          // null값을 제외하고 업데이트
-          for (const [key, value] of Object.entries(data)) {
-            if (value === undefined) {
-              delete instance.dataValues[key];
-            }
-          }
-        },
-      },
-    });
+    for (const [key, value] of Object.entries(data)) {
+      if (value === undefined || value === '') {
+        delete data[key];
+      }
+    }
+    const updatedUser = await db.User.update(data, { where: { email } });
     return updatedUser;
   },
 

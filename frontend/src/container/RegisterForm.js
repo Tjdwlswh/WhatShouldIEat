@@ -25,6 +25,11 @@ const RegisterForm = () => {
         value,
       }),
     );
+    if (form.password.length < 6) {
+      setError('비밀번호는 6글자 이상 설정하세요');
+    } else {
+      setError('');
+    }
   };
 
   const onSubmit = e => {

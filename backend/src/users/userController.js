@@ -80,6 +80,7 @@ const userController = {
     try {
       const { email } = req.user;
       const removedUser = await userService.deleteUser({ email });
+      res.clearCookie();
       res.status(200).json({ message: '탈퇴가 완료되었습니다.' });
     } catch (err) {
       next(err);

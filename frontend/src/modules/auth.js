@@ -13,6 +13,8 @@ const [REGISTER, REGISTER_SUCCESS, REGISTER_FAILURE] = createRequestActionTypes(
 
 const [LOGIN, LOGIN_SUCCESS, LOGIN_FAILURE] = createRequestActionTypes('auth/LOGIN');
 
+const [RENEW, RENEW_SUCCESS, RENEW_FAILURE] = createRequestActionTypes('auth/RENEW');
+
 export const changeField = createAction(CHANGE_FIELD, ({ form, key, value }) => ({
   form, //register 에서 오는 form or login에서 오는 form
   key, // input의 name
@@ -33,11 +35,20 @@ export const login = createAction(LOGIN, ({ email, password }) => ({
   password,
 }));
 
+export const renew = createAction(RENEW, ({ password, nickName, token }) => ({
+  password,
+  nickName,
+  token,
+}));
+
 const registerSaga = createRequestSaga(REGISTER, authAPI.register);
 const loginSaga = createRequestSaga(LOGIN, authAPI.login);
+const renewSaga = createRequestSaga(RENEW, authAPI.renew);
+
 export function* authSaga() {
   yield takeLatest(REGISTER, registerSaga);
   yield takeLatest(LOGIN, loginSaga);
+  yield takeLatest(RENEW, renewSaga);
 }
 
 const initialState = {
@@ -50,6 +61,14 @@ const initialState = {
   login: {
     email: '',
     password: '',
+  },
+  renew: {
+    email: '',
+    password: '',
+    passwordConfirm: '',
+    nickName: '',
+    message: '',
+    provider: '',
   },
   auth: null,
   authError: null,
@@ -82,6 +101,18 @@ const auth = handleActions(
       auth,
     }),
     [LOGIN_FAILURE]: (state, { payload: error }) => ({
+      ...state,
+      authError: error,
+    }),
+    [RENEW_SUCCESS]: (state, { payload: auth }) => ({
+      ...state,
+      authError: null,
+      renew: {
+        ...state.renew,
+        message: auth.message,
+      },
+    }),
+    [RENEW_FAILURE]: (state, { payload: error }) => ({
       ...state,
       authError: error,
     }),
