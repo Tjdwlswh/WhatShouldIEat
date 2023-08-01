@@ -7,6 +7,8 @@ import CreateRecipe from './pages/CreateRecipe';
 import MyRecipe from './pages/MyRecipe';
 import RecommendRecipe from './pages/RecommendRecipe';
 import ReviewRecipe from './pages/ReviewRecipe';
+import AccountPage from './pages/AccountPage';
+import LeavePage from './pages/LeavePage';
 
 function App() {
   return (
@@ -18,7 +20,8 @@ function App() {
       <Route path="/myrecipe" element={<MyRecipe />} />
       <Route path="/recommend" element={<RecommendRecipe />} />
       <Route path="/review" element={<ReviewRecipe />} />
-      <Route path="/myaccount" element={<ReviewRecipe />} />
+      <Route path="/myaccount" element={<AccountPage />} />
+      <Route path="/leave" element={<LeavePage />} />
     </Routes>
   );
 }

@@ -37,11 +37,17 @@ const WhiteBox = styled.div`
 const AuthTemplate = ({ children }) => {
   const navigate = useNavigate();
   const user = useSelector(state => state.user.user);
+  const isAccount = children.type.name === 'AccountContainer';
+
   useEffect(() => {
-    if (user) {
+    if (user && !isAccount) {
       navigate('/');
     }
-  }, [navigate, user]);
+    if (!user && isAccount) {
+      navigate('/');
+    }
+  }, [isAccount, navigate, user]);
+
   return (
     <AuthTemplateBlock>
       <WhiteBox>

@@ -9,6 +9,21 @@ const authAPI = {
     return await client.post('/auth/register', { email, password, nickName });
   },
 
+  renew: async ({ password, nickName, token }) => {
+    return await client.put(
+      '/auth/user',
+      {
+        password,
+        nickName,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    );
+  },
+
   getUser: async token => {
     return await client.get('/auth/user', {
       headers: {
@@ -27,6 +42,14 @@ const authAPI = {
 
   refresh: async () => {
     return await client.get('/auth/refresh');
+  },
+
+  leave: async token => {
+    return await client.delete('/auth/user', {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
   },
 };
 

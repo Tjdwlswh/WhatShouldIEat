@@ -66,7 +66,7 @@ const Header = ({ user, onLogout, handleEmailClick }) => {
           </Link>
           {user ? (
             <div className="right">
-              <UserInfo onClick={handleEmailClick}>{user.email}</UserInfo>
+              <UserInfo onClick={handleEmailClick}>{user.nickName}</UserInfo>
               <Button onClick={onLogout}>로그아웃</Button>
             </div>
           ) : (

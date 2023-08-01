@@ -15,10 +15,15 @@ recipeRouter.post('/airecipe', loginRequired, recipeController.createAiRecipe);
 // 레시피에 좋아요 추가
 recipeRouter.post('/:recipeId/like', loginRequired, recipeController.postLike);
 
-//나의 레시피 조회
+//나의 레시피 목록조회
 recipeRouter.get('/myrecipes', loginRequired, recipeController.getMyrecipe);
 
-//추천레시피 조회
+//상세 레시피 조회
+recipeRouter.get('/recipes/:recipeId', loginRequired, recipeController.getRecipe);
+
+//추천레시피 목록조회
+recipeRouter.get('/recipes', recipeController.getRecipe);
+
 
 //나의레시피 수정
 
