@@ -1,77 +1,57 @@
-import styled from 'styled-components';
+
 import Button from '../../common/Button';
-import palette from '../../../lib/styles/palette';
-
- const CreateAireturnBlock = styled.div`
-    display: flex;
- `
-
- const ImgUpload = styled.div`
-    width : 30%;
+import React, {useState, useCallback} from 'react'
+import { CreateAireturnBlock, ImgUpload, AiReturnbox, Tag, TagBoxBlock,TagForm,TagListBlock,} from './AiComponents';
  
-    background-color: ${palette.gray[3]};
-    padding: 2rem;
-    display: flex;
-    flex-direction: column;
-    .imgbox{
-        width : 100%;
-    }
-    .onebtn{
-        margin-top: 2rem;
-    }
- `
 
- const AiReturnbox = styled.div`
-    width: 70%;
-   
-    background-color: ${palette.gray[3]};
-    padding: 1rem 3rem;
-    input{
-       
-        width: 50%;
-        border-radius: 5px;
-        border: 0 solid #e0e0e0;
-    }
-    .one{
-        min-height:3rem;
-        margin-top: 2rem;
-    }
+export const TagItem = React.memo(({tag, onRemove})=>(
+    <Tag onClick={() => onRemove(tag)}> #{tag} </Tag>
+))
 
-    .two{
-        margin-top: 3rem;
-        min-height:6rem;
-    }
-    
-    .three{
-        margin-top: 1rem;
-        min-height:1rem;
-    }
+export const TagList = React.memo(({tags, onRemove}) => (
+    <TagListBlock>
+        {tags.map(tag => (
+            <TagItem key={tag} tag={tag} onRemove={onRemove} />
+        ))}
+    </TagListBlock>
+))
 
-    .four{
-        margin-top: 1rem;
-        min-height:1rem;
-    }
 
-    h3{
-        text-align: center;
-    }
-    .divbox{
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        border: 0 solid #e0e0e0;
-    }
-
-    .twobtn{
-        margin-top: 2rem;
-        text-align: center;
-        width: 100%;
-    }
-   
- `
 
 const CreateAiReturnForm = () => {
+
+    const [input, setInput] = useState('')
+    const [localTags, setLocalTags] = useState([])
+    
+    const insertTag = useCallback(
+        tag => {
+            if (!tag) return;
+            if (localTags.includes(tag)) return;
+            setLocalTags([...localTags, tag])
+        },
+        [localTags],
+    )
+
+    const onRemove = useCallback(
+        tag => {
+            setLocalTags(localTags.filter(t=>t !== tag))
+        },
+        [localTags]
+    )
+
+    const onChange = useCallback(e => {
+        setInput(e.target.value)
+    })
+
+    const onSubmit = useCallback(
+        e => {
+            e.preventDefault();
+            insertTag(input.trim());
+            setInput('')
+        },
+        [input, insertTag]
+    )
+
     return(
         <CreateAireturnBlock>
             <ImgUpload>
@@ -83,8 +63,21 @@ const CreateAiReturnForm = () => {
                 <label className='divbox'>
                 <input placeholder='재료들' className='one' contentEditable="true"></input>
                 <input placeholder='레시피' className='two' contentEditable="true"></input>
-                <div className='three'> #태그들 </div>
-                <input placeholder='태그를 입력하세요' className='four'></input>
+
+                <TagBoxBlock>
+                <div className='three'>
+                <TagList tags={localTags} onRemove={onRemove} />
+                </div>
+                <TagForm onSubmit={onSubmit}>
+                <input 
+                placeholder='태그를 입력하세요'
+                value={input}
+                onChange={onChange}
+                />
+                <button type="submit">추가</button>
+                </TagForm>
+                
+                </TagBoxBlock>
                 </label>
                 <div className='twobtn'>
                 <Button>나의 레시피로 저장</Button>
