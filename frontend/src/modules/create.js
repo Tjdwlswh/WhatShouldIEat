@@ -11,8 +11,9 @@ export const changeField = createAction(CHANGE_FIELD, ({ key, value }) => ({
   key,
   value,
 }));
-export const createPost = createAction(CREATE_POST, ({ tags }) => ({
-  tags,
+export const createPost = createAction(CREATE_POST, ({ ingredients,type }) => ({
+  ingredients,
+  type
 }));
 
 const createPostSaga = createRequestSaga(CREATE_POST, postsAPI.createPost);
@@ -21,7 +22,8 @@ export function* createSaga() {
 }
 
 const initialState = {
-  tags: [],
+  type : '',
+  ingredients: [],
   post: null,
   postError: null,
 };

@@ -10,8 +10,9 @@ const StyledButton = styled(Button)``;
 const CreateActionButtonContainer = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { tags, post, postError } = useSelector(({ create }) => ({
-    tags: create.tags,
+  const { ingredients,type, post, postError } = useSelector(({ create }) => ({
+    ingredients: create.ingredients,
+    type: create.type,
     post: create.post,
     postError: create.postError,
   }));
@@ -19,7 +20,7 @@ const CreateActionButtonContainer = () => {
   const onPublish = () => {
     dispatch(
       createPost({
-        tags,
+        ingredients,type
       }),
     );
   };
@@ -28,6 +29,7 @@ const CreateActionButtonContainer = () => {
     if (post) {
       const { _id, user } = post;
       navigate(`/${user.email}/${_id}`);
+    
     }
     if (postError) {
       console.log(postError);

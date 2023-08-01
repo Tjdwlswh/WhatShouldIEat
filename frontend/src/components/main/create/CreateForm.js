@@ -3,7 +3,7 @@ import Button from '../../common/Button';
 import palette from '../../../lib/styles/palette';
 import React, { useState, useCallback, useEffect } from 'react';
 import CreateActionButtonContainer from '../../../container/create/Actionbutton';
-//임시적으로 만들어 놓은 style
+
 
 const CreateBlock = styled.div`
   display: flex;
@@ -63,49 +63,69 @@ const Ingredient = styled.div`
   font-weight: bold;
   width: 100%;
   margin-top: 1rem;
+  min-height: 300px;
 `;
+
+const CheckInputbox = styled.div`
+  padding: 1rem;
+  margin-top: 3rem;
+  width: 100%;
+
+ .check{ margin-right : 0.5rem;};
+
+ label{
+  margin-right: 1rem;
+ }
+
+`
 
 // 하나만 랜더링 되도록 함
 
-const TagItem = React.memo(({ tag, onRemove }) => (
+const TagItem = React.memo(({ ingredient, onRemove }) => (
   <Tag
     onClick={() => {
-      onRemove(tag);
+      onRemove(ingredient);
     }}
   >
-    #{tag}
+    {ingredient}
   </Tag>
 ));
 
-const TagList = React.memo(({ tags, onRemove }) => (
+const TagList = React.memo(({ ingredients, onRemove }) => (
   <Ingredient>
-    {tags.map(tag => (
-      <TagItem key={tag} tag={tag} onRemove={onRemove} />
+    {ingredients.map(ingredient => (
+      <TagItem key={ingredient} ingredient={ingredient} onRemove={onRemove} />
     ))}
   </Ingredient>
 ));
 
-const CreateForm = ({ tags, onChangeTags, onPublish }) => {
+const CreateForm = ({ ingredients, onChangeTags,onChangeCheck, onPublish }) => {
   const [input, setInput] = useState('');
   const [localTags, setLocalTags] = useState([]);
+  const [check,setCheck] = useState(null)
+  const [isFixedChecked, setIsFixedChecked] = useState(false);
+  const [isFlexibleChecked, setIsFlexibleChecked] = useState(false);
 
+
+  console.log(check)
   const insertTag = useCallback(
-    tag => {
-      if (!tag) return;
+    (ingredient,check) => {
+      if (!ingredient) return;
       //공백이라면 추가하지 않음
-      if (localTags.includes(tag)) return;
+      if (localTags.includes(ingredient)) return;
       //이미 똑같은 재료가 있다면 추가하지 않음
 
-      const nextTags = [...localTags, tag];
+      const nextTags = [...localTags, ingredient];
       setLocalTags(nextTags);
       onChangeTags(nextTags);
+      onChangeCheck(check)
     },
-    [localTags, onChangeTags],
+    [localTags, onChangeTags,onChangeCheck],
   );
 
   const onRemove = useCallback(
-    tag => {
-      const nextTags = localTags.filter(t => t !== tag);
+    ingredient => {
+      const nextTags = localTags.filter(t => t !== ingredient);
       setLocalTags(nextTags);
       onChangeTags(nextTags);
     },
@@ -116,24 +136,37 @@ const CreateForm = ({ tags, onChangeTags, onPublish }) => {
     setInput(e.target.value);
   }, []);
 
+  const onHandleChange = useCallback(e => {
+    setCheck(e.target.value);
+    const { name, checked } = e.target;
+
+    if (name === 'fixed') {
+      setIsFixedChecked(checked);
+      setIsFlexibleChecked(false);
+    } else if (name === 'flexible') {
+      setIsFlexibleChecked(checked);
+      setIsFixedChecked(false);
+    }
+  }, []);
+
   const onSubmit = useCallback(
     e => {
       e.preventDefault();
-      insertTag(input.trim());
+      insertTag(input.trim(),check);
       setInput('');
     },
-    [input, insertTag],
+    [input, insertTag,check],
   );
 
   useEffect(() => {
-    setLocalTags(tags);
-  }, [tags]);
+    setLocalTags(ingredients);
+  }, [ingredients]);
 
   return (
     <CreateBlock>
       <div className="select">
         <h4>선택한 재료</h4>
-        <TagList tags={localTags} onRemove={onRemove} />
+        <TagList ingredients={localTags} onRemove={onRemove} />
         <div className="btn">
           <CreateActionButtonContainer onClick={onPublish} />
         </div>
@@ -147,6 +180,33 @@ const CreateForm = ({ tags, onChangeTags, onPublish }) => {
             onChange={onChange}
           />
           <Button type="submit">추가 버튼</Button>
+         
+          <CheckInputbox>
+          <label>
+          <input 
+          type="checkbox" 
+          name='fixed' 
+          className='check'
+          value="fixed"
+          onChange={onHandleChange}
+          checked={isFixedChecked}
+        
+          ></input>
+          재료 고정
+          </label>
+          <label>
+          <input 
+          type="checkbox"
+          name='flexible' 
+          value="flexible"
+          className='check'
+          onChange={onHandleChange}
+          checked={isFlexibleChecked}
+         
+          ></input>
+          재료 추가 기능
+          </label>
+          </CheckInputbox>
         </form>
       </div>
     </CreateBlock>
