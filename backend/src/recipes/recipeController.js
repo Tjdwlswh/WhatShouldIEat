@@ -1,5 +1,6 @@
 import { recipeService } from '../recipes/recipeService.js';
 import { hashtagService } from '../hashtags/hashtagService.js';
+import { commentService } from '../comments/commentService.js';
 
 const recipeController = {
   //나의레시피 생성
@@ -62,8 +63,10 @@ const recipeController = {
     try {
       const recipeId = req.params.recipeId;
       const recipe = await recipeService.getRecipe(recipeId);
-      
-      return res.status(200).json(recipe);
+      //등록된comment조회
+      const comment = await commentService.getComment(recipeId);
+      const result = { recipe, comment };
+      return res.status(200).json(result);
     } catch (err) {
       next(err);
     }

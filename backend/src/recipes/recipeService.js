@@ -2,6 +2,7 @@ import { recipeModel } from './recipeModel.js';
 import { ingredientModel } from '../ingredients/ingredientModel.js';
 import { hashtagModel } from '../hashtags/hashtagModel.js';
 import { getAiRecipe } from '../libs/api/recipeAPI.js';
+import { commentModel } from '../comments/commentModel.js';
 
 const recipeService = {
   addRecipe: async ({ foodname, ingredients, recipe, tags, foodImg, UserId }) => {
@@ -69,6 +70,7 @@ const recipeService = {
   },
   getRecipe: async recipeId => {
     const recipe = await recipeModel.findOne(recipeId);
+    // 좋아요 카운트로 바꾸기
     const recipeData = recipe.toJSON();
     recipeData.likeCount = recipe.Likers.length;
     delete recipeData.Likers;
