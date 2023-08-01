@@ -1,3 +1,4 @@
 import client from './client';
 
-export const createPost = ({ tags }) => client.post('경로', { tags });
+export const createPost = async ({ type,ingredients, }) => {
+    return await client.post('/airecipe', { type,ingredients })};

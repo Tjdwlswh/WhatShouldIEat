@@ -23,7 +23,7 @@ function App() {
         <Route path=":postId" element={<CreateAiReturn />} />
       </Route>
       <Route path="/CreateAi" element={<CreateAiReturn />} />
-
+      
       <Route path="/myrecipe" element={<MyRecipe />} />
       <Route path="/recommend" element={<RecommendRecipe />} />
       <Route path="/review" element={<ReviewRecipe />} />
