@@ -26,14 +26,14 @@ const recipeService = {
   createRecipe: async ({ type, ingredients }) => {
     let ingredient = `재료: ${ingredients.join('|')}`;
 
-    if (type === 'fixed') {
+    if (type === 'fixed' || type === null) {
       ingredient += ' 요리이름:';
     } else if (type === 'flexible') {
       ingredient += '|';
     }
     const { data } = await getAiRecipe(ingredient);
-    const { generated_text } = data[0];
-    const splittedText = generated_text.split(/(재료: | 레시피: | 요리이름: )/);
+    const generatedText = data[0].generated_text;
+    const splittedText = generatedText.split(/(재료: | 레시피: | 요리이름: )/);
     const recipe = {
       요리이름: splittedText[4],
       재료: splittedText[2].split('|'),

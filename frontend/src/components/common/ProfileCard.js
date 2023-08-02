@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
 import palette from '../../lib/styles/palette';
 
 const Container = styled.div`
@@ -70,11 +69,7 @@ const StatLabel = styled.p`
   color: ${palette.text};
 `;
 
-const ProfileCard = ({ props }) => {
-  const navigate = useNavigate();
-  const handleIconClick = () => {
-    navigate('/myaccount');
-  };
+const ProfileCard = ({ props, handleIconClick }) => {
   const { email, nickName, profileImg, provider, follower, like, recipe, isMine } = props;
 
   return (

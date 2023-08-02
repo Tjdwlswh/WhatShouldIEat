@@ -45,6 +45,11 @@ const CreateBlock = styled.div`
     display: flex;
     justify-content: flex-end;
   }
+
+  .btndelete {
+    margin-right: 1rem;
+    flex : 1;
+  }
 `;
 
 const Tag = styled.div`
@@ -143,11 +148,13 @@ const CreateForm = ({ ingredients, onChangeTags,onChangeCheck, onPublish }) => {
     if (name === 'fixed') {
       setIsFixedChecked(checked);
       setIsFlexibleChecked(false);
+      setCheck(checked ? 'fixed' : null);
     } else if (name === 'flexible') {
       setIsFlexibleChecked(checked);
       setIsFixedChecked(false);
+      setCheck(checked ? 'flexible' : null);
     }
-  }, []);
+  },[]);
 
   const onSubmit = useCallback(
     e => {
@@ -158,17 +165,36 @@ const CreateForm = ({ ingredients, onChangeTags,onChangeCheck, onPublish }) => {
     [input, insertTag,check],
   );
 
+ const onError = useCallback(
+    (check) => {
+      if(!check){
+        alert("type을 정하셔서 체크해주세요")
+      }
+      return
+    },[check]
+  )
+
+  const onDelete = useCallback(
+    (localTags) =>{
+      setLocalTags([])
+    },
+    [localTags]
+  )
+
   useEffect(() => {
     setLocalTags(ingredients);
   }, [ingredients]);
 
   return (
-    <CreateBlock>
+    <>    <CreateBlock>
       <div className="select">
         <h4>선택한 재료</h4>
         <TagList ingredients={localTags} onRemove={onRemove} />
         <div className="btn">
-          <CreateActionButtonContainer onClick={onPublish} />
+        <Button className="btndelete" onClick={onDelete}>모두 삭제</Button>
+        <div onClick={()=>{onError(check)}}> 
+          <CreateActionButtonContainer onClick={onPublish}  />
+          </div>
         </div>
       </div>
       <div className="block">
@@ -209,7 +235,11 @@ const CreateForm = ({ ingredients, onChangeTags,onChangeCheck, onPublish }) => {
           </CheckInputbox>
         </form>
       </div>
+     
     </CreateBlock>
+
+    </>
+
   );
 };
 
