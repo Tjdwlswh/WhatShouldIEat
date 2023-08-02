@@ -116,12 +116,11 @@ const CreateAiReturnForm = () => {
                 </TagBoxBlock>
                 </label>
                 <div className='twobtn'>
-
                 <Button>나의 레시피로 저장</Button>
                 </div>
             </AiReturnbox>
         </CreateAireturnBlock>
- 
+    
         </>
     )
 }

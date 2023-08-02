@@ -45,6 +45,11 @@ const CreateBlock = styled.div`
     display: flex;
     justify-content: flex-end;
   }
+
+  .btndelete {
+    margin-right: 1rem;
+    flex : 1;
+  }
 `;
 
 const Tag = styled.div`
@@ -169,6 +174,13 @@ const CreateForm = ({ ingredients, onChangeTags,onChangeCheck, onPublish }) => {
     },[check]
   )
 
+  const onDelete = useCallback(
+    (localTags) =>{
+      setLocalTags([])
+    },
+    [localTags]
+  )
+
   useEffect(() => {
     setLocalTags(ingredients);
   }, [ingredients]);
@@ -179,6 +191,7 @@ const CreateForm = ({ ingredients, onChangeTags,onChangeCheck, onPublish }) => {
         <h4>선택한 재료</h4>
         <TagList ingredients={localTags} onRemove={onRemove} />
         <div className="btn">
+        <Button className="btndelete" onClick={onDelete}>모두 삭제</Button>
         <div onClick={()=>{onError(check)}}> 
           <CreateActionButtonContainer onClick={onPublish}  />
           </div>
