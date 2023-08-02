@@ -95,7 +95,7 @@ export const AiReturnbox = styled.div`
     .one{
         min-height:3rem;
         margin-top: 2rem;
-       
+        
     }
 
     .two{

@@ -121,14 +121,7 @@ const CreateAiReturnForm = () => {
                 </div>
             </AiReturnbox>
         </CreateAireturnBlock>
-        <p>
-            1. api 로 get 요청해서 재료들(title), 레시피(body) 인풋창에 조회할수 있게 구현해야함 <br />
-            2. 이미지 업로드 로직 구현해야함<br />
-            3. 이미지 상태값, 수정된 ai post 들, 태그들을 한꺼번에 모아서 나의 레시피로 저장 (api 백엔드 연결,)<br />
-            4. readAipost.get 을 통해서 (요리명, 재료, 레시피)를 받아오고 다시 태그들이랑 레시피, 재료를 저장하는 리덕스를 구현후에 다시 post 함
-            5. post 후에 다시 readPost.get 을 통해서 저장된 
 
-        </p>
         </>
     )
 }
