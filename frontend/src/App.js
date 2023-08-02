@@ -18,7 +18,7 @@ function App() {
 
       
     
-      <Route path="/:username">
+      <Route path="/:email">
         <Route index element={<CreateRecipe />} />
         <Route path=":postId" element={<CreateAiReturn />} />
       </Route>

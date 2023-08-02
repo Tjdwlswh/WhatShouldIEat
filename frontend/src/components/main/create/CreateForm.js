@@ -163,7 +163,7 @@ const CreateForm = ({ ingredients, onChangeTags,onChangeCheck, onPublish }) => {
   }, [ingredients]);
 
   return (
-    <CreateBlock>
+    <>    <CreateBlock>
       <div className="select">
         <h4>선택한 재료</h4>
         <TagList ingredients={localTags} onRemove={onRemove} />
@@ -209,7 +209,19 @@ const CreateForm = ({ ingredients, onChangeTags,onChangeCheck, onPublish }) => {
           </CheckInputbox>
         </form>
       </div>
+     
     </CreateBlock>
+
+    <p>
+      진도부터 빼고나서 작성할 숙제 : <br />
+        0.로그인이 되어있지 않는 상태에서 버튼을 누르면 로그인 하라고 alert 창 띄워주고 return으로 끝냄
+        1.재료 (모두 삭제)버튼 만들어야 함 <br />
+        2.재료 고정 버튼을 두번 클릭하면 state 값이 null값이 되어야 함<br />
+        3.재료나 버튼 둘중 하나가 값이 없으면 alert 로 '재료가 빈값입니다', <br />
+          혹은 '버튼 check 는 필수입니다' 로 모달창 띄워줘야함
+      </p>
+    </>
+
   );
 };
 
