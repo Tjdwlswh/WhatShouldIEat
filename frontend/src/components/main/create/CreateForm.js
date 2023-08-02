@@ -143,11 +143,13 @@ const CreateForm = ({ ingredients, onChangeTags,onChangeCheck, onPublish }) => {
     if (name === 'fixed') {
       setIsFixedChecked(checked);
       setIsFlexibleChecked(false);
+      setCheck(checked ? 'fixed' : null);
     } else if (name === 'flexible') {
       setIsFlexibleChecked(checked);
       setIsFixedChecked(false);
+      setCheck(checked ? 'flexible' : null);
     }
-  }, []);
+  },[]);
 
   const onSubmit = useCallback(
     e => {
@@ -222,7 +224,7 @@ const CreateForm = ({ ingredients, onChangeTags,onChangeCheck, onPublish }) => {
       </div>
      
     </CreateBlock>
- 
+
     </>
 
   );
