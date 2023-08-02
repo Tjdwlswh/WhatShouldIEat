@@ -3,6 +3,7 @@ import Button from '../../common/Button';
 import palette from '../../../lib/styles/palette';
 import React, { useState, useCallback, useEffect } from 'react';
 import CreateActionButtonContainer from '../../../container/create/Actionbutton';
+import { useNavigate } from 'react-router-dom';
 
 
 const CreateBlock = styled.div`
@@ -110,7 +111,7 @@ const CreateForm = ({ ingredients, onChangeTags,onChangeCheck, onPublish }) => {
   const [check,setCheck] = useState(null)
   const [isFixedChecked, setIsFixedChecked] = useState(false);
   const [isFlexibleChecked, setIsFlexibleChecked] = useState(false);
-
+  const navigate = useNavigate();
 
   console.log(check)
   const insertTag = useCallback(
@@ -182,8 +183,11 @@ const CreateForm = ({ ingredients, onChangeTags,onChangeCheck, onPublish }) => {
         <TagList ingredients={localTags} onRemove={onRemove} />
         <div className="btn">
         <Button className="btndelete" onClick={onDelete}>모두 삭제</Button>
+        <div onClick={()=>{
+             navigate(`/CreateAi`);
+        }}>
           <CreateActionButtonContainer onClick={onPublish}  />
-          
+          </div>
         </div>
       </div>
       <div className="block">
