@@ -16,17 +16,18 @@ recipeRouter.post('/airecipe', loginRequired, recipeController.createAiRecipe);
 recipeRouter.post('/:recipeId/like', loginRequired, recipeController.postLike);
 
 //나의 레시피 목록조회
-recipeRouter.get('/myrecipes', loginRequired, recipeController.getMyrecipe);
+recipeRouter.get('/myrecipes', loginRequired, recipeController.getMyrecipes);
 
 //상세 레시피 조회
 recipeRouter.get('/recipes/:recipeId', loginRequired, recipeController.getRecipe);
 
 //추천레시피 목록조회
-recipeRouter.get('/recipes', recipeController.getRecipe);
-
+recipeRouter.get('/recipes', recipeController.getRecipes);
 
 //나의레시피 수정
+recipeRouter.put('/myrecipes/:recipeId', loginRequired, recipeController.updateMyRecipe);
 
-//나의 레시피 삭제
+//나의 레시피 삭제 (hashtag테이블에 파싱되어 저장된 데이터는 남아있음)
+recipeRouter.delete('/myrecipes/:recipeId', loginRequired, recipeController.deleteMyRecipe);
 
 export { recipeRouter };

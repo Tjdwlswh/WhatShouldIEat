@@ -23,7 +23,7 @@ class Comment extends Sequelize.Model {
 
   static associate(db) {
     db.Comment.belongsTo(db.User, { foreignKey: 'commenterId', targetKey: 'id', as: 'commenter' });
-    db.Comment.belongsTo(db.Recipe); // Comment모델에 recipeId 컬럼이 추가됨
+    db.Comment.belongsTo(db.Recipe, { foreignKey: 'recipeId', targetKey: 'id' }); // Comment모델에 recipeId 컬럼이 추가됨
   }
 }
 

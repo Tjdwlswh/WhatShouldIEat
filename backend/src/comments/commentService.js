@@ -1,8 +1,8 @@
 import { commentModel } from './commentModel.js';
 
 const commentService = {
-  addComment: async ({ comment, RecipeId, commenterId }) => {
-    const newComment = { comment, RecipeId, commenterId };
+  addComment: async ({ comment, recipeId, commenterId }) => {
+    const newComment = { comment, recipeId, commenterId };
     const createComment = await commentModel.addComment(newComment);
     return createComment;
   },
