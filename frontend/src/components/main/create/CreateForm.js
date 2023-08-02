@@ -158,6 +158,15 @@ const CreateForm = ({ ingredients, onChangeTags,onChangeCheck, onPublish }) => {
     [input, insertTag,check],
   );
 
+ const onError = useCallback(
+    (check) => {
+      if(!check){
+        alert("type을 정하셔서 체크해주세요")
+      }
+      return
+    },[check]
+  )
+
   useEffect(() => {
     setLocalTags(ingredients);
   }, [ingredients]);
@@ -168,7 +177,9 @@ const CreateForm = ({ ingredients, onChangeTags,onChangeCheck, onPublish }) => {
         <h4>선택한 재료</h4>
         <TagList ingredients={localTags} onRemove={onRemove} />
         <div className="btn">
-          <CreateActionButtonContainer onClick={onPublish} />
+        <div onClick={()=>{onError(check)}}> 
+          <CreateActionButtonContainer onClick={onPublish}  />
+          </div>
         </div>
       </div>
       <div className="block">
@@ -211,8 +222,7 @@ const CreateForm = ({ ingredients, onChangeTags,onChangeCheck, onPublish }) => {
       </div>
      
     </CreateBlock>
-
-
+ 
     </>
 
   );

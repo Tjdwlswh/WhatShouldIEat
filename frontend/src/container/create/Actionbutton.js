@@ -22,6 +22,7 @@ const CreateActionButtonContainer = () => {
       createPost({
         ingredients,type
       }),
+      
     );
   };
 
