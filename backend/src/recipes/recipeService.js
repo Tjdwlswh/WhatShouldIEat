@@ -76,6 +76,30 @@ const recipeService = {
     delete recipeData.Likers;
     return recipeData;
   },
+  getRecipes: async () => {
+    const recipes = await recipeModel.findAll();
+    return recipes;
+  },
+  updateMyRecipe: async ({ recipeId, userId, toUpdate }) => {
+    const recipe = await recipeModel.findOne(recipeId);
+    console.log('1', recipe, userId, recipeId, toUpdate);
+    if (recipe && recipe.UserId === userId) {
+      const result = await recipeModel.update(toUpdate);
+      console.log('3', result);
+      return result;
+    } else {
+      return false;
+    }
+  },
+  deleteMyRecipe: async (recipeId, userId) => {
+    const userData = await recipeModel.findOne(recipeId);
+    if (userData && userData.UserId === userId) {
+      await recipeModel.delete(recipeId);
+      const message = '레시피를 삭제하였습니다.';
+      return message;
+    }
+    return { failMessage: '메시지 삭제에 실패했습니다.' };
+  },
 };
 
 export { recipeService };
