@@ -165,20 +165,10 @@ const CreateForm = ({ ingredients, onChangeTags,onChangeCheck, onPublish }) => {
     [input, insertTag,check],
   );
 
- const onError = useCallback(
-    (check) => {
-      if(!check){
-        alert("type을 정하셔서 체크해주세요")
-      }
-      return
-    },[check]
-  )
-
   const onDelete = useCallback(
-    (localTags) =>{
+    () =>{
       setLocalTags([])
-    },
-    [localTags]
+    },[]
   )
 
   useEffect(() => {
@@ -192,9 +182,8 @@ const CreateForm = ({ ingredients, onChangeTags,onChangeCheck, onPublish }) => {
         <TagList ingredients={localTags} onRemove={onRemove} />
         <div className="btn">
         <Button className="btndelete" onClick={onDelete}>모두 삭제</Button>
-        <div onClick={()=>{onError(check)}}> 
           <CreateActionButtonContainer onClick={onPublish}  />
-          </div>
+          
         </div>
       </div>
       <div className="block">
@@ -206,9 +195,10 @@ const CreateForm = ({ ingredients, onChangeTags,onChangeCheck, onPublish }) => {
             onChange={onChange}
           />
           <Button type="submit">추가 버튼</Button>
-         
+          
           <CheckInputbox>
           <label>
+           {!(check) && <div>***type을 정하셔서 체크해주세요***</div>}
           <input 
           type="checkbox" 
           name='fixed' 
