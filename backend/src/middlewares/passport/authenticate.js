@@ -4,7 +4,9 @@ import setCookie from '../../utils/setCookie.js';
 // 로컬 로그인
 const localAuthenticate = async (req, res, next) => {
   passport.authenticate('local', { session: false }, (err, user, info) => {
-    if (err) next(err);
+    if (err) {
+      return next(err);
+    }
     if (info) {
       const error = new Error(info.message);
       error.status = 404;

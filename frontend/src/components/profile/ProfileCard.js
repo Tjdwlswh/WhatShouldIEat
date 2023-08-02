@@ -1,14 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
-import { mainColor, accentColor, textColor } from '../../constants/config';
 import { useSelector } from 'react-redux';
-import { useNavigate } from '../../../node_modules/react-router-dom/dist/index';
+import { useNavigate } from 'react-router-dom';
+import palette from '../../lib/styles/palette';
 
 const Container = styled.div`
   height: 400px;
   width: 300px;
   border-radius: 20px;
-  border: 5px solid ${mainColor};
+  border: 5px solid ${palette.main};
   overflow: hidden;
   padding: 30px;
 `;
@@ -16,18 +16,18 @@ const Container = styled.div`
 const Card = styled.div`
   text-align: center;
   width: 100%;
-  color: ${textColor};
+  color: ${palette.text};
 `;
 
 const Avatar = styled.img`
   top: 10px;
   max-width: 120px;
   border-radius: 50%;
-  border: 4px solid ${mainColor};
+  border: 4px solid ${palette.main};
 `;
 
 const NickName = styled.h1`
-  color: ${accentColor};
+  color: ${palette.accent};
   font-weight: bold;
   margin-top: 1.25rem;
   margin-bottom: 0.25rem;
@@ -53,8 +53,8 @@ const StatsContainer = styled.div`
   margin-top: 1.5rem;
   padding-top: 1.5rem;
   padding-bottom: 1.5rem;
-  border-top: 1px solid ${accentColor};
-  color: ${mainColor};
+  border-top: 1px solid ${palette.accent};
+  color: ${palette.main};
 `;
 
 const Stat = styled.div`
@@ -68,7 +68,7 @@ const StatNumber = styled.h3`
 const StatLabel = styled.p`
   font-size: 0.75rem;
   line-height: 1rem;
-  color: ${textColor};
+  color: ${palette.text};
 `;
 
 const ProfileCard = props => {
@@ -87,7 +87,7 @@ const ProfileCard = props => {
   const like = '803K';
   const recipe = '1.4K';
 
-  const userEmail = useSelector(state => state.user.user.email);
+  const userEmail = useSelector(state => state.user.user?.email);
   console.log(email, userEmail);
   return (
     <Container>

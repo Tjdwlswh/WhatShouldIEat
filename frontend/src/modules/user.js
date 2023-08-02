@@ -14,6 +14,8 @@ const [LOGOUT, LOGOUT_SUCCESS, LOGOUT_FAILURE] = createRequestActionTypes('user/
 
 // export const check = createAction(CHECK);
 export const logout = createAction(LOGOUT);
+
+export const clearUser = createAction(LOGOUT_SUCCESS);
 // ###
 export const setToken = createAction(SET_TOKEN, token => token);
 
@@ -34,8 +36,7 @@ function* logoutSaga(action) {
     yield call(authAPI.logout, action.payload);
     yield put({ type: LOGOUT_SUCCESS });
   } catch (err) {
-    console.log('logoutSaga: ', err);
-    yield put({ type: LOGOUT_FAILURE, payload: err });
+    yield put({ type: LOGOUT_FAILURE, payload: err.toString() });
   }
 }
 
@@ -55,11 +56,11 @@ function* getUserSaga(action) {
     const response = yield call(authAPI.getUser, action.payload); // authAPI.getUser.getUser에 토큰을 전달
     yield put({ type: GET_USER_SUCCESS, payload: response.data }); // 성공 액션을 디스패치
   } catch (error) {
-    if (error.response.data.error === 'TokenExpiredError: jwt expired') {
-      yield put({ type: GET_USER_FAILURE, payload: error }); // 에러 액션을 디스패치
-    } else {
-      console.log('회원정보 불러오기 실패');
-    }
+    // if (error.response.data.error === 'TokenExpiredError: jwt expired') {
+    yield put({ type: GET_USER_FAILURE, payload: error.toString() }); // 에러 액션을 디스패치
+    // } else {
+    //   console.log('회원정보 불러오기 실패');
+    // }
   }
 }
 
@@ -68,7 +69,7 @@ function* getUserFailureSaga(action) {
     yield call(authAPI.refresh);
     const renewToken = cookies.get('token');
     yield put(setToken(renewToken));
-    yield put(getUser(renewToken));
+    if (renewToken) yield put(getUser(renewToken));
   } catch (error) {
     yield put(logout());
     localStorage.removeItem('user');

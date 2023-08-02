@@ -29,7 +29,6 @@ const Background = styled.div`
 const Loading = () => {
   const dispatch = useDispatch();
   const { loading } = useSelector(state => state.loading);
-  console.log(loading);
   const handleBackgroundClick = e => {
     e.preventDefault();
     dispatch(finishLoading());

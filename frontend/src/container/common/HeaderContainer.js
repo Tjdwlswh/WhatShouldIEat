@@ -14,11 +14,13 @@ const HeaderContainer = () => {
   const token = cookies.get('token');
 
   useEffect(() => {
-    if (token) dispatch(setToken(token));
+    if (token) {
+      dispatch(setToken(token));
+    }
   }, [dispatch, token]);
 
   useEffect(() => {
-    if (accessToken) dispatch(getUser(accessToken));
+    dispatch(getUser(accessToken));
   }, [accessToken, dispatch]);
 
   const { user } = useSelector(state => ({

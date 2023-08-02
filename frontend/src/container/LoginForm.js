@@ -31,6 +31,10 @@ const LoginForm = () => {
   const onSubmit = e => {
     e.preventDefault();
     const { email, password } = form;
+    if ([email, password].includes('')) {
+      setError('빈칸을 모두 입력하세요');
+      return;
+    }
     dispatch(login({ email, password }));
   };
 
@@ -40,8 +44,7 @@ const LoginForm = () => {
 
   useEffect(() => {
     if (authError) {
-      setError('로그인 실패');
-      console.log(authError);
+      setError(authError.response.data.error);
       return;
     }
     if (auth) {
