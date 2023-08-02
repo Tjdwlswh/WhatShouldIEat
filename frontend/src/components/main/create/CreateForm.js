@@ -3,6 +3,7 @@ import Button from '../../common/Button';
 import palette from '../../../lib/styles/palette';
 import React, { useState, useCallback, useEffect } from 'react';
 import CreateActionButtonContainer from '../../../container/create/Actionbutton';
+import { useNavigate } from 'react-router-dom';
 
 
 const CreateBlock = styled.div`
@@ -110,7 +111,7 @@ const CreateForm = ({ ingredients, onChangeTags,onChangeCheck, onPublish }) => {
   const [check,setCheck] = useState(null)
   const [isFixedChecked, setIsFixedChecked] = useState(false);
   const [isFlexibleChecked, setIsFlexibleChecked] = useState(false);
-
+  const navigate = useNavigate();
 
   console.log(check)
   const insertTag = useCallback(
@@ -165,20 +166,10 @@ const CreateForm = ({ ingredients, onChangeTags,onChangeCheck, onPublish }) => {
     [input, insertTag,check],
   );
 
- const onError = useCallback(
-    (check) => {
-      if(!check){
-        alert("type을 정하셔서 체크해주세요")
-      }
-      return
-    },[check]
-  )
-
   const onDelete = useCallback(
-    (localTags) =>{
+    () =>{
       setLocalTags([])
-    },
-    [localTags]
+    },[]
   )
 
   useEffect(() => {
@@ -192,7 +183,9 @@ const CreateForm = ({ ingredients, onChangeTags,onChangeCheck, onPublish }) => {
         <TagList ingredients={localTags} onRemove={onRemove} />
         <div className="btn">
         <Button className="btndelete" onClick={onDelete}>모두 삭제</Button>
-        <div onClick={()=>{onError(check)}}> 
+        <div onClick={()=>{
+             navigate(`/CreateAi`);
+        }}>
           <CreateActionButtonContainer onClick={onPublish}  />
           </div>
         </div>
@@ -206,9 +199,10 @@ const CreateForm = ({ ingredients, onChangeTags,onChangeCheck, onPublish }) => {
             onChange={onChange}
           />
           <Button type="submit">추가 버튼</Button>
-         
+          
           <CheckInputbox>
           <label>
+           {!(check) && <div>***type을 정하셔서 체크해주세요***</div>}
           <input 
           type="checkbox" 
           name='fixed' 
