@@ -89,8 +89,9 @@ const recipeController = {
     try {
       const recipeId = req.params.recipeId;
       const userId = req.user.id;
-      const  toUpdate  = req.body;
+      const toUpdate = req.body;
       const recipe = await recipeService.updateMyRecipe({ recipeId, userId, toUpdate });
+
       return res.status(200).json(recipe);
     } catch (err) {
       next(err);
