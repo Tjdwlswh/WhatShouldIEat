@@ -6,7 +6,7 @@ const recipeController = {
   //나의레시피 생성
   postMyrecipe: async (req, res, next) => {
     try {
-      const { foodname, ingredients, recipe, tags } = req.body;
+      const { foodname, ingredients, recipe, tags, aiRecipeId } = req.body;
       const foodImg = req.file ? req.file.filename : undefined;
       const newRecipe = await recipeService.addRecipe({
         foodname,
@@ -15,6 +15,7 @@ const recipeController = {
         tags,
         foodImg,
         UserId: req.user.id,
+        aiRecipeId,
       });
       if (newRecipe.errMessage) {
         throw new Error(newRecipe.errMessage);

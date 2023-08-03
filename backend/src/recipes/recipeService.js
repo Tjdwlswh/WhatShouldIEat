@@ -5,7 +5,7 @@ import { getAiRecipe } from '../libs/api/recipeAPI.js';
 import { commentModel } from '../comments/commentModel.js';
 
 const recipeService = {
-  addRecipe: async ({ foodname, ingredients, recipe, tags, foodImg, UserId }) => {
+  addRecipe: async ({ foodname, ingredients, recipe, tags, foodImg, UserId, aiRecipeId }) => {
     const newRecipe = { foodname, ingredients, recipe, tags, foodImg, UserId };
     const createdRecipe = await recipeModel.create(newRecipe);
 
@@ -20,6 +20,10 @@ const recipeService = {
     const newTag = await hashtagModel.findOrCreate(hashtags);
     //해시태그 모델을 레시피 모델과 연결
     await createdRecipe.addHashtags(newTag.map(t => t[0]));
+
+    //3.Ai레시피와 연결
+    const airecipe = await recipeModel.findAiRecipe({ id: aiRecipeId });
+    createdRecipe.setAiRecipe(airecipe);
 
     return createdRecipe;
   },
