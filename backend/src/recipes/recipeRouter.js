@@ -12,6 +12,9 @@ recipeRouter.post('/myrecipes', loginRequired, imgUpload, recipeController.postM
 //인공지능 레시피 생성
 recipeRouter.post('/airecipe', loginRequired, recipeController.createAiRecipe);
 
+// 인공지능 레시피 조회, 현재 쓸 일 없음
+// recipeRouter.get('/airecipe/:id', loginRequired, recipeController.getAiRecipe);
+
 // 레시피에 좋아요 추가
 recipeRouter.post('/:recipeId/like', loginRequired, recipeController.postLike);
 

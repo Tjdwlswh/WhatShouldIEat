@@ -70,6 +70,14 @@ const recipeModel = {
     const deleteData = await db.Recipe.destroy({ where: { id: recipeId } });
     return deleteData;
   },
+  // 이하 AI 레시피 관련 DB 메소드
+  aiCreate: async newAiRecipe => {
+    return await db.AiRecipe.create(newAiRecipe);
+  },
+
+  findAiRecipe: async ({ id }) => {
+    return await db.AiRecipe.findByPk(id);
+  },
 };
 
 export { recipeModel };

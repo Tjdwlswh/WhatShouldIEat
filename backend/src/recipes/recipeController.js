@@ -28,12 +28,23 @@ const recipeController = {
   createAiRecipe: async (req, res, next) => {
     try {
       const { type = 'flexible', ingredients } = req.body;
-      const recipe = await recipeService.createRecipe({ type, ingredients });
-      res.status(200).json(recipe);
+      const aiRecipe = await recipeService.createAiRecipe({ type, ingredients });
+      res.status(200).json(aiRecipe);
     } catch (err) {
       next(err);
     }
   },
+  // 인공지능 레시피 조회
+  getAiRecipe: async (req, res, next) => {
+    try {
+      const { id } = req.params;
+      const aiRecipe = await recipeService.aiRecipe({ id });
+      res.status(200).json(aiRecipe);
+    } catch (err) {
+      next(err);
+    }
+  },
+
   //레시피에 좋아요 추가
   postLike: async (req, res, next) => {
     try {
@@ -89,7 +100,7 @@ const recipeController = {
     try {
       const recipeId = req.params.recipeId;
       const userId = req.user.id;
-      const  toUpdate  = req.body;
+      const toUpdate = req.body;
       const recipe = await recipeService.updateMyRecipe({ recipeId, userId, toUpdate });
       return res.status(200).json(recipe);
     } catch (err) {
