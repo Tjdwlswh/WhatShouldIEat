@@ -33,7 +33,11 @@ export const savePost = createAction(
   }),
 );
 
-const createPostSaga = createRequestSaga(CREATE_POST, postsAPI.createPost);
+const createPostSaga = createRequestSaga(
+  CREATE_POST,
+  postsAPI.createPost,
+  '최대 10초 이상 걸릴 수 있습니다...',
+);
 const savePostSaga = createRequestSaga(SAVE_POST, postsAPI.savePost);
 
 export function* createSaga() {

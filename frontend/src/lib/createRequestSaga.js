@@ -7,13 +7,13 @@ export const createRequestActionTypes = type => {
   return [type, SUCCESS, FAILURE];
 };
 
-export function createRequestSaga(type, request) {
+export function createRequestSaga(type, request, message) {
   const SUCCESS = `${type}_SUCCESS`;
   const FAILURE = `${type}_FAILURE`;
 
   return function* (action) {
     //action은 register(username, password) or login(username, password)
-    yield put(startLoading());
+    yield put(startLoading(message));
     try {
       const response = yield call(request, action.payload);
       yield put({
