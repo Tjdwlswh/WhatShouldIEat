@@ -27,6 +27,10 @@ class User extends Sequelize.Model {
           allowNull: false,
           defaultValue: 'local',
         },
+        socialToken: {
+          type: Sequelize.STRING(300),
+          allowNull: true,
+        },
         refreshToken: {
           type: Sequelize.STRING(300),
           allowNull: true,
@@ -55,7 +59,7 @@ class User extends Sequelize.Model {
     });
     db.User.belongsToMany(db.User, {
       foreignKey: 'followerId',
-      as: 'Followings',  //user.getFollowings
+      as: 'Followings', //user.getFollowings
       through: 'Follow',
     });
     db.User.hasMany(db.Comment, { foreignKey: 'commenterId', sourceKey: 'id' });

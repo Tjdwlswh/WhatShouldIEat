@@ -1,6 +1,7 @@
 import bcrypt from 'bcrypt';
 import { UserModel } from './userModel.js';
 import { ConflictException, NotFoundException } from '../libs/httpException.js';
+import { revokeAPI } from '../libs/api/revokeAPI.js';
 
 const userService = {
   addUser: async ({ email, password, nickName, profileImg }) => {
@@ -39,11 +40,16 @@ const userService = {
   },
 
   editUser: async ({ data, email }) => {
+    // 유저 정보 수정
     const editedUser = await UserModel.update(data, email);
     return editedUser;
   },
 
   deleteUser: async ({ email }) => {
+    // 유저 탈퇴
+    const { socialToken, provider } = await UserModel.findByEmail(email);
+    const result = await revokeAPI(provider, socialToken);
+    console.log('탈퇴요청', result);
     const removedUser = await UserModel.delete(email);
     return removedUser;
   },
