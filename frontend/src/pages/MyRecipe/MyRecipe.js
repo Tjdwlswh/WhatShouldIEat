@@ -1,5 +1,5 @@
-import MyRecipeForm from '../components/main/myrecipe/MyRecipeForm';
-import MyRecipeTemp from '../components/main/myrecipe/MyRecipeTemp';
+import MyRecipeForm from '../../components/main/myrecipe/MyRecipeForm';
+import MyRecipeTemp from '../../components/main/myrecipe/MyRecipeTemp';
 
 const MyRecipe = () => {
   return (

@@ -4,10 +4,12 @@ import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import MainPage from './pages/MainPage';
 import CreateRecipe from './pages/Create/CreateRecipe';
-import MyRecipe from './pages/MyRecipe';
+import MyRecipe from './pages/MyRecipe/MyRecipe';
 import RecommendRecipe from './pages/RecommendRecipe';
 import ReviewRecipe from './pages/ReviewRecipe';
 import CreateAiReturn from './pages/Create/CreateAiReturn';
+import MyRecipeList from './pages/MyRecipe/MyRecipeList';
+
 
 function App() {
   return (
@@ -17,11 +19,13 @@ function App() {
       <Route path="/register" element={<RegisterPage />} />
       <Route path="create" element={<CreateRecipe />} />
       <Route path="/createAi" element={<CreateAiReturn />} />
+     
 
       <Route path="/:email">
+      <Route index element={<MyRecipeList />} />
       <Route path=":postId" element={<MyRecipe />} />
       </Route>
-      
+
       {/* 임시 my레시피 주소 */}
       <Route path="/myrecipe" element={<MyRecipe />} />
       {/* ㅡㅡㅡㅡㅡㅡ */}
