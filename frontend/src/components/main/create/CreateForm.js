@@ -49,6 +49,16 @@ const CreateBlock = styled.div`
     margin-right: 1rem;
     flex: 1;
   }
+
+  .inputbtn {
+    color: red;
+    font-weight: bold;
+  }
+
+  .inputbtn {
+    color: red;
+    font-weight: bold;
+  }
 `;
 
 const Tag = styled.div`
@@ -77,6 +87,13 @@ const CheckInputbox = styled.div`
 
   .check {
     margin-right: 0.5rem;
+  }
+
+  .ischecked {
+    height: 2rem;
+    color: red;
+    font-weight: bold;
+    font-size: 1rem;
   }
 
   label {
@@ -173,17 +190,29 @@ const CreateForm = ({ ingredients, onChangeTags, onChangeCheck }) => {
     setLocalTags(ingredients);
   }, [ingredients]);
 
+  const navigated = () => {
+    navigate('/createAi');
+  };
+
   return (
     <>
+      {' '}
       <CreateBlock>
         <div className="select">
           <h4>선택한 재료</h4>
           <TagList ingredients={localTags} onRemove={onRemove} />
+
           <div className="btn">
             <Button className="btndelete" onClick={onDelete}>
               모두 삭제
             </Button>
-            <CreateActionButtonContainer />
+            {localTags.length === 0 ? (
+              <div className="inputbtn"> 재료를 입력해주세요 </div>
+            ) : (
+              <div onClick={navigated}>
+                <CreateActionButtonContainer onClick={onPublish} />
+              </div>
+            )}
           </div>
         </div>
         <div className="block">
@@ -197,8 +226,8 @@ const CreateForm = ({ ingredients, onChangeTags, onChangeCheck }) => {
             <Button type="submit">추가 버튼</Button>
 
             <CheckInputbox>
+              <div className="ischecked">{!check && <div>***type을 체크해주세요***</div>}</div>
               <label>
-                {!check && <div>***type을 정하셔서 체크해주세요***</div>}
                 <input
                   type="checkbox"
                   name="fixed"

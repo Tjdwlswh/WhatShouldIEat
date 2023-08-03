@@ -7,6 +7,8 @@ const CHANGE_FIELD = 'create/CHANGE_FIELD';
 const [CREATE_POST, CREATE_POST_SUCCESS, CREATE_POST_FAILURE] =
   createRequestActionTypes('create/CREATE_POST');
 
+
+
 export const changeField = createAction(CHANGE_FIELD, ({ key, value }) => ({
   key,
   value,
@@ -16,6 +18,8 @@ export const createPost = createAction(CREATE_POST, ({ ingredients, type, token 
   type,
   token,
 }));
+
+
 
 const createPostSaga = createRequestSaga(CREATE_POST, postsAPI.createPost);
 
