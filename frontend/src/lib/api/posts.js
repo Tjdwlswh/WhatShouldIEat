@@ -12,4 +12,14 @@ export const createPost = async ({ type, ingredients, aiRecipeId, token }) => {
   );
 };
 
-export const readAiPost = id => client.get(`/airecipe/${id}`);
+export const savePost = async ({ foodname, ingredients, recipe, tags, aiRecipeId, token }) => {
+  return await client.post(
+    '/myrecipes',
+    { foodname, ingredients, recipe, tags, aiRecipeId },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
+  );
+};

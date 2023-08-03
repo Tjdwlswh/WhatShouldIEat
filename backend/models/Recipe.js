@@ -45,6 +45,11 @@ class Recipe extends Sequelize.Model {
     db.Recipe.belongsToMany(db.Hashtag, { through: 'RecipeHashtag', onDelete: 'CASCADE' });
     db.Recipe.hasMany(db.Comment, { foreignKey: 'recipeId', sourceKey: 'id', onDelete: 'CASCADE' });
     db.Recipe.belongsToMany(db.Ingredient, { through: 'RecipeIngredient', onDelete: 'CASCADE' });
+    db.Recipe.hasOne(db.AiRecipe, {
+      foreignKey: 'recipeId',
+      sourceKey: 'id',
+      onDelete: 'CASCADE',
+    });
   }
 }
 

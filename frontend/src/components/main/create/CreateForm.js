@@ -54,11 +54,6 @@ const CreateBlock = styled.div`
     color: red;
     font-weight: bold;
   }
-
-  .inputbtn {
-    color: red;
-    font-weight: bold;
-  }
 `;
 
 const Tag = styled.div`
@@ -190,10 +185,6 @@ const CreateForm = ({ ingredients, onChangeTags, onChangeCheck }) => {
     setLocalTags(ingredients);
   }, [ingredients]);
 
-  const navigated = () => {
-    navigate('/createAi');
-  };
-
   return (
     <>
       {' '}
@@ -209,9 +200,7 @@ const CreateForm = ({ ingredients, onChangeTags, onChangeCheck }) => {
             {localTags.length === 0 ? (
               <div className="inputbtn"> 재료를 입력해주세요 </div>
             ) : (
-              <div onClick={navigated}>
-                <CreateActionButtonContainer onClick={onPublish} />
-              </div>
+              <CreateActionButtonContainer />
             )}
           </div>
         </div>
@@ -219,7 +208,7 @@ const CreateForm = ({ ingredients, onChangeTags, onChangeCheck }) => {
           <form className="box" onSubmit={onSubmit}>
             <input
               className="row"
-              placeholder="태그를 입력하세요"
+              placeholder="재료를 입력하세요"
               value={input}
               onChange={onChange}
             />
