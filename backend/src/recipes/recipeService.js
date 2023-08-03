@@ -5,7 +5,7 @@ import { getAiRecipe } from '../libs/api/recipeAPI.js';
 import { commentModel } from '../comments/commentModel.js';
 
 const recipeService = {
-  addRecipe: async ({ foodname, ingredients, recipe, tags, foodImg, UserId }) => {
+  addRecipe: async ({ foodname, ingredients, recipe, tags, foodImg, UserId, aiRecipeId }) => {
     const newRecipe = { foodname, ingredients, recipe, tags, foodImg, UserId };
     const createdRecipe = await recipeModel.create(newRecipe);
 
@@ -21,26 +21,45 @@ const recipeService = {
     //해시태그 모델을 레시피 모델과 연결
     await createdRecipe.addHashtags(newTag.map(t => t[0]));
 
+    //3.Ai레시피와 연결
+    const airecipe = await recipeModel.findAiRecipe({ id: aiRecipeId });
+    createdRecipe.setAiRecipe(airecipe);
+
     return createdRecipe;
   },
-  createRecipe: async ({ type, ingredients }) => {
+  createAiRecipe: async ({ type, ingredients }) => {
     let ingredient = `재료: ${ingredients.join('|')}`;
 
-    if (type === 'fixed') {
+    if (type === 'fixed' || type === null) {
       ingredient += ' 요리이름:';
     } else if (type === 'flexible') {
       ingredient += '|';
     }
     const { data } = await getAiRecipe(ingredient);
-    const { generated_text } = data[0];
-    const splittedText = generated_text.split(/(재료: | 레시피: | 요리이름: )/);
-    const recipe = {
-      요리이름: splittedText[4],
-      재료: splittedText[2].split('|'),
-      레시피: splittedText[6],
+    const generatedText = data[0].generated_text;
+    const splittedText = generatedText.split(/(재료: | 레시피: | 요리이름: )/);
+    const newAiRecipe = {
+      foodname: splittedText[4],
+      ingredients: splittedText[2],
+      recipe: splittedText[6],
     };
-    return recipe;
+
+    const createdAiRecipe = await recipeModel.aiCreate(newAiRecipe);
+
+    //1.ingredients테이블에 재료들 파싱해서 저장
+    const newIngredient = splittedText[2].split('|');
+    const createdIngredient = await ingredientModel.findOrCreate(newIngredient);
+    //재료 모델을 레시피 모델과 연결
+    await createdAiRecipe.addIngredients(createdIngredient.map(i => i[0]));
+    return createdAiRecipe;
   },
+
+  // DB에 저장된 AI 레시피 조회.
+  aiRecipe: async ({ id }) => {
+    const aiRecipe = await recipeModel.findAiRecipe({ id });
+    return aiRecipe;
+  },
+
   addLike: async (recipeId, userId) => {
     const recipe = await recipeModel.findOne(recipeId);
     if (!recipe) {

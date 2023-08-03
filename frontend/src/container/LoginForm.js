@@ -4,13 +4,14 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { changeField, initializeForm, login } from '../modules/auth';
 import AuthForm from '../components/auth/AuthForm';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 // import { check } from '../modules/user';
 
 const LoginForm = () => {
   const [error, setError] = useState(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
   const { form, auth, authError } = useSelector(state => ({
     form: state.auth.login,
     auth: state.auth.auth,
@@ -42,6 +43,11 @@ const LoginForm = () => {
     dispatch(initializeForm('login')); //아무것도 담겨있지 않은 login, 초기화
   }, [dispatch]);
 
+  useEffect(() => {
+    if (searchParams.get('status')) {
+      setError('탈퇴한 계정입니다.');
+    }
+  }, [searchParams]);
   useEffect(() => {
     if (authError) {
       setError(authError.response.data.error);

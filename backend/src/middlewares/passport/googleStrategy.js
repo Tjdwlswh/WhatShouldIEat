@@ -22,13 +22,13 @@ const GoogleStrategy = new Strategy(
           nickName,
           provider,
           profileImg,
+          socialToken: accessToken,
           refreshToken,
         },
         email,
       );
       return done(null, { token, refreshToken });
     } catch (err) {
-      console.log('user');
       return done(err);
     }
   },

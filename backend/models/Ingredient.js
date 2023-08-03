@@ -23,6 +23,7 @@ class Ingredient extends Sequelize.Model {
 
   static associate(db) {
     db.Ingredient.belongsToMany(db.Recipe, { through: 'RecipeIngredient' });
+    db.Ingredient.belongsToMany(db.AiRecipe, { through: 'AiRecipeIngredient' });
   }
 }
 

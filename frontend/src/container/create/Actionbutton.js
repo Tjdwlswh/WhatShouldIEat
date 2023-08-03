@@ -8,24 +8,24 @@ import React from 'react';
 const StyledButton = styled(Button)``;
 
 const CreateActionButtonContainer = () => {
-
   const dispatch = useDispatch();
-  const { ingredients,type, } = useSelector(({ create }) => ({
+  const { ingredients, type } = useSelector(({ create }) => ({
     ingredients: create.ingredients,
     type: create.type,
-  
   }));
+  const { token } = useSelector(state => state.user);
 
   const onPublish = () => {
     dispatch(
       createPost({
-        ingredients,type
+        ingredients,
+        type,
+        token,
       }),
-      
     );
   };
 
-  return <StyledButton onPublish={onPublish}>레시피 만들기 버튼</StyledButton>;
+  return <StyledButton onClick={onPublish}>레시피 만들기 버튼</StyledButton>;
 };
 
 export default CreateActionButtonContainer;

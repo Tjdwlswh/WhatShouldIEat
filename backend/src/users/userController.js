@@ -76,6 +76,7 @@ const userController = {
     }
   },
 
+  // 회원 탈퇴
   deleteAccount: async (req, res, next) => {
     try {
       const { email } = req.user;

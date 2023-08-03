@@ -1,6 +1,25 @@
 import client from './client';
 
-export const createPost = async ({ type,ingredients, }) => {
-    return await client.post('/airecipe', { type,ingredients })};
+export const createPost = async ({ type, ingredients, aiRecipeId, token }) => {
+  return await client.post(
+    '/airecipe',
+    { type, ingredients, aiRecipeId },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
+  );
+};
 
-export const readAiPost = id => client.get(`/airecipe/${id}`)
+export const savePost = async ({ foodname, ingredients, recipe, tags, aiRecipeId, token }) => {
+  return await client.post(
+    '/myrecipes',
+    { foodname, ingredients, recipe, tags, aiRecipeId },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
+  );
+};

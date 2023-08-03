@@ -1,7 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 import palette from '../../lib/styles/palette';
 
 const Container = styled.div`
@@ -71,31 +69,16 @@ const StatLabel = styled.p`
   color: ${palette.text};
 `;
 
-const ProfileCard = props => {
-  const navigate = useNavigate();
-  const handleIconClick = e => {
-    e.preventDefault();
-    navigate('/myaccount');
-  };
+const ProfileCard = ({ props, handleIconClick }) => {
+  const { email, nickName, profileImg, provider, follower, like, recipe, isMine } = props;
 
-  // const { email, nickName, profileImg, provider } = props;
-  const profileImg = `${process.env.PUBLIC_URL}/logo.png`;
-  const email = 'test@test.com';
-  const nickName = 'test';
-  const provider = 'local';
-  const follower = '80K';
-  const like = '803K';
-  const recipe = '1.4K';
-
-  const userEmail = useSelector(state => state.user.user?.email);
-  console.log(email, userEmail);
   return (
     <Container>
       <Card>
         <Avatar src={profileImg} alt="Profile Picture" />
         <NickName>
           {nickName}
-          {email === userEmail && (
+          {isMine && (
             <ProviderImg
               src={`${process.env.PUBLIC_URL}/assets/img/icons/${provider}.png`}
               alt="provider"
@@ -111,7 +94,7 @@ const ProfileCard = props => {
           </Stat>
           <Stat>
             <StatNumber>{like}</StatNumber>
-            <StatLabel>Likes</StatLabel>
+            <StatLabel>Followings</StatLabel>
           </Stat>
           <Stat>
             <StatNumber>{recipe}</StatNumber>
