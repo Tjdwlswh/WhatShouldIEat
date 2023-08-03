@@ -11,18 +11,20 @@ export const changeField = createAction(CHANGE_FIELD, ({ key, value }) => ({
   key,
   value,
 }));
-export const createPost = createAction(CREATE_POST, ({ ingredients,type }) => ({
+export const createPost = createAction(CREATE_POST, ({ ingredients, type, token }) => ({
   ingredients,
-  type
+  type,
+  token,
 }));
 
 const createPostSaga = createRequestSaga(CREATE_POST, postsAPI.createPost);
+
 export function* createSaga() {
   yield takeLatest(CREATE_POST, createPostSaga);
 }
 
 const initialState = {
-  type : '',
+  type: '',
   ingredients: [],
   post: null,
   postError: null,

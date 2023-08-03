@@ -16,7 +16,7 @@ const AccountContainer = () => {
   const email = useSelector(state => state.user.user?.email);
   const nickName = useSelector(state => state.user.user?.nickName);
   const provider = useSelector(state => state.user.user?.provider);
-  const token = useSelector(state => state.user?.token);
+  const token = useSelector(state => state.user.token);
 
   useEffect(() => {
     dispatch(initializeForm('renew'));

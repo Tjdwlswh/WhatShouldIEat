@@ -3,8 +3,6 @@ import Button from '../../common/Button';
 import palette from '../../../lib/styles/palette';
 import React, { useState, useCallback, useEffect } from 'react';
 import CreateActionButtonContainer from '../../../container/create/Actionbutton';
-import { useNavigate } from 'react-router-dom';
-
 
 const CreateBlock = styled.div`
   display: flex;
@@ -49,7 +47,7 @@ const CreateBlock = styled.div`
 
   .btndelete {
     margin-right: 1rem;
-    flex : 1;
+    flex: 1;
   }
 `;
 
@@ -77,13 +75,14 @@ const CheckInputbox = styled.div`
   margin-top: 3rem;
   width: 100%;
 
- .check{ margin-right : 0.5rem;};
+  .check {
+    margin-right: 0.5rem;
+  }
 
- label{
-  margin-right: 1rem;
- }
-
-`
+  label {
+    margin-right: 1rem;
+  }
+`;
 
 // 하나만 랜더링 되도록 함
 
@@ -105,17 +104,17 @@ const TagList = React.memo(({ ingredients, onRemove }) => (
   </Ingredient>
 ));
 
-const CreateForm = ({ ingredients, onChangeTags,onChangeCheck, onPublish }) => {
+// const CreateForm = ({ ingredients, onChangeTags, onChangeCheck, onPublish }) => {
+const CreateForm = ({ ingredients, onChangeTags, onChangeCheck }) => {
   const [input, setInput] = useState('');
   const [localTags, setLocalTags] = useState([]);
-  const [check,setCheck] = useState(null)
+  const [check, setCheck] = useState(null);
   const [isFixedChecked, setIsFixedChecked] = useState(false);
   const [isFlexibleChecked, setIsFlexibleChecked] = useState(false);
-  const navigate = useNavigate();
 
-  console.log(check)
+  console.log(check);
   const insertTag = useCallback(
-    (ingredient,check) => {
+    (ingredient, check) => {
       if (!ingredient) return;
       //공백이라면 추가하지 않음
       if (localTags.includes(ingredient)) return;
@@ -124,9 +123,9 @@ const CreateForm = ({ ingredients, onChangeTags,onChangeCheck, onPublish }) => {
       const nextTags = [...localTags, ingredient];
       setLocalTags(nextTags);
       onChangeTags(nextTags);
-      onChangeCheck(check)
+      onChangeCheck(check);
     },
-    [localTags, onChangeTags,onChangeCheck],
+    [localTags, onChangeTags, onChangeCheck],
   );
 
   const onRemove = useCallback(
@@ -155,85 +154,77 @@ const CreateForm = ({ ingredients, onChangeTags,onChangeCheck, onPublish }) => {
       setIsFixedChecked(false);
       setCheck(checked ? 'flexible' : null);
     }
-  },[]);
+  }, []);
 
   const onSubmit = useCallback(
     e => {
       e.preventDefault();
-      insertTag(input.trim(),check);
+      insertTag(input.trim(), check);
       setInput('');
     },
-    [input, insertTag,check],
+    [input, insertTag, check],
   );
 
-  const onDelete = useCallback(
-    () =>{
-      setLocalTags([])
-    },[]
-  )
+  const onDelete = useCallback(() => {
+    setLocalTags([]);
+  }, []);
 
   useEffect(() => {
     setLocalTags(ingredients);
   }, [ingredients]);
 
   return (
-    <>    <CreateBlock>
-      <div className="select">
-        <h4>선택한 재료</h4>
-        <TagList ingredients={localTags} onRemove={onRemove} />
-        <div className="btn">
-        <Button className="btndelete" onClick={onDelete}>모두 삭제</Button>
-        <div onClick={()=>{
-             navigate(`/CreateAi`);
-        }}>
-          <CreateActionButtonContainer onClick={onPublish}  />
+    <>
+      <CreateBlock>
+        <div className="select">
+          <h4>선택한 재료</h4>
+          <TagList ingredients={localTags} onRemove={onRemove} />
+          <div className="btn">
+            <Button className="btndelete" onClick={onDelete}>
+              모두 삭제
+            </Button>
+            <CreateActionButtonContainer />
           </div>
         </div>
-      </div>
-      <div className="block">
-        <form className="box" onSubmit={onSubmit}>
-          <input
-            className="row"
-            placeholder="태그를 입력하세요"
-            value={input}
-            onChange={onChange}
-          />
-          <Button type="submit">추가 버튼</Button>
-          
-          <CheckInputbox>
-          <label>
-           {!(check) && <div>***type을 정하셔서 체크해주세요***</div>}
-          <input 
-          type="checkbox" 
-          name='fixed' 
-          className='check'
-          value="fixed"
-          onChange={onHandleChange}
-          checked={isFixedChecked}
-        
-          ></input>
-          재료 고정
-          </label>
-          <label>
-          <input 
-          type="checkbox"
-          name='flexible' 
-          value="flexible"
-          className='check'
-          onChange={onHandleChange}
-          checked={isFlexibleChecked}
-         
-          ></input>
-          재료 추가 기능
-          </label>
-          </CheckInputbox>
-        </form>
-      </div>
-     
-    </CreateBlock>
+        <div className="block">
+          <form className="box" onSubmit={onSubmit}>
+            <input
+              className="row"
+              placeholder="태그를 입력하세요"
+              value={input}
+              onChange={onChange}
+            />
+            <Button type="submit">추가 버튼</Button>
 
+            <CheckInputbox>
+              <label>
+                {!check && <div>***type을 정하셔서 체크해주세요***</div>}
+                <input
+                  type="checkbox"
+                  name="fixed"
+                  className="check"
+                  value="fixed"
+                  onChange={onHandleChange}
+                  checked={isFixedChecked}
+                ></input>
+                재료 고정
+              </label>
+              <label>
+                <input
+                  type="checkbox"
+                  name="flexible"
+                  value="flexible"
+                  className="check"
+                  onChange={onHandleChange}
+                  checked={isFlexibleChecked}
+                ></input>
+                재료 추가 기능
+              </label>
+            </CheckInputbox>
+          </form>
+        </div>
+      </CreateBlock>
     </>
-
   );
 };
 
