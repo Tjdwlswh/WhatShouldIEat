@@ -187,7 +187,6 @@ const CreateForm = ({ ingredients, onChangeTags, onChangeCheck }) => {
 
   return (
     <>
-      {' '}
       <CreateBlock>
         <div className="select">
           <h4>선택한 재료</h4>
