@@ -15,16 +15,17 @@ function App() {
       <Route path="/" element={<MainPage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<RegisterPage />} />
+      <Route path="create" element={<CreateRecipe />} />
+      <Route path="/createAi" element={<CreateAiReturn />} />
 
-      
-    
       <Route path="/:email">
-        <Route index element={<CreateRecipe />} />
-        <Route path=":postId" element={<CreateAiReturn />} />
+      <Route path=":postId" element={<MyRecipe />} />
       </Route>
-      <Route path="/CreateAi" element={<CreateAiReturn />} />
       
+      {/* 임시 my레시피 주소 */}
       <Route path="/myrecipe" element={<MyRecipe />} />
+      {/* ㅡㅡㅡㅡㅡㅡ */}
+
       <Route path="/recommend" element={<RecommendRecipe />} />
       <Route path="/review" element={<ReviewRecipe />} />
       <Route path="/myaccount" element={<ReviewRecipe />} />

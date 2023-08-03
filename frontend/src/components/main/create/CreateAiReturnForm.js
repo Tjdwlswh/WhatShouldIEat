@@ -7,7 +7,7 @@ import { useParams } from 'react-router-dom'
 import { readAiPost,unloadPost } from '../../../modules/aipost';
 import Responsive from '../../common/Responsive';
 import styled from 'styled-components';
-
+import Uploader from './ImgComponent';
 
 export const TagItem = React.memo(({tag, onRemove})=>(
     <Tag onClick={() => onRemove(tag)}> #{tag} </Tag>
@@ -93,7 +93,9 @@ const CreateAiReturnForm = () => {
             <ImgUpload>
             <img className='imgbox' src='/logo.png' alt='AI 사진' />
             <Button className="onebtn">이미지 업로드</Button>
+            
             </ImgUpload>
+            
 
             <AiReturnbox>
                 <h3 contentEditable="true">여기는 'foodname'</h3>
@@ -120,7 +122,11 @@ const CreateAiReturnForm = () => {
                 </div>
             </AiReturnbox>
         </CreateAireturnBlock>
-    
+        <p>
+            2. 이미지 업로드 로직 구현해야함<br />
+            4. readAipost.get 을 통해서 (요리명, 재료, 레시피)를 받아오고 다시 태그들이랑 레시피, 재료를 저장하는 리덕스를 구현후에 다시 post 함
+        </p>
+        <Uploader />
         </>
     )
 }
