@@ -258,11 +258,6 @@ const CreateForm = ({ ingredients, onChangeTags,onChangeCheck, onPublish }) => {
       </div>
      
     </CreateBlock>
-    <p>
-      진도부터 빼고나서 작성할 숙제 : <br />
-        0.로그인이 되어있지 않는 상태에서 버튼을 누르면 로그인 하라고 alert 창 띄워주고 return으로 끝냄<br />
-      </p>
-
     </>
 
   );

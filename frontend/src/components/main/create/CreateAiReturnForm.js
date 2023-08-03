@@ -122,10 +122,7 @@ const CreateAiReturnForm = () => {
                 </div>
             </AiReturnbox>
         </CreateAireturnBlock>
-        <p>
-            2. 이미지 업로드 로직 구현해야함<br />
-            4. readAipost.get 을 통해서 (요리명, 재료, 레시피)를 받아오고 다시 태그들이랑 레시피, 재료를 저장하는 리덕스를 구현후에 다시 post 함
-        </p>
+      
         <Uploader />
         </>
     )
