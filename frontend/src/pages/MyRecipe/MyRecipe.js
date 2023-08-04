@@ -1,11 +1,12 @@
-import MyRecipeForm from '../../components/main/myrecipe/MyRecipeForm';
+
 import MyRecipeTemp from '../../components/main/myrecipe/MyRecipeTemp';
+import MyRecipeContainer from '../../container/myrecipe/MyRecipeContainer';
 
 const MyRecipe = () => {
   return (
     <div>
       <MyRecipeTemp>
-        <MyRecipeForm />
+        <MyRecipeContainer />
       </MyRecipeTemp>
     </div>
   );

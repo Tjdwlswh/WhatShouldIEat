@@ -23,3 +23,17 @@ export const savePost = async ({ foodname, ingredients, recipe, tags, aiRecipeId
     },
   );
 };
+
+export const readPost = async ({recipeId,token }) => {
+  return await client.get(`/recipes/${recipeId}`,
+  {recipeId},
+  {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  },
+  
+  )
+}
+
+///recipes/:recipeId
