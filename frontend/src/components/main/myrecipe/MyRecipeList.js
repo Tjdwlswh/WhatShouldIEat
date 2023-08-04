@@ -65,7 +65,9 @@ const HashTag = styled.span`
   line-height: 110%;
 `;
 
-export const ItemList = () => {
+const ItemList = ({ post }) => {
+  const { foodname, tags, foodImg } = post;
+
   return (
     <Link to={``}>
       <Recipe>
@@ -75,9 +77,9 @@ export const ItemList = () => {
         <Description>
           <Logo src="/logo192.png" alt="로고" />
           <NameGroup>
-            <Name>여기는 이름</Name>
+            <Name>{foodname}</Name>
             <TagGruop>
-              <HashTag>여기는 태그</HashTag>
+              <HashTag>{tags}</HashTag>
             </TagGruop>
           </NameGroup>
         </Description>
@@ -86,28 +88,21 @@ export const ItemList = () => {
   );
 };
 
-const MyRecipeList = () => {
-  useEffect(() => {
-    //서버 api 호출
-  }, []);
+const MyRecipeList = ({ posts, loading, error }) => {
+  if (error) {
+    return <div> 에러가 발생했습니다. </div>;
+  }
 
   return (
     <div>
       <RecipeGroup>
-        <ItemList />
-        <ItemList />
-        <ItemList />
-        <ItemList />
-        <ItemList />
-        <ItemList />
-        <ItemList />
-        <ItemList />
-        <ItemList />
-        <ItemList />
-        <ItemList />
-        <ItemList />
-        <ItemList />
-        <ItemList />
+        {!loading && posts && (
+          <div>
+            {posts.map(post => (
+              <ItemList post={post}></ItemList>
+            ))}
+          </div>
+        )}
       </RecipeGroup>
     </div>
   );

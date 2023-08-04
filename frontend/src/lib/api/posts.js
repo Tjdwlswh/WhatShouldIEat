@@ -32,4 +32,10 @@ export const readPost = async ({ recipeId, token }) => {
   });
 };
 
-///recipes/:recipeId
+export const listPosts = async ({ token }) => {
+  return await client.get('/myrecipes', {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};

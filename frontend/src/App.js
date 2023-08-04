@@ -19,7 +19,7 @@ function App() {
       <Route path="/" element={<MainPage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<RegisterPage />} />
-      <Route path="create" element={<CreateRecipe />} />
+      <Route path="/create" element={<CreateRecipe />} />
       <Route path="/createAi" element={<CreateAiReturn />} />
 
       <Route path="/:email">

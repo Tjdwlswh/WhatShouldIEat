@@ -55,7 +55,7 @@ const Header = ({ user, onLogout, handleEmailClick }) => {
           <Link to="/create" className="link">
             레시피 생성
           </Link>
-          <Link to="/myrecipe" className="link">
+          <Link to={`/createAi`} className="link">
             나의 레시피
           </Link>
           <Link to="/recommend" className="link">

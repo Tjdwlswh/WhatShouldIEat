@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { readPost, unloadPost } from '../../modules/recipe';
+import { readPost, unloadPost } from '../../modules/myrecipe';
 import MyRecipeForm from '../../components/main/myrecipe/MyRecipeForm';
 import MyRecipeList from '../../components/main/myrecipe/MyRecipeList';
 import { ItemList } from '../../components/main/myrecipe/MyRecipeList';
@@ -26,11 +26,10 @@ const MyRecipeContainer = () => {
   }, [dispatch, recipeId, token]);
 
   return (
-  <div>
-  <MyRecipeForm post={post} loading={loading} error={error} />;
-  <ItemList post={post} />
-  </div>
-  )
+    <div>
+      <MyRecipeForm post={post} loading={loading} error={error} />;
+    </div>
+  );
 };
 
 export default MyRecipeContainer;

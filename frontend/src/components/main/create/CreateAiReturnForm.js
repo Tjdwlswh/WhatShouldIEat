@@ -82,7 +82,7 @@ const CreateAiReturnForm = () => {
       const { id } = myRecipe;
       navigate(`/${email}/${id}`);
     }
-  }, [myRecipe, navigate, user]);
+  }, [myRecipe, navigate, user, id]);
 
   return (
     <>
