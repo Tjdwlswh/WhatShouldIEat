@@ -22,7 +22,7 @@ const recipeModel = {
     return await db.Recipe.findOne({
       where: { id: recipeId },
       include: [
-        { model: db.User, attributes: ['nickName'] },
+        { model: db.User, attributes: ['nickName', 'profileImg'] },
         { model: db.User, as: 'Likers', attributes: ['id'] },
       ],
     });
