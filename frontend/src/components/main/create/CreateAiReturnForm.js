@@ -11,9 +11,7 @@ import {
   TagListBlock,
 } from './AiComponents';
 import { useDispatch, useSelector } from 'react-redux';
-import styled from 'styled-components';
 import { savePost } from '../../../modules/create';
-import Uploader from './ImgComponent';
 
 export const TagItem = React.memo(({ tag, onRemove }) => (
   <Tag onClick={() => onRemove(tag)}> #{tag} </Tag>
@@ -34,7 +32,7 @@ const CreateAiReturnForm = () => {
   const [localTags, setLocalTags] = useState([]);
 
   const { token } = useSelector(state => state.user);
-  const {user} = useSelector(state => state.user)
+  const { user } = useSelector(state => state.user);
   const { post, postError, myRecipe } = useSelector(({ create }) => ({
     post: create.post,
     error: create.error,
@@ -78,11 +76,11 @@ const CreateAiReturnForm = () => {
 
   useEffect(() => {
     if (myRecipe) {
-      const {email} = user
-      const{id} = myRecipe
+      const { email } = user;
+      const { id } = myRecipe;
       navigate(`/${email}/${id}`);
     }
-  }, [myRecipe, navigate,user]);
+  }, [myRecipe, navigate, user]);
 
   return (
     <>
