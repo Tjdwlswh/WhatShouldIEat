@@ -4,7 +4,7 @@ import { upload } from '../imgUploads/imgUploadRouter.js';
 import { recipeController } from './recipeController.js';
 
 const recipeRouter = Router();
-const imgUpload = upload.single('foodImg');
+const imgUpload = upload.single('image');
 
 //나의레시피로 생성
 recipeRouter.post('/myrecipes', loginRequired, imgUpload, recipeController.postMyrecipe);

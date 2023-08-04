@@ -3,7 +3,6 @@ import React, { useState, useCallback, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   CreateAireturnBlock,
-  ImgUpload,
   AiReturnbox,
   Tag,
   TagBoxBlock,
@@ -12,6 +11,7 @@ import {
 } from './AiComponents';
 import { useDispatch, useSelector } from 'react-redux';
 import { savePost } from '../../../modules/create';
+import ImgContainer from '../../../container/common/ImgContainer';
 
 export const TagItem = React.memo(({ tag, onRemove }) => (
   <Tag onClick={() => onRemove(tag)}> #{tag} </Tag>
@@ -30,6 +30,7 @@ const CreateAiReturnForm = () => {
   const navigate = useNavigate();
   const [input, setInput] = useState('');
   const [localTags, setLocalTags] = useState([]);
+  const [image, setImage] = useState(null);
 
   const { token } = useSelector(state => state.user);
   const { user } = useSelector(state => state.user);
@@ -70,8 +71,15 @@ const CreateAiReturnForm = () => {
   );
 
   const handleClickSave = () => {
-    const tags = `#${localTags.join('#')}`;
-    dispatch(savePost({ foodname, ingredients, recipe, tags, aiRecipeId: id, token }));
+    let tags = '';
+    if (localTags) {
+      tags = `#${localTags.join('#')}`;
+    }
+    dispatch(savePost({ foodname, ingredients, recipe, tags, aiRecipeId: id, token, image }));
+  };
+
+  const handleImageSelected = file => {
+    setImage(file);
   };
 
   useEffect(() => {
@@ -85,10 +93,7 @@ const CreateAiReturnForm = () => {
   return (
     <>
       <CreateAireturnBlock>
-        <ImgUpload>
-          <img className="imgbox" src="/logo.png" alt="AI 사진" />
-          <Button className="onebtn">이미지 업로드</Button>
-        </ImgUpload>
+        <ImgContainer onImageSelected={handleImageSelected} />
 
         <AiReturnbox>
           <h3 contentEditable="true">{foodname}</h3>

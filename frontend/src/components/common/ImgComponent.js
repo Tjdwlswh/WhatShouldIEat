@@ -1,7 +1,5 @@
+import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
-import palette from '../../lib/styles/palette';
-import { useEffect, useRef } from 'react';
-import axios from 'axios';
 import Button from './Button';
 
 const Wrapper = styled.div`
@@ -10,7 +8,6 @@ const Wrapper = styled.div`
   justify-content: center;
   align-items: center;
   width: 15rem;
-  padding: 1rem;
 `;
 
 const ButtonBox = styled.div`
@@ -34,24 +31,30 @@ const ImgBox = styled.div`
   }
 `;
 
-const ImgComponent = ({ image, setImage }) => {
+const ImgComponent = ({ onImageSelected }) => {
+  const [imageURL, setImageURL] = useState('/logo.png');
   const inputRef = useRef();
 
   useEffect(() => {
     return () => {
-      URL.revokeObjectURL(image.preview_URL);
+      URL.revokeObjectURL(imageURL);
     };
-  }, [image.preview_URL]);
+  }, [imageURL]);
 
   const saveImage = e => {
     e.preventDefault();
-    if (e.target.files[0]) {
-      URL.revokeObjectURL(image.preview_URL);
-      const preview_URL = URL.createObjectURL(e.target.files[0]);
-      setImage(() => ({
-        image_file: e.target.files[0],
-        preview_URL: preview_URL,
-      }));
+    const image = e.target.files[0];
+
+    if (image.size > 5 * 1024 * 1024) {
+      alert('업로드 가능한 최대 용량은 5MB입니다. ');
+      return;
+    }
+
+    if (image) {
+      URL.revokeObjectURL(imageURL);
+      const preview_URL = URL.createObjectURL(image);
+      onImageSelected(image);
+      setImageURL(preview_URL);
     }
   };
 
@@ -60,32 +63,14 @@ const ImgComponent = ({ image, setImage }) => {
   };
 
   const handleDeleteClick = () => {
-    URL.revokeObjectURL(image.preview_URL);
-    setImage(() => ({
-      image_file: {},
-      preview_URL: 'logo.png',
-    }));
-  };
-
-  const sendImageToServer = async () => {
-    if (image.image_file) {
-      const formData = new FormData();
-      formData.append('imgfile', image.image_file);
-      await axios.post('경로', formData);
-      alert('서버에 등록이 완료되었습니다.');
-      setImage({
-        image_file: '',
-        preview_URL: 'logo.png',
-      });
-    } else {
-      alert('사진을 등록하세요!');
-    }
+    URL.revokeObjectURL(imageURL);
+    setImageURL('/logo.png');
   };
 
   return (
     <Wrapper>
       <ImgBox>
-        <img src={image.preview_URL} alt="preview" />
+        <img src={imageURL} alt="preview" />
       </ImgBox>
       <input
         type="file"

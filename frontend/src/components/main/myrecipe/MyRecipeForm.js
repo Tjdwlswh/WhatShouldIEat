@@ -5,13 +5,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import {
   CreateAireturnBlock,
-  ImgUpload,
   AiReturnbox,
   TagBoxBlock,
   TagForm,
   TagListBlock,
 } from '../create/AiComponents';
 import palette from '../../../lib/styles/palette';
+import ImgContainer from '../../../container/common/ImgContainer';
 
 const SubInfo = styled.div`
   margin-top: 1rem;
@@ -59,13 +59,14 @@ const MyRecipeForm = ({ post, error, loading }) => {
 
   const { comment } = post;
 
+  const handleImageSelected = file => {
+    console.log(file);
+  };
+
   return (
     <>
       <CreateAireturnBlock>
-        <ImgUpload>
-          <img className="imgbox" src="/logo.png" alt="AI 사진" />
-          <Button className="onebtn">이미지 업로드</Button>
-        </ImgUpload>
+        <ImgContainer onImageSelected={handleImageSelected} />
 
         <AiReturnbox>
           <SubInfo>

@@ -23,13 +23,14 @@ export const createPost = createAction(CREATE_POST, ({ ingredients, type, token 
 
 export const savePost = createAction(
   SAVE_POST,
-  ({ foodname, ingredients, recipe, tags, aiRecipeId, token }) => ({
+  ({ foodname, ingredients, recipe, tags, aiRecipeId, token, image }) => ({
     foodname,
     ingredients,
     recipe,
     tags,
     aiRecipeId,
     token,
+    image,
   }),
 );
 
