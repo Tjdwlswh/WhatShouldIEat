@@ -3,7 +3,6 @@ import React, { useState, useCallback, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   CreateAireturnBlock,
-  ImgUpload,
   AiReturnbox,
   Tag,
   TagBoxBlock,
@@ -11,10 +10,8 @@ import {
   TagListBlock,
 } from './AiComponents';
 import { useDispatch, useSelector } from 'react-redux';
-import Responsive from '../../common/Responsive';
-import styled from 'styled-components';
 import { savePost } from '../../../modules/create';
-import Uploader from './ImgComponent';
+import ImgContainer from '../../../container/common/ImgContainer';
 
 export const TagItem = React.memo(({ tag, onRemove }) => (
   <Tag onClick={() => onRemove(tag)}> #{tag} </Tag>
@@ -28,17 +25,15 @@ export const TagList = React.memo(({ tags, onRemove }) => (
   </TagListBlock>
 ));
 
-const AiPostViewerBlock = styled(Responsive)`
-  margin-top: 4rem;
-`;
-
 const CreateAiReturnForm = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [input, setInput] = useState('');
   const [localTags, setLocalTags] = useState([]);
+  const [image, setImage] = useState(null);
 
   const { token } = useSelector(state => state.user);
+  const { user } = useSelector(state => state.user);
   const { post, postError, myRecipe } = useSelector(({ create }) => ({
     post: create.post,
     error: create.error,
@@ -76,36 +71,29 @@ const CreateAiReturnForm = () => {
   );
 
   const handleClickSave = () => {
-    const tags = `#${localTags.join('#')}`;
-    dispatch(savePost({ foodname, ingredients, recipe, tags, aiRecipeId: id, token }));
+    let tags = '';
+    if (localTags) {
+      tags = `#${localTags.join('#')}`;
+    }
+    dispatch(savePost({ foodname, ingredients, recipe, tags, aiRecipeId: id, token, image }));
+  };
+
+  const handleImageSelected = file => {
+    setImage(file);
   };
 
   useEffect(() => {
     if (myRecipe) {
-      navigate('/myrecipe');
+      const { email } = user;
+      const { id } = myRecipe;
+      navigate(`/${email}/${id}`);
     }
-  }, [myRecipe, navigate]);
-
-  // if(error) {
-  //     if (error.response && error.response.status === 404) {
-  //         return <AiPostViewerBlock>AI가 작동을 안해요</AiPostViewerBlock>
-  //     }
-  //     return <AiPostViewerBlock>오류가 발생했습ㄴ</AiPostViewerBlock>
-  // }
-
-  // if(loading || !aipost) {
-  //     return null;
-  // }
-
-  // const { foodname, ingredients, recipe } = aipost
+  }, [myRecipe, navigate, user]);
 
   return (
     <>
       <CreateAireturnBlock>
-        <ImgUpload>
-          <img className="imgbox" src="/logo.png" alt="AI 사진" />
-          <Button className="onebtn">이미지 업로드</Button>
-        </ImgUpload>
+        <ImgContainer onImageSelected={handleImageSelected} />
 
         <AiReturnbox>
           <h3 contentEditable="true">{foodname}</h3>

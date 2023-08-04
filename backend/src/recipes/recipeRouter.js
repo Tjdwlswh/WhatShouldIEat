@@ -4,7 +4,7 @@ import { upload } from '../imgUploads/imgUploadRouter.js';
 import { recipeController } from './recipeController.js';
 
 const recipeRouter = Router();
-const imgUpload = upload.single('foodImg');
+const imgUpload = upload.single('image');
 
 //나의레시피로 생성
 recipeRouter.post('/myrecipes', loginRequired, imgUpload, recipeController.postMyrecipe);
@@ -24,7 +24,7 @@ recipeRouter.get('/myrecipes', loginRequired, recipeController.getMyrecipes);
 //상세 레시피 조회
 recipeRouter.get('/recipes/:recipeId', loginRequired, recipeController.getRecipe);
 
-//추천레시피 목록조회
+//추천레시피 목록조회 - 로그인필요없음
 recipeRouter.get('/recipes', recipeController.getRecipes);
 
 //나의레시피 수정

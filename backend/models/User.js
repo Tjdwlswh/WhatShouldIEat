@@ -50,16 +50,16 @@ class User extends Sequelize.Model {
   }
 
   static associate(db) {
-    db.User.hasMany(db.Recipe);
-    db.User.belongsToMany(db.Recipe, { through: 'Like' });
+    db.User.hasMany(db.Recipe, { foreignKey: 'userId', sourceKey: 'id', as: 'Recipes' });
+    db.User.belongsToMany(db.Recipe, { through: 'Likeit' });
     db.User.belongsToMany(db.User, {
       foreignKey: 'followingId',
-      as: 'Followers', //user.getFollowers
+      as: 'Followers',
       through: 'Follow',
     });
     db.User.belongsToMany(db.User, {
       foreignKey: 'followerId',
-      as: 'Followings', //user.getFollowings
+      as: 'Followings',
       through: 'Follow',
     });
     db.User.hasMany(db.Comment, { foreignKey: 'commenterId', sourceKey: 'id' });

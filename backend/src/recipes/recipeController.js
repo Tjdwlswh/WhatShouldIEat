@@ -14,7 +14,7 @@ const recipeController = {
         recipe,
         tags,
         foodImg,
-        UserId: req.user.id,
+        userId: req.user.id,
         aiRecipeId,
       });
       if (newRecipe.errMessage) {
@@ -103,6 +103,7 @@ const recipeController = {
       const userId = req.user.id;
       const toUpdate = req.body;
       const recipe = await recipeService.updateMyRecipe({ recipeId, userId, toUpdate });
+
       return res.status(200).json(recipe);
     } catch (err) {
       next(err);

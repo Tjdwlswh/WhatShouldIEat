@@ -28,7 +28,7 @@ const Background = styled.div`
 
 const Loading = () => {
   const dispatch = useDispatch();
-  const { loading } = useSelector(state => state.loading);
+  const { loading, message } = useSelector(state => state.loading);
   const handleBackgroundClick = e => {
     e.preventDefault();
     dispatch(finishLoading());
@@ -38,6 +38,7 @@ const Loading = () => {
     loading && (
       <Background onClick={handleBackgroundClick}>
         <img src={loader} alt="로딩 중" />
+        <h1>{message}</h1>
       </Background>
     )
   );

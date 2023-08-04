@@ -5,11 +5,11 @@ import { getAiRecipe } from '../libs/api/recipeAPI.js';
 import { commentModel } from '../comments/commentModel.js';
 
 const recipeService = {
-  addRecipe: async ({ foodname, ingredients, recipe, tags, foodImg, UserId, aiRecipeId }) => {
-    const newRecipe = { foodname, ingredients, recipe, tags, foodImg, UserId };
+  addRecipe: async ({ foodname, ingredients, recipe, tags, foodImg, userId, aiRecipeId }) => {
+    const newRecipe = { foodname, ingredients, recipe, tags, foodImg, userId };
     const createdRecipe = await recipeModel.create(newRecipe);
 
-    //1.ingredients테이블에 재료들 파싱해서 저장
+    //1.ingridients테이블에 재료들 파싱해서 저장
     const newIngredient = ingredients.split('|');
     const createdIngredient = await ingredientModel.findOrCreate(newIngredient);
     //재료 모델을 레시피 모델과 연결
@@ -100,12 +100,31 @@ const recipeService = {
     return recipes;
   },
   updateMyRecipe: async ({ recipeId, userId, toUpdate }) => {
+    //업데이트 전 자료 찾아옴
     const recipe = await recipeModel.findOne(recipeId);
-    console.log('1', recipe, userId, recipeId, toUpdate);
-    if (recipe && recipe.UserId === userId) {
-      const result = await recipeModel.update(toUpdate);
-      console.log('3', result);
-      return result;
+
+    if (recipe && recipe.userId === userId) {
+      await recipeModel.update({ toUpdate, recipeId });
+      //1.ingredients테이블에 재료들 파싱 후  업데이트
+      if (toUpdate.ingredients) {
+        const newIngredient = toUpdate.ingredients.split('|');
+        const createdIngredients = await ingredientModel.findOrCreate(newIngredient);
+        //업데이트하면 success=1, 실패=0불러와져서 새로 업데이트된 레시피로 불러옴
+        const updatedRecipe = await recipeModel.findOne(recipeId);
+        //새로운 재료를 연결
+        await updatedRecipe.setIngredients(createdIngredients.map(i => i[0]));
+      }
+
+      //2.해시태그 정보 업데이트
+      if (toUpdate.tags) {
+        const hashtags = toUpdate.tags.match(/#[^\s#]*/g);
+        const newTag = await hashtagModel.findOrCreate(hashtags);
+        const updatedRecipe = await recipeModel.findOne(recipeId);
+        //새로운 해시태그를 연결
+        await updatedRecipe.setHashtags(newTag.map(t => t[0]));
+      }
+      const updatedRecipe = await recipeModel.findOne(recipeId);
+      return updatedRecipe;
     } else {
       return false;
     }

@@ -23,17 +23,22 @@ export const createPost = createAction(CREATE_POST, ({ ingredients, type, token 
 
 export const savePost = createAction(
   SAVE_POST,
-  ({ foodname, ingredients, recipe, tags, aiRecipeId, token }) => ({
+  ({ foodname, ingredients, recipe, tags, aiRecipeId, token, image }) => ({
     foodname,
     ingredients,
     recipe,
     tags,
     aiRecipeId,
     token,
+    image,
   }),
 );
 
-const createPostSaga = createRequestSaga(CREATE_POST, postsAPI.createPost);
+const createPostSaga = createRequestSaga(
+  CREATE_POST,
+  postsAPI.createPost,
+  '최대 10초 이상 걸릴 수 있습니다...',
+);
 const savePostSaga = createRequestSaga(SAVE_POST, postsAPI.savePost);
 
 export function* createSaga() {

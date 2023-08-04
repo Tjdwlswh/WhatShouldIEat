@@ -49,6 +49,15 @@ const UserModel = {
     const removedUser = await db.User.destroy({ where: { email } });
     return removedUser;
   },
+  findOne: async userId => {
+    const user = await db.User.findOne({
+      where: { id: userId },
+      include: [
+        { model: db.User, as: 'Followers', attributes: ['nickName', 'id'] },
+        { model: db.User, as: 'Followings', attributes: ['nickName', 'id'] },
+      ],
+    });
+    return user;
+  },
 };
-
 export { UserModel };
