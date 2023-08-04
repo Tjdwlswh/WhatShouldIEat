@@ -48,24 +48,12 @@ const recipeModel = {
     });
     return recipes;
   },
-  update: async (toUpdate, recipeId) => {
-    console.log('4', toUpdate, recipeId);
+  update: async ({ toUpdate, recipeId }) => {
     const updatedRecipe = await db.Recipe.update(toUpdate, {
       where: { id: recipeId },
-      hooks: {
-        beforeUpdate: (instance, options) => {
-          // null값을 제외하고 업데이트
-          for (const [key, value] of Object.entries(toUpdate)) {
-            if (value === undefined) {
-              delete instance.dataValues[key];
-            }
-          }
-        },
-      },
     });
     return updatedRecipe;
   },
-
   delete: async recipeId => {
     const deleteData = await db.Recipe.destroy({ where: { id: recipeId } });
     return deleteData;
