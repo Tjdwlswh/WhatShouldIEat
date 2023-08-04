@@ -4,6 +4,7 @@ import palette from '../../lib/styles/palette';
 import Button from '../common/Button';
 import KakaoLoginButton from '../button/KakaoLogin';
 import GoogleLoginButton from '../button/GoogleLogin';
+import ImgUploadContainer from '../../container/common/ImgUploadContainer';
 
 //회원가입 로그인 폼 웹디자인 컴포넌트
 
@@ -11,7 +12,13 @@ const AuthFormBlock = styled.div`
   h3 {
     margin: 0;
     color: ${palette.gray[8]};
+    text-align: center;
     margin-bottom: 1rem;
+  }
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 `;
 
@@ -65,7 +72,7 @@ const SuccessMessage = styled.div`
   margin-top: 1rem;
 `;
 
-const AuthForm = ({ type, form, onChange, onSubmit, error }) => {
+const AuthForm = ({ type, form, onChange, onSubmit, error, onImageSelected }) => {
   const text = textMap[type];
   const isRegister = type === 'register';
   const isLogin = type === 'login';
@@ -85,7 +92,10 @@ const AuthForm = ({ type, form, onChange, onSubmit, error }) => {
             value={form.email}
           />
         ) : (
-          <StyleInput defaultValue={form.email} disabled />
+          <>
+            <ImgUploadContainer onImageSelected={onImageSelected} />
+            <StyleInput defaultValue={form.email} disabled />
+          </>
         )}
         {!isOAuth && (
           <>

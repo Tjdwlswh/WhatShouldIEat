@@ -3,12 +3,12 @@ import styled from 'styled-components';
 import palette from '../../lib/styles/palette';
 
 const Container = styled.div`
-  height: 400px;
-  width: 300px;
+  width: 90%;
+  height: 93%;
   border-radius: 20px;
   border: 5px solid ${palette.main};
   overflow: hidden;
-  padding: 30px;
+  padding: 20px;
 `;
 
 const Card = styled.div`
@@ -50,7 +50,6 @@ const StatsContainer = styled.div`
   justify-content: space-between;
   margin-top: 1.5rem;
   padding-top: 1.5rem;
-  padding-bottom: 1.5rem;
   border-top: 1px solid ${palette.accent};
   color: ${palette.main};
 `;

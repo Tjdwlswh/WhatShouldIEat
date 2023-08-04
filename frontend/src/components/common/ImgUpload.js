@@ -5,9 +5,10 @@ import Button from './Button';
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: center;
   width: 15rem;
+  margin-bottom: 1rem;
 `;
 
 const ButtonBox = styled.div`
@@ -31,7 +32,7 @@ const ImgBox = styled.div`
   }
 `;
 
-const ImgComponent = ({ onImageSelected }) => {
+const ImgUpload = ({ onImageSelected }) => {
   const [imageURL, setImageURL] = useState('/logo.png');
   const inputRef = useRef();
 
@@ -87,4 +88,4 @@ const ImgComponent = ({ onImageSelected }) => {
   );
 };
 
-export default ImgComponent;
+export default ImgUpload;
