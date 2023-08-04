@@ -83,24 +83,33 @@ export const ImgUpload = styled.div`
 
 export const AiReturnbox = styled.div`
     width: 70%;
-   
     background-color: ${palette.gray[3]};
     padding: 1rem 3rem;
-    input{
-        
-        width: 50%;
-        border-radius: 5px;
-        border: 0 solid #e0e0e0;
+    display: flex;
+    flex-direction: column;
+
+    h3 {
+        width : 100%;
+        background-color: #E8EAF6;
+        display: block;
+        font-size: 1.5;
+        height: 3rem;
+        line-height:1.7;
     }
+
     .one{
         min-height:3rem;
         margin-top: 2rem;
+        width : 100%;
+        background-color: #E8EAF6;
         
     }
 
     .two{
         margin-top: 3rem;
         min-height:6rem;
+        width : 100%;
+        background-color: #E8EAF6;
     }
 
     .three{
@@ -110,9 +119,6 @@ export const AiReturnbox = styled.div`
         justify-content: center;
     }
 
-    h3{
-        text-align: center;
-    }
     .divbox{
         display: flex;
         flex-direction: column;
@@ -122,7 +128,7 @@ export const AiReturnbox = styled.div`
     }
 
     .twobtn{
-        margin-top: 2rem;
+        margin-top: 1rem;
         text-align: center;
         width: 100%;
     }

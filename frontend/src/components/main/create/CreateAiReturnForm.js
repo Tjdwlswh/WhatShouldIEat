@@ -11,7 +11,6 @@ import {
   TagListBlock,
 } from './AiComponents';
 import { useDispatch, useSelector } from 'react-redux';
-import Responsive from '../../common/Responsive';
 import styled from 'styled-components';
 import { savePost } from '../../../modules/create';
 import Uploader from './ImgComponent';
@@ -28,10 +27,6 @@ export const TagList = React.memo(({ tags, onRemove }) => (
   </TagListBlock>
 ));
 
-const AiPostViewerBlock = styled(Responsive)`
-  margin-top: 4rem;
-`;
-
 const CreateAiReturnForm = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -39,6 +34,7 @@ const CreateAiReturnForm = () => {
   const [localTags, setLocalTags] = useState([]);
 
   const { token } = useSelector(state => state.user);
+  const {user} = useSelector(state => state.user)
   const { post, postError, myRecipe } = useSelector(({ create }) => ({
     post: create.post,
     error: create.error,
@@ -82,22 +78,11 @@ const CreateAiReturnForm = () => {
 
   useEffect(() => {
     if (myRecipe) {
-      navigate('/myrecipe');
+      const {email} = user
+      const{id} = myRecipe
+      navigate(`/${email}/${id}`);
     }
-  }, [myRecipe, navigate]);
-
-  // if(error) {
-  //     if (error.response && error.response.status === 404) {
-  //         return <AiPostViewerBlock>AI가 작동을 안해요</AiPostViewerBlock>
-  //     }
-  //     return <AiPostViewerBlock>오류가 발생했습ㄴ</AiPostViewerBlock>
-  // }
-
-  // if(loading || !aipost) {
-  //     return null;
-  // }
-
-  // const { foodname, ingredients, recipe } = aipost
+  }, [myRecipe, navigate,user]);
 
   return (
     <>
