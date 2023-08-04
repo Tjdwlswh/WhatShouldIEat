@@ -104,9 +104,6 @@ const recipeService = {
     const recipe = await recipeModel.findOne(recipeId);
 
     if (recipe && recipe.UserId === userId) {
-      // 기존에 연결된 재료와 해시태그 자료 삭제
-      // const result = await recipe.removeIngredient(recipeId);
-      // const result1 = await recipe.removeHashtag(recipeId);
       await recipeModel.update({ toUpdate, recipeId });
       //1.ingredients테이블에 재료들 파싱 후  업데이트
       if (toUpdate.ingredients) {
