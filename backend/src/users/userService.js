@@ -1,5 +1,6 @@
 import bcrypt from 'bcrypt';
 import { UserModel } from './userModel.js';
+import { recipeModel } from '../recipes/recipeModel.js';
 import { ConflictException, NotFoundException } from '../libs/httpException.js';
 import { revokeAPI } from '../libs/api/revokeAPI.js';
 
@@ -70,9 +71,19 @@ const userService = {
       const errorMessage = 'Follower not found.';
       throw new NotFoundException(errorMessage);
     }
-    const result = await user.addFollowing(parseInt(followingId, 10));
-    console.log('2', result);
-    return result.Follow.dataValues;
+    await user.addFollowing(parseInt(followingId, 10));
+    return;
+  },
+  getUsercard: async userId => {
+    const { nickName, profileImg, Followers, Followings } = await UserModel.findOne(userId);
+    const recipe = await recipeModel.findMyRecipe(userId);
+    const user = { nickName, profileImg, Followers, Followings };
+    const recipeCount = recipe?.length || 0;
+    const followerCount = user?.Followers?.length || 0;
+    const followingCount = user?.Followings?.length || 0;
+    const followingIdList = user?.Followings?.map(f => f.id) || [];
+    const result = { user, recipeCount, followerCount, followingCount, followingIdList };
+    return result;
   },
 };
 export { userService };

@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { readPost, unloadPost } from '../../modules/recipe';
 import MyRecipeForm from '../../components/main/myrecipe/MyRecipeForm';
+import MyRecipeList from '../../components/main/myrecipe/MyRecipeList';
+import { ItemList } from '../../components/main/myrecipe/MyRecipeList';
 
 const MyRecipeContainer = () => {
   const { postId } = useParams();
@@ -23,7 +25,12 @@ const MyRecipeContainer = () => {
     };
   }, [dispatch, recipeId, token]);
 
-  return <MyRecipeForm post={post} loading={loading} error={error} />;
+  return (
+  <div>
+  <MyRecipeForm post={post} loading={loading} error={error} />;
+  <ItemList post={post} />
+  </div>
+  )
 };
 
 export default MyRecipeContainer;

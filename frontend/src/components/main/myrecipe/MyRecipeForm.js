@@ -37,9 +37,9 @@ const Tags = styled.div`
     margin-right: 0.5rem;
     font-size: 1.3rem;
     font-weight: bold;
-    &:hover {
+    /* &:hover {
       color: ${palette.cyan[6]};
-    }
+    } */
   }
 `;
 
@@ -55,8 +55,12 @@ const MyRecipeForm = ({ post, error, loading }) => {
     return null;
   }
 
-  const { foodname, ingredients, recipe, createdAt } = post.recipe;
+  const { foodname, ingredients, recipe, createdAt, tags, User } = post.recipe;
 
+  const tagArray = tags.split('#');
+  tagArray.shift();
+
+  console.log(tagArray);
   const { comment } = post;
 
   const handleImageSelected = file => {
@@ -71,7 +75,7 @@ const MyRecipeForm = ({ post, error, loading }) => {
         <AiReturnbox>
           <SubInfo>
             <span>
-              <b>이름</b>
+              <b>{User.nickName}</b>
             </span>
             <span>{new Date(createdAt).toLocaleDateString()}</span>
           </SubInfo>
@@ -86,9 +90,9 @@ const MyRecipeForm = ({ post, error, loading }) => {
           </label>
 
           <Tags>
-            <div className="tag">#태그1</div>
-            <div className="tag">#태그2</div>
-            <div className="tag">#태그3</div>
+            {tagArray.map(tag => (
+              <div className="tag">#{tag}</div>
+            ))}
           </Tags>
 
           <div className="twobtn">

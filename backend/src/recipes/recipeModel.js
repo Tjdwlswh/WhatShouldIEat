@@ -7,7 +7,7 @@ const recipeModel = {
   },
   findMyRecipe: async userId => {
     return await db.Recipe.findAll({
-      where: { UserId: userId },
+      where: { userId },
       include: [
         {
           model: db.User,
