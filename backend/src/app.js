@@ -9,8 +9,8 @@ import { sequelize } from '../models/index.js';
 import { errorMiddleWare } from './middlewares/errorMiddleWare.js';
 import { imgUploadRouter } from './imgUploads/imgUploadRouter.js';
 import { userRouter } from './users/userRouter.js';
-import { followRouter } from './follows/followRouter.js';
 import { recipeRouter } from './recipes/recipeRouter.js';
+import { commentRouter } from './comments/commentRouter.js';
 const app = express();
 const passport = initializePassport();
 
@@ -43,7 +43,7 @@ app.get('/', (req, res) => {
 
 // app.use('/auth', userRouter);
 
-app.use([imgUploadRouter, userRouter, followRouter, recipeRouter]);
+app.use([imgUploadRouter, userRouter, recipeRouter, commentRouter]);
 app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
 app.use(errorMiddleWare);

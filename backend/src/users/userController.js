@@ -107,6 +107,15 @@ const userController = {
       next(err);
     }
   },
+  getUser: async (req, res, next) => {
+    try {
+      const userId = req.user.id;
+      const user = await userService.getUsercard(userId);
+      res.status(200).json(user);
+    } catch (err) {
+      next(err);
+    }
+  },
 };
 
 export { userController };

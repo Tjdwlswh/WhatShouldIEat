@@ -5,8 +5,8 @@ import { getAiRecipe } from '../libs/api/recipeAPI.js';
 import { commentModel } from '../comments/commentModel.js';
 
 const recipeService = {
-  addRecipe: async ({ foodname, ingredients, recipe, tags, foodImg, UserId, aiRecipeId }) => {
-    const newRecipe = { foodname, ingredients, recipe, tags, foodImg, UserId };
+  addRecipe: async ({ foodname, ingredients, recipe, tags, foodImg, userId, aiRecipeId }) => {
+    const newRecipe = { foodname, ingredients, recipe, tags, foodImg, userId };
     const createdRecipe = await recipeModel.create(newRecipe);
 
     //1.ingridients테이블에 재료들 파싱해서 저장
@@ -103,7 +103,7 @@ const recipeService = {
     //업데이트 전 자료 찾아옴
     const recipe = await recipeModel.findOne(recipeId);
 
-    if (recipe && recipe.UserId === userId) {
+    if (recipe && recipe.userId === userId) {
       await recipeModel.update({ toUpdate, recipeId });
       //1.ingredients테이블에 재료들 파싱 후  업데이트
       if (toUpdate.ingredients) {

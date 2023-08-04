@@ -14,7 +14,7 @@ const recipeController = {
         recipe,
         tags,
         foodImg,
-        UserId: req.user.id,
+        userId: req.user.id,
         aiRecipeId,
       });
       if (newRecipe.errMessage) {

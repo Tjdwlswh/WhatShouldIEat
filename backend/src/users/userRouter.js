@@ -2,14 +2,10 @@ import { Router } from 'express';
 import loginRequired from '../middlewares/passport/loginRequired.js';
 import { upload } from '../imgUploads/imgUploadRouter.js';
 import { userController } from './userController.js';
-import { followData } from '../middlewares/follow.js';
 import { imgUploadRouter } from '../imgUploads/imgUploadRouter.js';
 
 const userRouter = Router();
 const imgUpload = upload.single('profileImg');
-
-// 모든 템플릿에서 사용하는 라우터용 미들웨어
-userRouter.use(followData);
 
 // 회원가입
 userRouter.post('/auth/register', imgUpload, userController.register);
@@ -47,8 +43,14 @@ userRouter.get('/auth/kakao/callback', userController.kakaoCallback);
 userRouter.get('/auth/google/login', userController.googleLogin);
 userRouter.get('/auth/google/callback', userController.googleCallback);
 
+//팔로우 신청
+userRouter.post('/:followingId/follow', loginRequired, userController.postFollow);
+
 // user 정보
 userRouter.get('/auth/user', loginRequired, userController.getUserInfo);
+
+//user profilecard
+userRouter.get('/auth/usercard', loginRequired, userController.getUser);
 
 // user 정보수정
 userRouter.put('/auth/user', loginRequired, userController.editUserInfo);
