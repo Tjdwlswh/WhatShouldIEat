@@ -35,7 +35,7 @@ const userController = {
 
   logout: async (req, res, next) => {
     try {
-      res.clearCookie();
+      res.clearCookie('refreshToken');
       const { email } = req.user;
       await userService.clearTokenInDB(email);
       res.status(200).json({ message: '로그아웃 성공' });

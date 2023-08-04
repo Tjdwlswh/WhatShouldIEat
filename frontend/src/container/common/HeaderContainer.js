@@ -29,6 +29,7 @@ const HeaderContainer = () => {
 
   const onLogout = () => {
     dispatch(logout(accessToken));
+    cookies.remove('token');
   };
 
   const handleEmailClick = e => {
