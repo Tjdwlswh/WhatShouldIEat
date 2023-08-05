@@ -59,11 +59,13 @@ const ImgUpload = ({ onImageSelected }) => {
     }
   };
 
-  const handleUploadClick = () => {
+  const handleUploadClick = e => {
+    e.preventDefault();
     inputRef.current.click();
   };
 
-  const handleDeleteClick = () => {
+  const handleDeleteClick = e => {
+    e.preventDefault();
     URL.revokeObjectURL(imageURL);
     setImageURL('/logo.png');
   };

@@ -18,6 +18,11 @@ const recipeModel = {
       order: [['createdAt', 'DESC']],
     });
   },
+
+  findMyRecipeCount: async userId => {
+    return await db.Recipe.count({ where: { userId } });
+  },
+
   findOne: async recipeId => {
     return await db.Recipe.findOne({
       where: { id: recipeId },
