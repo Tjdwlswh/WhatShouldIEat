@@ -3,6 +3,7 @@ import { UserModel } from './userModel.js';
 import { recipeModel } from '../recipes/recipeModel.js';
 import { ConflictException, NotFoundException } from '../libs/httpException.js';
 import { revokeAPI } from '../libs/api/revokeAPI.js';
+import { deleteFile } from '../libs/controlFile.js';
 
 const userService = {
   addUser: async ({ email, password, nickName, profileImg }) => {
@@ -42,6 +43,16 @@ const userService = {
 
   editUser: async ({ data, email }) => {
     // 유저 정보 수정
+    for (const [key, value] of Object.entries(data)) {
+      if (value === '') {
+        delete data[key];
+      }
+    }
+    if (data.image === 'delete') {
+      data.profileImg = '';
+      const { profileImg } = await UserModel.findByEmail(email);
+      deleteFile(profileImg);
+    }
     const editedUser = await UserModel.update(data, email);
     return editedUser;
   },

@@ -28,7 +28,7 @@ recipeRouter.get('/recipes/:recipeId', loginRequired, recipeController.getRecipe
 recipeRouter.get('/recipes', recipeController.getRecipes);
 
 //나의레시피 수정
-recipeRouter.put('/myrecipes/:recipeId', loginRequired, recipeController.updateMyRecipe);
+recipeRouter.put('/myrecipes/:recipeId', loginRequired, imgUpload, recipeController.updateMyRecipe);
 
 //나의 레시피 삭제 (hashtag테이블에 파싱되어 저장된 데이터는 남아있음)
 recipeRouter.delete('/myrecipes/:recipeId', loginRequired, recipeController.deleteMyRecipe);

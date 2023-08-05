@@ -3,6 +3,7 @@ import { ingredientModel } from '../ingredients/ingredientModel.js';
 import { hashtagModel } from '../hashtags/hashtagModel.js';
 import { getAiRecipe } from '../libs/api/recipeAPI.js';
 import { commentModel } from '../comments/commentModel.js';
+import { deleteFile } from '../libs/controlFile.js';
 
 const recipeService = {
   addRecipe: async ({ foodname, ingredients, recipe, tags, foodImg, userId, aiRecipeId }) => {
@@ -99,9 +100,15 @@ const recipeService = {
     const recipes = await recipeModel.findAll();
     return recipes;
   },
-  updateMyRecipe: async ({ recipeId, userId, toUpdate }) => {
+  updateMyRecipe: async ({ recipeId, userId, foodImg, toUpdate }) => {
     //업데이트 전 자료 찾아옴
     const recipe = await recipeModel.findOne(recipeId);
+    // 사진 삭제
+    if (toUpdate.image === 'delete') {
+      foodImg = '';
+      deleteFile(recipe.foodImg);
+    }
+    toUpdate['foodImg'] = foodImg;
 
     if (recipe && recipe.userId === userId) {
       await recipeModel.update({ toUpdate, recipeId });
