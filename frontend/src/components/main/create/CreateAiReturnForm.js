@@ -76,6 +76,7 @@ const CreateAiReturnForm = () => {
       tags = `#${localTags.join('#')}`;
     }
     dispatch(savePost({ foodname, ingredients, recipe, tags, aiRecipeId: id, token, image }));
+    setImage(null);
   };
 
   const handleImageSelected = file => {

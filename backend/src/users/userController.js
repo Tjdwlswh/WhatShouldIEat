@@ -67,9 +67,9 @@ const userController = {
   editUserInfo: async (req, res, next) => {
     try {
       const { email } = req.user;
-      const { nickName, password } = req.body;
+      const { nickName, password, image } = req.body;
       const profileImg = req.file ? req.file.filename : undefined;
-      const data = { nickName, profileImg, password };
+      const data = { nickName, profileImg, password, image };
       const editedUser = await userService.editUser({ data, email });
       res.status(200).json({ message: '수정이 완료되었습니다.' });
     } catch (err) {

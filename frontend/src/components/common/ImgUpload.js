@@ -29,11 +29,15 @@ const ImgBox = styled.div`
   img {
     max-width: 200px;
     max-height: 200px;
+    border-radius: 4px;
   }
 `;
 
-const ImgUpload = ({ onImageSelected }) => {
-  const [imageURL, setImageURL] = useState('/logo.png');
+const ImgUpload = ({ onImageSelected, imgSrc }) => {
+  if (imgSrc) {
+    imgSrc = `${process.env.REACT_APP_BACK_URL}/uploads/${imgSrc}`;
+  }
+  const [imageURL, setImageURL] = useState(imgSrc || '/logo.png');
   const inputRef = useRef();
 
   useEffect(() => {
@@ -66,6 +70,7 @@ const ImgUpload = ({ onImageSelected }) => {
 
   const handleDeleteClick = e => {
     e.preventDefault();
+    onImageSelected('delete');
     URL.revokeObjectURL(imageURL);
     setImageURL('/logo.png');
   };
