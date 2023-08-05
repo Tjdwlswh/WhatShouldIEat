@@ -11,7 +11,7 @@ import {
   TagListBlock,
 } from '../create/AiComponents';
 import palette from '../../../lib/styles/palette';
-import ImgContainer from '../../../container/common/ImgContainer';
+import ImgUploadContainer from '../../../container/common/ImgUploadContainer';
 
 const SubInfo = styled.div`
   margin-top: 1rem;
@@ -70,7 +70,7 @@ const MyRecipeForm = ({ post, error, loading }) => {
   return (
     <>
       <CreateAireturnBlock>
-        <ImgContainer onImageSelected={handleImageSelected} />
+        <ImgUploadContainer onImageSelected={handleImageSelected} />
 
         <AiReturnbox>
           <SubInfo>

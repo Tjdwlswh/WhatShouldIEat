@@ -1,3 +1,4 @@
+import createFormData from '../utils/createFormData';
 import client from './client';
 
 const authAPI = {
@@ -9,19 +10,13 @@ const authAPI = {
     return await client.post('/auth/register', { email, password, nickName });
   },
 
-  renew: async ({ password, nickName, token }) => {
-    return await client.put(
-      '/auth/user',
-      {
-        password,
-        nickName,
+  renew: async ({ password, nickName, image, token }) => {
+    const formData = createFormData({ password, nickName, image });
+    return await client.put('/auth/user', formData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
       },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      },
-    );
+    });
   },
 
   getUser: async token => {

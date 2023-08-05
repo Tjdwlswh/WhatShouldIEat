@@ -16,8 +16,8 @@ const OuterContainer = styled.div`
         display: none;
       }
     `}
-  height: 420px;
-  width: 320px;
+  height: 400px;
+  width: 300px;
   background-color: white;
   border-radius: 30px;
   display: flex;

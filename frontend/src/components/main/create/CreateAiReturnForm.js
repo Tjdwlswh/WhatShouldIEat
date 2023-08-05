@@ -11,7 +11,7 @@ import {
 } from './AiComponents';
 import { useDispatch, useSelector } from 'react-redux';
 import { savePost } from '../../../modules/create';
-import ImgContainer from '../../../container/common/ImgContainer';
+import ImgUploadContainer from '../../../container/common/ImgUploadContainer';
 
 export const TagItem = React.memo(({ tag, onRemove }) => (
   <Tag onClick={() => onRemove(tag)}> #{tag} </Tag>
@@ -93,7 +93,7 @@ const CreateAiReturnForm = () => {
   return (
     <>
       <CreateAireturnBlock>
-        <ImgContainer onImageSelected={handleImageSelected} />
+        <ImgUploadContainer onImageSelected={handleImageSelected} />
 
         <AiReturnbox>
           <h3 contentEditable="true">{foodname}</h3>

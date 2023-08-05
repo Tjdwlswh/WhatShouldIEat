@@ -35,9 +35,10 @@ export const login = createAction(LOGIN, ({ email, password }) => ({
   password,
 }));
 
-export const renew = createAction(RENEW, ({ password, nickName, token }) => ({
+export const renew = createAction(RENEW, ({ password, nickName, image, token }) => ({
   password,
   nickName,
+  image,
   token,
 }));
 
