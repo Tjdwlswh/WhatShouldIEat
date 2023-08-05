@@ -29,7 +29,7 @@ const AccountContainer = () => {
 
   useEffect(() => {
     if (authError) {
-      if (authError.response.status === 409) {
+      if (authError.response?.status === 409) {
         setError('이미 존재하는 닉네임입니다.');
         return;
       }

@@ -1,11 +1,8 @@
-// redux 와 components 연결
-//로그인, 회원가입후 뒤로가기 했을때 input값 초기화
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { changeField, initializeForm, login } from '../modules/auth';
 import AuthForm from '../components/auth/AuthForm';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-// import { check } from '../modules/user';
 
 const LoginForm = () => {
   const [error, setError] = useState(null);
@@ -54,8 +51,7 @@ const LoginForm = () => {
       return;
     }
     if (auth) {
-      console.log('로그인 성공');
-      // dispatch(check()); //쿠키로
+      console.log(auth.message);
     }
   }, [auth, authError, navigate]);
 
