@@ -84,10 +84,14 @@ const user = handleActions(
       user: null,
       checkError: error,
     }),
-    [LOGOUT_SUCCESS]: state => ({
-      user: null,
-      token: null,
-    }),
+    [LOGOUT_SUCCESS]: state => {
+      cookies.remove('token');
+      localStorage.setItem('isLoggedIn', false);
+      return {
+        user: null,
+        token: null,
+      };
+    },
   },
   initialState,
 );
