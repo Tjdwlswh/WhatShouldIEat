@@ -41,7 +41,7 @@ app.get('/', (req, res) => {
   res.send('Hello, #뭐해먹지?');
 });
 
-app.use('/uploads', express.static('uploads'));
+app.use('/api/uploads', express.static('uploads'));
 // app.use('/auth', userRouter);
 
 app.use([imgUploadRouter, userRouter, recipeRouter, commentRouter]);

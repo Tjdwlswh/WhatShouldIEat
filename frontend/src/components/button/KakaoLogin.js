@@ -37,7 +37,7 @@ const KakaoLoginButton = () => {
   const handleClick = e => {
     e.preventDefault();
     dispatch(startLoading());
-    window.location.href = 'http://localhost:5000/auth/kakao/login';
+    window.location.href = `${process.env.REACT_APP_BACK_URL}/auth/kakao/login`;
   };
 
   return (

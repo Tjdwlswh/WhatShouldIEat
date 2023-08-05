@@ -5,7 +5,7 @@ import JwtSign from '../../utils/jwtSign.js';
 const KakaoStrategy = new Strategy(
   {
     clientID: process.env.KAKAO_ID,
-    callbackURL: '/auth/kakao/callback',
+    callbackURL: process.env.KAKAO_CALLBACK,
   },
   async (accessToken, refreshToken, profile, done) => {
     try {

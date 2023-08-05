@@ -36,7 +36,7 @@ const GoogleLoginButton = () => {
   const handleClick = e => {
     e.preventDefault();
     dispatch(startLoading());
-    window.location.href = 'http://localhost:5000/auth/google/login';
+    window.location.href = `${process.env.REACT_APP_BACK_URL}/auth/google/login`;
   };
 
   return (
