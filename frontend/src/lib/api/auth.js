@@ -27,6 +27,14 @@ const authAPI = {
     });
   },
 
+  getUserCard: async token => {
+    return await client.get('/auth/usercard', {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  },
+
   logout: async token => {
     return await client.get('/auth/logout', {
       headers: {

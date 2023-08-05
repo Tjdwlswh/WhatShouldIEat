@@ -76,13 +76,19 @@ const userService = {
   },
   getUsercard: async userId => {
     const { nickName, profileImg, Followers, Followings } = await UserModel.findOne(userId);
-    const recipe = await recipeModel.findMyRecipe(userId);
-    const user = { nickName, profileImg, Followers, Followings };
-    const recipeCount = recipe?.length || 0;
-    const followerCount = user?.Followers?.length || 0;
-    const followingCount = user?.Followings?.length || 0;
-    const followingIdList = user?.Followings?.map(f => f.id) || [];
-    const result = { user, recipeCount, followerCount, followingCount, followingIdList };
+    const recipeCount = await recipeModel.findMyRecipeCount(userId);
+    // const user = { nickName, profileImg, Followers, Followings };
+    const followerCount = Followers?.length || 0;
+    const followingCount = Followings?.length || 0;
+    const followingIdList = Followings?.map(f => f.id) || [];
+    const result = {
+      nickName,
+      profileImg,
+      recipeCount,
+      followerCount,
+      followingCount,
+      followingIdList,
+    };
     return result;
   },
 };

@@ -21,7 +21,6 @@ const AccountContainer = () => {
 
   useEffect(() => {
     dispatch(initializeForm('renew'));
-    console.log('initializeForm');
   }, [dispatch]);
 
   useEffect(() => {
