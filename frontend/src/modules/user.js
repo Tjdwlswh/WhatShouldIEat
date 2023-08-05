@@ -13,7 +13,7 @@ const [GET_USER, GET_USER_SUCCESS, GET_USER_FAILURE] = createRequestActionTypes(
 const [LOGOUT, LOGOUT_SUCCESS, LOGOUT_FAILURE] = createRequestActionTypes('user/LOGOUT');
 
 // export const check = createAction(CHECK);
-export const logout = createAction(LOGOUT);
+export const logout = createAction(LOGOUT, token => token);
 
 export const clearUser = createAction(LOGOUT_SUCCESS);
 // ###
@@ -117,7 +117,6 @@ const user = handleActions(
       checkError: error,
     }),
     [LOGOUT_SUCCESS]: state => ({
-      ...state,
       user: null,
       token: null,
     }),

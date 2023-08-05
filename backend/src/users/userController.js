@@ -35,7 +35,7 @@ const userController = {
 
   logout: async (req, res, next) => {
     try {
-      res.clearCookie();
+      res.clearCookie('refreshToken');
       const { email } = req.user;
       await userService.clearTokenInDB(email);
       res.status(200).json({ message: '로그아웃 성공' });
@@ -96,8 +96,9 @@ const userController = {
     try {
       // 내가 팔로우 신청하면 내가 follower, 남은 following
       const followerId = req.user.id; //나
-      const followingId = req.params.id; //너
+      const followingId = req.params.followingId; //너
 
+      console.log('1', followerId, followingId);
       // 팔로우 신청하면 클라에 보내줘야할 자료에 맞게 바꿀수도 있음.
       await userService.addFollowing(followingId, followerId);
 

@@ -70,9 +70,9 @@ const userService = {
       const errorMessage = 'Follower not found.';
       throw new NotFoundException(errorMessage);
     }
-    await user.addFollowing(parseInt(followingId, 10));
-
-    return;
+    const result = await user.addFollowing(parseInt(followingId, 10));
+    console.log('2', result);
+    return result.Follow.dataValues;
   },
 };
 export { userService };

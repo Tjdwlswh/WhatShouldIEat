@@ -1,13 +1,13 @@
 import { combineReducers } from 'redux';
-import auth, { authSaga } from './auth';
-import loading from './loading';
 import { all } from 'redux-saga/effects';
+import auth, { authSaga } from './auth';
+import file from './file';
+import loading from './loading';
 import user, { userSaga } from './user';
 import create, { createSaga } from './create';
+
 import post, { postSaga } from './myrecipe';
 import posts, { postsSaga } from './myrecipelist';
-
-//리듀서들 하나로 모아서 useSelector 이용
 
 const rootReducer = combineReducers({
   auth,
