@@ -15,5 +15,14 @@ const commentService = {
       return (comment = []);
     }
   },
+  deleteComment: async ({ commenterId, recipeId, commentId }) => {
+    const comment = await commentModel.findOne({ commenterId, recipeId, commentId });
+    if (comment) {
+      await commentModel.delete(commentId);
+      const message = '댓글을 삭제하였습니다.';
+      return message;
+    }
+    return { failMessage: '메시지 삭제에 실패했습니다.' };
+  },
 };
 export { commentService };

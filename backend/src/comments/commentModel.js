@@ -19,6 +19,12 @@ const commentModel = {
       order: [['createdAt', 'DESC']],
     });
   },
+  findOne: async ({ commenterId, recipeId, commentId }) => {
+    return await db.Comment.findOne({ where: { id: commentId, commenterId, recipeId } });
+  },
+  delete: async (commentId) => {
+    return await db.Comment.destroy({ where: { id: commentId } });
+  },
 };
 
 export { commentModel };

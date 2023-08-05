@@ -39,7 +39,11 @@ class Recipe extends Sequelize.Model {
   }
 
   static associate(db) {
-    db.Recipe.belongsTo(db.User, { foreignKey: 'userId', targetKey: 'id', onDelete: 'CASCADE' }); // 레시피 모델에 userId컬럼 추가됨
+    db.Recipe.belongsTo(db.User, {
+      foreignKey: 'userId',
+      targetKey: 'id',
+      onDelete: 'CASCADE',
+    }); // 레시피 모델에 userId컬럼 추가됨
     db.Recipe.belongsToMany(db.User, { through: 'Likeit', as: 'Likers', onDelete: 'CASCADE' }); // through 옵션: 생성할 모델 이름 지정 , 레시피에 likeit
     //as는 프론트에 전달할 객체의 key
     db.Recipe.belongsToMany(db.Hashtag, { through: 'RecipeHashtag', onDelete: 'CASCADE' });

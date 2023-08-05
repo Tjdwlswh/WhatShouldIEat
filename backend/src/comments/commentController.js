@@ -15,6 +15,17 @@ const commentController = {
       next(err);
     }
   },
+  deleteComment: async (req, res, next) => {
+    try {
+      const commenterId = req.user.id;
+      const recipeId = req.params.recipeId;
+      const commentId = req.params.commentId;
+      const result = await commentService.deleteComment({ commenterId, recipeId, commentId });
+      return res.status(200).json(result);
+    } catch (err) {
+      next(err);
+    }
+  },
 };
 
 export { commentController };
