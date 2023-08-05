@@ -70,10 +70,13 @@ const initialState = {
 
 const user = handleActions(
   {
-    [SET_TOKEN]: (state, { payload: token }) => ({
-      ...state,
-      token,
-    }),
+    [SET_TOKEN]: (state, { payload: token }) => {
+      localStorage.setItem('isLoggedIn', true);
+      return {
+        ...state,
+        token,
+      };
+    },
     [GET_USER_SUCCESS]: (state, { payload: user }) => ({
       ...state,
       user,
