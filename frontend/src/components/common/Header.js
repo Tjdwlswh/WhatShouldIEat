@@ -52,12 +52,17 @@ const Header = ({ user, onLogout, handleEmailClick }) => {
           <Link to="/" className="logo">
             뭐해먹지?
           </Link>
-          <Link to="/create" className="link">
-            레시피 생성
-          </Link>
-          <Link to={`/createAi`} className="link">
-            나의 레시피
-          </Link>
+          {user && (
+            <Link to="/create" className="link">
+              레시피 생성
+            </Link>
+          )}
+          {user && (
+            <Link to={`/${user.email}`} className="link">
+              나의 레시피
+            </Link>
+          )}
+
           <Link to="/recommend" className="link">
             추천 레시피
           </Link>

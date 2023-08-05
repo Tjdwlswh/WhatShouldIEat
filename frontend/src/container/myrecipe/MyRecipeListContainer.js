@@ -6,6 +6,9 @@ import { useParams, useSearchParams } from 'react-router-dom';
 
 const PostListContainer = () => {
   const dispatch = useDispatch();
+  const { email } = useParams();
+  const [searchParams] = useSearchParams();
+
   const { posts, error, loading, user } = useSelector(({ posts, loading, user }) => ({
     posts: posts.posts,
     error: posts.error,
@@ -18,10 +21,12 @@ const PostListContainer = () => {
   console.log(user);
 
   useEffect(() => {
-    dispatch(listPosts(token));
-  }, [dispatch, token]);
+    const tag = searchParams.get('tag');
+    const page = parseInt(searchParams.get('page'), 10) || 1;
+    dispatch(listPosts(token, email, tag, page));
+  }, [dispatch, token, email, searchParams]);
 
-  return <MyRecipeList loading={loading} error={error} posts={posts} showWriteButton={user} />;
+  return <MyRecipeList loading={loading} error={error} posts={posts} user={user} />;
 };
 
 export default PostListContainer;

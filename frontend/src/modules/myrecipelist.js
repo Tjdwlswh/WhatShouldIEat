@@ -6,8 +6,11 @@ import { takeLatest } from 'redux-saga/effects';
 const [LIST_POSTS, LIST_POSTS_SUCCESS, LIST_POST_FAILURE] =
   createRequestActionTypes('posts/LIST_POSTS');
 
-export const listPosts = createAction(LIST_POSTS, ({ token }) => ({
+export const listPosts = createAction(LIST_POSTS, (token, email, tag, page) => ({
   token,
+  email,
+  tag,
+  page,
 }));
 
 const listPostsSaga = createRequestSaga(LIST_POSTS, postsAPI.listPosts);
