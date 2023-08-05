@@ -2,12 +2,14 @@ import { useEffect } from 'react';
 import styled from 'styled-components';
 import Responsive from '../../common/Responsive';
 import { Link } from 'react-router-dom';
+import palette from '../../../lib/styles/palette';
 
 const RecipeGroup = styled(Responsive)`
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
   padding: 8px;
+  flex: 1;
 `;
 
 const Recipe = styled.div`
@@ -46,12 +48,22 @@ const NameGroup = styled.div`
   gap: 4px;
 `;
 
-const Name = styled.span`
-  font-size: 16px;
-  font-weight: 400;
-  color: #a1a1a1;
-  line-height: 110%;
-  margin: 0;
+const SubInfo = styled.div`
+  color: ${palette.gray[9]};
+  span + span:before {
+    color: ${palette.gray[4]};
+    padding-left: 0.25rem;
+    padding-right: 0.25rem;
+    content: '\\B7';
+  }
+
+  .title {
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
+  .tags {
+    margin-left: 1rem;
+  }
 `;
 
 const TagGruop = styled.div`
@@ -59,55 +71,68 @@ const TagGruop = styled.div`
   gap: 2px;
 `;
 
-const HashTag = styled.span`
+const Tags = styled.span`
   font-size: 12px;
   color: orange;
   line-height: 110%;
+
+  &:hover {
+    color: ${palette.cyan[6]};
+  }
 `;
 
-export const ItemList = () => {
+const ItemList = ({ post, user }) => {
+  const { foodname, tags, foodImg } = post;
+  const tagArray = tags.split('#');
+  tagArray.shift('');
+  console.log(tagArray);
+
+  //foodImg 이거 나중에 사용하기
+
   return (
-    <Link to={``}>
-      <Recipe>
-        <Thumbnail>
-          <img src="/logo.png" alt="음식사진" />
-        </Thumbnail>
-        <Description>
-          <Logo src="/logo192.png" alt="로고" />
-          <NameGroup>
-            <Name>여기는 이름</Name>
-            <TagGruop>
-              <HashTag>여기는 태그</HashTag>
-            </TagGruop>
-          </NameGroup>
-        </Description>
-      </Recipe>
-    </Link>
+    <div className="flex">
+      <Link to={`/${user.email}/${post.id}`}>
+        <Recipe>
+          <Thumbnail>{<img src={'/logo.png'} alt="음식사진" />}</Thumbnail>
+          <Description>
+            <Logo src="/logo192.png" alt="로고" />
+            <NameGroup>
+              <SubInfo>
+                <span className="title">{foodname}</span>
+                <span>{new Date(post.createdAt).toLocaleDateString()}</span>
+              </SubInfo>
+              <TagGruop>
+                <Tags>
+                  {tagArray.map(tag => (
+                    <Link className="tags" to={`/?tag=${tag}`} key={tag}>
+                      #{tag}
+                    </Link>
+                  ))}
+                </Tags>
+              </TagGruop>
+            </NameGroup>
+          </Description>
+        </Recipe>
+      </Link>
+    </div>
   );
 };
 
-const MyRecipeList = () => {
-  useEffect(() => {
-    //서버 api 호출
-  }, []);
+const MyRecipeList = ({ posts, loading, error, user }) => {
+  if (error) {
+    return <div> 에러가 발생했습니다. </div>;
+  }
 
   return (
     <div>
       <RecipeGroup>
-        <ItemList />
-        <ItemList />
-        <ItemList />
-        <ItemList />
-        <ItemList />
-        <ItemList />
-        <ItemList />
-        <ItemList />
-        <ItemList />
-        <ItemList />
-        <ItemList />
-        <ItemList />
-        <ItemList />
-        <ItemList />
+        {!loading && posts && (
+          <div>
+            {posts.map(post => (
+              <ItemList user={user} post={post} key={post.id}></ItemList>
+            ))}
+          </div>
+        )}
       </RecipeGroup>
     </div>
   );

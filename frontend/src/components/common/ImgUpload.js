@@ -5,9 +5,10 @@ import Button from './Button';
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: center;
   width: 15rem;
+  margin-bottom: 1rem;
 `;
 
 const ButtonBox = styled.div`
@@ -31,7 +32,7 @@ const ImgBox = styled.div`
   }
 `;
 
-const ImgComponent = ({ onImageSelected }) => {
+const ImgUpload = ({ onImageSelected }) => {
   const [imageURL, setImageURL] = useState('/logo.png');
   const inputRef = useRef();
 
@@ -58,11 +59,13 @@ const ImgComponent = ({ onImageSelected }) => {
     }
   };
 
-  const handleUploadClick = () => {
+  const handleUploadClick = e => {
+    e.preventDefault();
     inputRef.current.click();
   };
 
-  const handleDeleteClick = () => {
+  const handleDeleteClick = e => {
+    e.preventDefault();
     URL.revokeObjectURL(imageURL);
     setImageURL('/logo.png');
   };
@@ -87,4 +90,4 @@ const ImgComponent = ({ onImageSelected }) => {
   );
 };
 
-export default ImgComponent;
+export default ImgUpload;

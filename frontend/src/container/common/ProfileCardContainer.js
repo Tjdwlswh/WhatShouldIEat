@@ -3,6 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import styled, { css } from 'styled-components';
 import ProfileCard from '../../components/common/ProfileCard';
+import authAPI from '../../lib/api/auth';
 
 const OuterContainer = styled.div`
   ${props =>
@@ -16,8 +17,8 @@ const OuterContainer = styled.div`
         display: none;
       }
     `}
-  height: 420px;
-  width: 320px;
+  height: 400px;
+  width: 300px;
   background-color: white;
   border-radius: 30px;
   display: flex;
@@ -27,33 +28,39 @@ const OuterContainer = styled.div`
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.08);
 `;
 
-const ProfileCardContainer = ({ email }) => {
+// const ProfileCardContainer = ({ email }) => {
+const ProfileCardContainer = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [isAccount, setIsAccount] = useState(false);
-  const handleIconClick = () => {
-    navigate('/myaccount');
-  };
+  const [userData, setUserData] = useState({});
+  const { token } = useSelector(state => state.user);
+  const myEmail = useSelector(state => state.user.user?.email);
 
   useEffect(() => {
     const { pathname } = location;
     setIsAccount(pathname === '/myaccount');
   }, [location]);
 
-  const userEmail = useSelector(state => state.user.user?.email);
-  const props = {
-    profileImg: `${process.env.PUBLIC_URL}/logo.png`,
-    email,
-    nickName: 'test',
-    provider: 'local',
-    follower: '80K',
-    like: '803K',
-    recipe: '1.4K',
-    isMine: userEmail === email,
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const { data } = await authAPI.getUserCard(token);
+        setUserData(data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchData();
+  }, [token]);
+
+  const handleIconClick = () => {
+    navigate('/myaccount');
   };
+
   return (
     <OuterContainer isAccount={isAccount}>
-      <ProfileCard props={props} handleIconClick={handleIconClick} />
+      <ProfileCard props={userData} onClickIcon={handleIconClick} />
     </OuterContainer>
   );
 };

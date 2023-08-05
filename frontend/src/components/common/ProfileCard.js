@@ -3,23 +3,26 @@ import styled from 'styled-components';
 import palette from '../../lib/styles/palette';
 
 const Container = styled.div`
-  height: 400px;
-  width: 300px;
+  width: 90%;
+  height: 93%;
   border-radius: 20px;
   border: 5px solid ${palette.main};
   overflow: hidden;
-  padding: 30px;
+  padding: 0 20px;
 `;
 
 const Card = styled.div`
-  text-align: center;
-  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   color: ${palette.text};
+  justify-content: flex-end;
 `;
 
 const Avatar = styled.img`
-  top: 10px;
-  max-width: 120px;
+  width: 130px;
+  height: 130px;
   border-radius: 50%;
   border: 4px solid ${palette.main};
 `;
@@ -46,11 +49,11 @@ const Email = styled.h2`
 `;
 
 const StatsContainer = styled.div`
+  width: 100%;
   display: flex;
   justify-content: space-between;
   margin-top: 1.5rem;
   padding-top: 1.5rem;
-  padding-bottom: 1.5rem;
   border-top: 1px solid ${palette.accent};
   color: ${palette.main};
 `;
@@ -69,35 +72,50 @@ const StatLabel = styled.p`
   color: ${palette.text};
 `;
 
-const ProfileCard = ({ props, handleIconClick }) => {
-  const { email, nickName, profileImg, provider, follower, like, recipe, isMine } = props;
+const ProfileCard = ({ props, onClickIcon }) => {
+  console.log('props', props);
+  const {
+    nickName,
+    profileImg,
+    // provider,
+    recipeCount,
+    followerCount,
+    followingCount,
+    followingIdList,
+  } = props;
 
   return (
     <Container>
       <Card>
-        <Avatar src={profileImg} alt="Profile Picture" />
+        <Avatar
+          src={
+            `${process.env.REACT_APP_DEV_BACK_URL}/uploads/${profileImg}` ||
+            `${process.env.PUBLIC_URL}/logo.png`
+          }
+          alt="Profile Picture"
+        />
         <NickName>
           {nickName}
-          {isMine && (
+          {/* {isMine && (
             <ProviderImg
               src={`${process.env.PUBLIC_URL}/assets/img/icons/${provider}.png`}
               alt="provider"
-              onClick={handleIconClick}
+              onClick={onClickIcon}
             />
-          )}
+          )} */}
         </NickName>
-        <Email>{email}</Email>
+        {/* <Email>{email}</Email> */}
         <StatsContainer>
           <Stat>
-            <StatNumber>{follower}</StatNumber>
+            <StatNumber>{followerCount}</StatNumber>
             <StatLabel>Followers</StatLabel>
           </Stat>
           <Stat>
-            <StatNumber>{like}</StatNumber>
+            <StatNumber>{followingCount}</StatNumber>
             <StatLabel>Followings</StatLabel>
           </Stat>
           <Stat>
-            <StatNumber>{recipe}</StatNumber>
+            <StatNumber>{recipeCount}</StatNumber>
             <StatLabel>Recipes</StatLabel>
           </Stat>
         </StatsContainer>

@@ -11,7 +11,7 @@ import {
   TagListBlock,
 } from '../create/AiComponents';
 import palette from '../../../lib/styles/palette';
-import ImgContainer from '../../../container/common/ImgContainer';
+import ImgUploadContainer from '../../../container/common/ImgUploadContainer';
 
 const SubInfo = styled.div`
   margin-top: 1rem;
@@ -43,7 +43,7 @@ const Tags = styled.div`
   }
 `;
 
-const MyRecipeForm = ({ post, error, loading }) => {
+const MyRecipeForm = ({ post, error, loading, onEdit }) => {
   if (error) {
     if (error.response && error.response.status === 404) {
       return <CreateAireturnBlock>존재하지 않는 포스트 입니다.</CreateAireturnBlock>;
@@ -70,7 +70,7 @@ const MyRecipeForm = ({ post, error, loading }) => {
   return (
     <>
       <CreateAireturnBlock>
-        <ImgContainer onImageSelected={handleImageSelected} />
+        <ImgUploadContainer onImageSelected={handleImageSelected} />
 
         <AiReturnbox>
           <SubInfo>
@@ -79,14 +79,10 @@ const MyRecipeForm = ({ post, error, loading }) => {
             </span>
             <span>{new Date(createdAt).toLocaleDateString()}</span>
           </SubInfo>
-          <h3 contentEditable="true">요리이름 : {foodname}</h3>
+          <h3>요리이름 : {foodname}</h3>
           <label className="divbox">
-            <div className="one" contentEditable="true">
-              재료 : {ingredients}
-            </div>
-            <div className="two" contentEditable="true">
-              레시피 : {recipe}
-            </div>
+            <div className="one">재료 : {ingredients}</div>
+            <div className="two">레시피 : {recipe}</div>
           </label>
 
           <Tags>
@@ -96,7 +92,8 @@ const MyRecipeForm = ({ post, error, loading }) => {
           </Tags>
 
           <div className="twobtn">
-            <Button>전체 레시피 삭제</Button>
+            <Button className="margin">레시피 삭제</Button>
+            <Button onClick={onEdit}>레시피 수정</Button>
           </div>
         </AiReturnbox>
       </CreateAireturnBlock>

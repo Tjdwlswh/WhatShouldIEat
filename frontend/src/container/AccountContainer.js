@@ -7,6 +7,7 @@ import { getUser } from '../modules/user';
 
 const AccountContainer = () => {
   const [error, setError] = useState(null);
+  const [image, setImage] = useState(null);
   const dispatch = useDispatch();
   const { form, auth, authError } = useSelector(state => ({
     form: state.auth.renew,
@@ -20,7 +21,6 @@ const AccountContainer = () => {
 
   useEffect(() => {
     dispatch(initializeForm('renew'));
-    console.log('initializeForm');
   }, [dispatch]);
 
   useEffect(() => {
@@ -68,11 +68,22 @@ const AccountContainer = () => {
       dispatch(changeField({ form: 'renew', key: 'passwordConfirm', value: '' }));
       return;
     }
-    dispatch(renew({ password, nickName, token }));
+    dispatch(renew({ password, nickName, image, token }));
+  };
+
+  const handleImageSelected = file => {
+    setImage(file);
   };
 
   return (
-    <AuthForm type="renew" form={form} onChange={onChange} onSubmit={onSubmit} error={error} />
+    <AuthForm
+      type="renew"
+      form={form}
+      onChange={onChange}
+      onSubmit={onSubmit}
+      error={error}
+      onImageSelected={handleImageSelected}
+    />
   );
 };
 

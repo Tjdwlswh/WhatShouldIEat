@@ -5,7 +5,7 @@ import { userController } from './userController.js';
 import { imgUploadRouter } from '../imgUploads/imgUploadRouter.js';
 
 const userRouter = Router();
-const imgUpload = upload.single('profileImg');
+const imgUpload = upload.single('image');
 
 // 회원가입
 userRouter.post('/auth/register', imgUpload, userController.register);
@@ -53,7 +53,7 @@ userRouter.get('/auth/user', loginRequired, userController.getUserInfo);
 userRouter.get('/auth/usercard', loginRequired, userController.getUser);
 
 // user 정보수정
-userRouter.put('/auth/user', loginRequired, userController.editUserInfo);
+userRouter.put('/auth/user', loginRequired, imgUpload, userController.editUserInfo);
 
 // 회원탈퇴
 userRouter.delete('/auth/user', loginRequired, userController.deleteAccount);

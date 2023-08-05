@@ -114,4 +114,8 @@ export const AiReturnbox = styled.div`
     text-align: center;
     width: 100%;
   }
+
+  .margin {
+    margin-right: 0.5rem;
+  }
 `;
