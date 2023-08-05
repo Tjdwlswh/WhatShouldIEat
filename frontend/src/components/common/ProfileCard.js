@@ -89,7 +89,7 @@ const ProfileCard = ({ props, onClickIcon }) => {
       <Card>
         <Avatar
           src={
-            `${process.env.REACT_APP_DEV_BACK_URL}/uploads/${profileImg}` ||
+            `${process.env.REACT_APP_BACK_URL}/uploads/${profileImg}` ||
             `${process.env.PUBLIC_URL}/logo.png`
           }
           alt="Profile Picture"
