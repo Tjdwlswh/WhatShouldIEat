@@ -85,14 +85,17 @@ const userService = {
     await user.addFollowing(parseInt(followingId, 10));
     return;
   },
-  getUsercard: async userId => {
-    const { nickName, profileImg, Followers, Followings } = await UserModel.findOne(userId);
+  getUserCard: async userId => {
+    const { nickName, profileImg, provider, Followers, Followings } = await UserModel.findOne(
+      userId,
+    );
     const recipeCount = await recipeModel.findMyRecipeCount(userId);
     // const user = { nickName, profileImg, Followers, Followings };
     const followerCount = Followers?.length || 0;
     const followingCount = Followings?.length || 0;
     const followingIdList = Followings?.map(f => f.id) || [];
     const result = {
+      provider,
       nickName,
       profileImg,
       recipeCount,

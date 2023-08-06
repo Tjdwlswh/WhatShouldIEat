@@ -39,7 +39,7 @@ const RouterGuard = () => {
     { path: `/${user?.email}`, component: MyRecipeListPage, loginRequired: true },
     { path: `/${user?.email}/`, component: MyRecipePage, loginRequired: true },
     // 임시 my레시피 주소
-    { path: '/myrecipe', component: MyRecipePage, loginRequired: true },
+    { path: '/myrecipe', component: MyRecipeListPage, loginRequired: true },
 
     { path: '/recommend', component: RecommendRecipe, loginRequired: true },
     { path: '/review', component: ReviewRecipe, loginRequired: true },

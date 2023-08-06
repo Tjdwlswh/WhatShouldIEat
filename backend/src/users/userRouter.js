@@ -50,7 +50,7 @@ userRouter.post('/:followingId/follow', loginRequired, userController.postFollow
 userRouter.get('/user', loginRequired, userController.getUserInfo);
 
 //user profilecard
-userRouter.get('/usercard', loginRequired, userController.getUser);
+userRouter.get('/usercard', loginRequired, userController.getUserCard);
 
 // user 정보수정
 userRouter.put('/user', loginRequired, imgUpload, userController.editUserInfo);
