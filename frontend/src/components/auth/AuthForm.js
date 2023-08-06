@@ -72,30 +72,32 @@ const SuccessMessage = styled.div`
   margin-top: 1rem;
 `;
 
-const AuthForm = ({ type, form, onChange, onSubmit, error, onImageSelected }) => {
+const AuthForm = ({ type, form, onChange, onSubmit, error, onImageSelected, imgSrc }) => {
   const text = textMap[type];
+  const { provider, email, password, passwordConfirm, nickName, message } = form;
+
   const isRegister = type === 'register';
   const isLogin = type === 'login';
   const isRenew = type === 'renew';
-  const isOAuth = ['google', 'kakao'].includes(form.provider);
+  const isOAuth = ['google', 'kakao'].includes(provider);
 
   return (
     <AuthFormBlock>
       <h3>{text}</h3>
       <form onSubmit={onSubmit}>
-        {!isRenew ? (
+        {isRenew ? (
+          <>
+            <ImgUploadContainer onImageSelected={onImageSelected} imgSrc={imgSrc} />
+            <StyleInput defaultValue={email} disabled />
+          </>
+        ) : (
           <StyleInput
             autoComplete="email"
             name="email"
             placeholder="이메일"
             onChange={onChange}
-            value={form.email}
+            value={email}
           />
-        ) : (
-          <>
-            <ImgUploadContainer onImageSelected={onImageSelected} />
-            <StyleInput defaultValue={form.email} disabled />
-          </>
         )}
         {!isOAuth && (
           <>
@@ -105,7 +107,7 @@ const AuthForm = ({ type, form, onChange, onSubmit, error, onImageSelected }) =>
               placeholder={isRenew ? '비밀번호를 변경하려면 입력하세요' : '비밀번호'}
               type="password"
               onChange={onChange}
-              value={form.password}
+              value={password}
             />
             {(isRegister || isRenew) && (
               <StyleInput
@@ -114,21 +116,16 @@ const AuthForm = ({ type, form, onChange, onSubmit, error, onImageSelected }) =>
                 placeholder="비밀번호 확인"
                 type="password"
                 onChange={onChange}
-                value={form.passwordConfirm}
+                value={passwordConfirm}
               />
             )}
           </>
         )}
         {(isRegister || isRenew) && (
-          <StyleInput
-            name="nickName"
-            placeholder="닉네임"
-            onChange={onChange}
-            value={form.nickName}
-          />
+          <StyleInput name="nickName" placeholder="닉네임" onChange={onChange} value={nickName} />
         )}
         {error && <ErrorMessage>{error}</ErrorMessage>}
-        {form.message && <SuccessMessage>{form.message}</SuccessMessage>}
+        {message && <SuccessMessage>{message}</SuccessMessage>}
         <ButtonWithMarginTop cyan={true} fullWidth={true} style={{ marginTop: '1rem' }}>
           {text}
         </ButtonWithMarginTop>

@@ -26,11 +26,6 @@ const UserModel = {
   },
 
   update: async (data, email) => {
-    for (const [key, value] of Object.entries(data)) {
-      if (value === undefined || value === '') {
-        delete data[key];
-      }
-    }
     const updatedUser = await db.User.update(data, { where: { email } });
     return updatedUser;
   },

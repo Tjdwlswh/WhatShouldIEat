@@ -100,7 +100,9 @@ const recipeController = {
       const recipeId = req.params.recipeId;
       const userId = req.user.id;
       const toUpdate = req.body;
-      const recipe = await recipeService.updateMyRecipe({ recipeId, userId, toUpdate });
+      const foodImg = req.file ? req.file.filename : undefined;
+
+      const recipe = await recipeService.updateMyRecipe({ recipeId, userId, foodImg, toUpdate });
 
       return res.status(200).json(recipe);
     } catch (err) {

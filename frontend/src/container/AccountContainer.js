@@ -14,9 +14,7 @@ const AccountContainer = () => {
     auth: state.auth.auth,
     authError: state.auth.authError,
   }));
-  const email = useSelector(state => state.user.user?.email);
-  const nickName = useSelector(state => state.user.user?.nickName);
-  const provider = useSelector(state => state.user.user?.provider);
+  const { email, nickName, provider, profileImg } = useSelector(state => state.user.user) || {};
   const token = useSelector(state => state.user.token);
 
   useEffect(() => {
@@ -31,7 +29,7 @@ const AccountContainer = () => {
 
   useEffect(() => {
     if (authError) {
-      if (authError.response.status === 409) {
+      if (authError.response?.status === 409) {
         setError('이미 존재하는 닉네임입니다.');
         return;
       }
@@ -55,7 +53,7 @@ const AccountContainer = () => {
     e.preventDefault();
     const { password, passwordConfirm, nickName } = form;
 
-    if (form.password.length < 6 && form.password !== '') {
+    if (password.length < 6 && password !== '') {
       // 빈칸으로 보내면 업데이트 안함
       setError('비밀번호는 6글자 이상 설정하세요');
     } else {
@@ -69,6 +67,7 @@ const AccountContainer = () => {
       return;
     }
     dispatch(renew({ password, nickName, image, token }));
+    setImage(null);
   };
 
   const handleImageSelected = file => {
@@ -83,6 +82,7 @@ const AccountContainer = () => {
       onSubmit={onSubmit}
       error={error}
       onImageSelected={handleImageSelected}
+      imgSrc={profileImg}
     />
   );
 };

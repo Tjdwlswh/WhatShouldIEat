@@ -29,7 +29,7 @@ const MyRecipeContainer = () => {
 
   const onEdit = () => {
     dispatch(readPost({ recipeId, token }));
-    navigate('/CreateAi');
+    navigate('/createAi');
   };
   console.log(post);
 
