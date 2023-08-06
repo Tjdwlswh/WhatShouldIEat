@@ -61,9 +61,9 @@ const recipeController = {
   //나의 레시피 목록 조회
   getMyrecipes: async (req, res, next) => {
     try {
-      // 레시피 테이블에서 UserId가 req.user.id 인것만 조회
       const userId = req.user.id;
-      const myRecipe = await recipeService.myRecipe(userId);
+      const lastId = req.query.lastId;
+      const myRecipe = await recipeService.myRecipe({ userId, lastId });
 
       return res.status(200).json(myRecipe);
     } catch (err) {
@@ -87,11 +87,9 @@ const recipeController = {
   getRecipes: async (req, res, next) => {
     try {
       //좋아요 순으로 ->최신순 && 페이지네이션 무한스크롤 적용
-      //const where = {};
-      //if (parseInt(req.query.lastId, 10)) { //초기로딩이 아닐 경우(스크롤 후 로딩)
-      //  where.id =
-      //}
-      const recipes = await recipeService.getRecipes();
+      const lastId = req.query.lastId;
+
+      const recipes = await recipeService.getRecipes({ lastId });
       return res.status(200).json(recipes);
     } catch (err) {
       next(err);

@@ -5,9 +5,14 @@ const recipeModel = {
   create: async newRecipe => {
     return await db.Recipe.create(newRecipe);
   },
-  findMyRecipe: async userId => {
-    return await db.Recipe.findAll({
-      where: { userId },
+  findMyRecipe: async ({ userId, lastId }) => {
+    const where = { userId };
+    if (parseInt(lastId, 10)) {
+      where.id = { [Sequelize.Op.lt]: parseInt(lastId, 10) };
+    }
+    const recipes = await db.Recipe.findAll({
+      where,
+      limit: 8,
       include: [
         {
           model: db.User,
@@ -17,6 +22,7 @@ const recipeModel = {
       ],
       order: [['createdAt', 'DESC']],
     });
+    return recipes;
   },
 
   findMyRecipeCount: async userId => {
@@ -32,18 +38,31 @@ const recipeModel = {
       ],
     });
   },
-  findAll: async () => {
+  findAll: async ({ lastId }) => {
+    console.log('1', lastId);
+    const where = {};
+    if (parseInt(lastId, 10)) {
+      where.id = { [Sequelize.Op.lt]: parseInt(lastId, 10) };
+    }
     const recipes = await db.Recipe.findAll({
+      where,
+      limit: 8,
       include: [
         {
           model: db.User,
           as: 'Likers',
-          attributes: [],
-          through: { attributes: [] }, // 중간 테이블의 속성은 사용하지 않음
+          attributes: ['id'],
+          //through: { attributes: [] }, // 중간 테이블의 속성은 사용하지 않음
         },
       ],
       attributes: {
-        include: [[Sequelize.fn('COUNT', Sequelize.col('Likers.id')), 'likeCount']],
+        // include: [
+        //   [
+        //     Sequelize.literal('(SELECT COUNT(*) FROM Likeit WHERE Likeit.RecipeId = Recipe.id)'),
+        //     'likeCount',
+        //   ],
+        // ],
+        include: [[Sequelize.fn('COUNT', Sequelize.col('userId')), 'likeCount']],
       },
       group: ['Recipe.id'], // 중복된 행을 방지하기 위해 Recipe.id로 그룹화
       order: [

@@ -70,9 +70,9 @@ const recipeService = {
     const likePlusOne = await recipe.addLikers(userId);
     return likePlusOne;
   },
-  myRecipe: async userId => {
+  myRecipe: async ({ userId, lastId }) => {
     //user의 id로 나의 레시피 조회
-    const myRecipe = await recipeModel.findMyRecipe(userId);
+    const myRecipe = await recipeModel.findMyRecipe({ userId, lastId });
     //생성된 나의 레시피가 없다면 빈 배열로 리턴하기
     if (!myRecipe) {
       return (myRecipe = []);
@@ -95,8 +95,8 @@ const recipeService = {
     delete recipeData.Likers;
     return recipeData;
   },
-  getRecipes: async () => {
-    const recipes = await recipeModel.findAll();
+  getRecipes: async ({lastId}) => {
+    const recipes = await recipeModel.findAll({lastId});
     return recipes;
   },
   updateMyRecipe: async ({ recipeId, userId, toUpdate }) => {
