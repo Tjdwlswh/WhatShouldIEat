@@ -26,6 +26,12 @@ export function createRequestSaga(type, request, message) {
         payload: e,
         error: true,
       });
+      if (e.response.data.error === 'TokenExpiredError: jwt expired') {
+        // yield put(getUser());
+        yield put({
+          type: 'user/GET_USER_FAILURE',
+        });
+      }
     }
     yield put(finishLoading());
   };

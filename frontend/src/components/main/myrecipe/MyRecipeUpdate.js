@@ -14,6 +14,7 @@ import {
 
 import { useDispatch, useSelector } from 'react-redux';
 import { savePost } from '../../../modules/create';
+import ImgUploadContainer from '../../../container/common/ImgUploadContainer';
 
 export const TagItem = React.memo(({ tag, onRemove }) => (
   <Tag onClick={() => onRemove(tag)}> #{tag} </Tag>
@@ -32,6 +33,7 @@ const MyRecipeUpdate = () => {
   const navigate = useNavigate();
   const [input, setInput] = useState('');
   const [localTags, setLocalTags] = useState([]);
+  const [image, setImage] = useState(null);
 
   const { token } = useSelector(state => state.user);
 
@@ -70,14 +72,14 @@ const MyRecipeUpdate = () => {
     [input, insertTag],
   );
 
+  const handleImageSelected = file => {
+    setImage(file);
+  };
+
   return (
     <>
       <CreateAireturnBlock>
-        <ImgUpload>
-          <img className="imgbox" src="/logo.png" alt="AI 사진" />
-          <Button className="onebtn">이미지 업로드</Button>
-        </ImgUpload>
-
+        <ImgUploadContainer onImageSelected={handleImageSelected} imgSrc={lastpost.foodImg} />
         <AiReturnbox>
           <h3 contentEditable="true">{lastpost.foodname}</h3>
           <label className="divbox">
