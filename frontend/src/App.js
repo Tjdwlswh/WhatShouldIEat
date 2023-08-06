@@ -9,7 +9,7 @@ import RecommendRecipe from './pages/RecommendRecipe';
 import ReviewRecipe from './pages/ReviewRecipe';
 import CreateAiReturn from './pages/Create/CreateAiReturn';
 import AccountPage from './pages/AccountPage';
-
+import MyRecipeUpdatePage from './pages/MyRecipe/MyRecipeUpdatePage';
 import LeavePage from './pages/LeavePage';
 import MyRecipeListPage from './pages/MyRecipe/MyRecipeListPage';
 
@@ -21,6 +21,7 @@ function App() {
       <Route path="/register" element={<RegisterPage />} />
       <Route path="/create" element={<CreateRecipe />} />
       <Route path="/createAi" element={<CreateAiReturn />} />
+      <Route path="/myrecipeUpdate" element={<MyRecipeUpdatePage />} />
 
       <Route path="/:email">
         <Route index element={<MyRecipeListPage />} />
