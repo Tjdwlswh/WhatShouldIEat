@@ -15,6 +15,17 @@ const commentController = {
       next(err);
     }
   },
+  getMyComment: async (req, res, next) => {
+    try {
+      const commenterId = req.user.id;
+      const { page, pageSize } = req.query;
+      const comments = await commentService.getMyComment({ commenterId, page, pageSize });
+      return res.status(200).json(comments);
+    } catch (err) {
+      next(err);
+    }
+  },
+
   deleteComment: async (req, res, next) => {
     try {
       const commenterId = req.user.id;

@@ -15,6 +15,16 @@ const commentService = {
       return (comment = []);
     }
   },
+  getMyComment: async ({ commenterId, page, pageSize }) => {
+    const comments = await commentModel.getMyComment({ commenterId, page, pageSize });
+
+    if (comments) {
+      return comments;
+    } else {
+      return (comments = []);
+    }
+  },
+
   deleteComment: async ({ commenterId, recipeId, commentId }) => {
     const comment = await commentModel.findOne({ commenterId, recipeId, commentId });
     if (comment) {
