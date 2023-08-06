@@ -7,11 +7,6 @@ const [READ_POST, READ_POST_SUCCESS, READ_POST_FAILURE] =
   createRequestActionTypes('post/READ_POST');
 
 const UNLOAD_POST = 'post/UNLOAD_POST';
-const SET_ORIGINAL_POST = 'update/SET_ORIGINAL_POST';
-
-export const setOriginalPost = createAction(SET_ORIGINAL_POST, ({ post }) => ({
-  post,
-}));
 
 export const readPost = createAction(READ_POST, ({ recipeId, token }) => ({
   recipeId,
@@ -40,10 +35,6 @@ const post = handleActions(
     [READ_POST_FAILURE]: (state, { payload: error }) => ({
       ...state,
       error,
-    }),
-    [SET_ORIGINAL_POST]: (state, { payload: post }) => ({
-      ...state,
-      post: post,
     }),
 
     [UNLOAD_POST]: () => initialState,

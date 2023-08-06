@@ -11,6 +11,7 @@ import CreateAiReturn from './Create/CreateAiReturn';
 import CreateRecipe from './Create/CreateRecipe';
 import MyRecipePage from './MyRecipe/MyRecipePage';
 import MyRecipeListPage from './MyRecipe/MyRecipeListPage';
+import MyRecipeUpdatePage from './MyRecipe/MyRecipeUpdatePage';
 import RecommendRecipe from './RecommendRecipe';
 import ReviewRecipe from './ReviewRecipe';
 import AccountPage from './AccountPage';
@@ -34,6 +35,7 @@ const RouterGuard = () => {
     { path: '/register', component: RegisterPage, logoutRequired: true },
     { path: '/create', component: CreateRecipe },
     { path: '/createAi', component: CreateAiReturn, loginRequired: true },
+    { path: `/myrecipeUpdate`, component: MyRecipeUpdatePage, loginRequired: true },
     { path: `/${user?.email}`, component: MyRecipeListPage, loginRequired: true },
     { path: `/${user?.email}/`, component: MyRecipePage, loginRequired: true },
     // 임시 my레시피 주소

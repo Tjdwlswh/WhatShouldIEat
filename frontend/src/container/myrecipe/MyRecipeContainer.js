@@ -1,11 +1,8 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useNavigate } from 'react-router-dom';
-import { readPost, unloadPost, setOriginalPost } from '../../modules/myrecipe';
-
+import { readPost, unloadPost } from '../../modules/myrecipe';
 import MyRecipeForm from '../../components/main/myrecipe/MyRecipeForm';
-import MyRecipeList from '../../components/main/myrecipe/MyRecipeList';
-import { ItemList } from '../../components/main/myrecipe/MyRecipeList';
 
 const MyRecipeContainer = () => {
   const { postId } = useParams();
@@ -27,15 +24,9 @@ const MyRecipeContainer = () => {
     };
   }, [dispatch, recipeId, token]);
 
-  const onEdit = () => {
-    dispatch(readPost({ recipeId, token }));
-    navigate('/createAi');
-  };
-  console.log(post);
-
   return (
     <div>
-      <MyRecipeForm post={post} loading={loading} error={error} onEdit={onEdit} />;
+      <MyRecipeForm post={post} loading={loading} error={error} />;
     </div>
   );
 };
