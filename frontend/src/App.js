@@ -10,6 +10,7 @@ function App() {
       <Route path="/register" element={<RouterGuard />} />
       <Route path="/create" element={<RouterGuard />} />
       <Route path="/createAi" element={<RouterGuard />} />
+      <Route path="/myrecipeUpdate" element={<RouterGuard />} />
 
       <Route path="/:email">
         <Route index element={<RouterGuard />} />

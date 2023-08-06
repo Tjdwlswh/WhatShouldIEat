@@ -19,10 +19,29 @@ const commentModel = {
       order: [['createdAt', 'DESC']],
     });
   },
+  getMyComment: async ({ commenterId, page, pageSize = 10 }) => {
+    const limit = parseInt(pageSize);
+    const offset = (page - 1) * limit;
+
+    return await db.Comment.findAll({
+      where: {
+        CommenterId: commenterId,
+      },
+      include: [
+        {
+          model: db.Recipe,
+          attributes: ['foodname', 'tags', 'foodImg'],
+        },
+      ],
+      order: [['createdAt', 'DESC']],
+      offset,
+      limit,
+    });
+  },
   findOne: async ({ commenterId, recipeId, commentId }) => {
     return await db.Comment.findOne({ where: { id: commentId, commenterId, recipeId } });
   },
-  delete: async (commentId) => {
+  delete: async commentId => {
     return await db.Comment.destroy({ where: { id: commentId } });
   },
 };

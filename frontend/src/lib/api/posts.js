@@ -45,14 +45,14 @@ export const readPost = async ({ recipeId, token }) => {
   });
 };
 
-export const updatePost = async ({ recipeId, token, post }) => {
-  return await client.put(`/myrecipes/${recipeId}`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-    post,
-  });
-};
+// export const updatePost = async ({ recipeId, token, post }) => {
+//   return await client.put(`/myrecipes/${recipeId}`, {
+//     headers: {
+//       Authorization: `Bearer ${token}`,
+//     },
+//     post,
+//   });
+// };
 
 export const listPosts = async ({ token, email, tag, page }) => {
   return await client.get('/myrecipes', {

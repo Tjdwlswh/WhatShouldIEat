@@ -11,7 +11,8 @@ import {
   TagListBlock,
 } from '../create/AiComponents';
 import palette from '../../../lib/styles/palette';
-import ImgUploadContainer from '../../../container/common/ImgUploadContainer';
+import TagUpdate from '../../common/Tags';
+import { setOriginalPost } from '../../../modules/update';
 
 const SubInfo = styled.div`
   margin-top: 1rem;
@@ -43,7 +44,9 @@ const Tags = styled.div`
   }
 `;
 
-const MyRecipeForm = ({ post, error, loading, onEdit }) => {
+const MyRecipeForm = ({ post, error, loading }) => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   if (error) {
     if (error.response && error.response.status === 404) {
       return <CreateAireturnBlock>존재하지 않는 포스트 입니다.</CreateAireturnBlock>;
@@ -63,15 +66,14 @@ const MyRecipeForm = ({ post, error, loading, onEdit }) => {
   console.log(tagArray);
   const { comment } = post;
 
-  const handleImageSelected = file => {
-    console.log(file);
+  const onClickHandle = () => {
+    dispatch(setOriginalPost(post.recipe));
+    navigate('/myrecipeUpdate');
   };
 
   return (
     <>
       <CreateAireturnBlock>
-        <ImgUploadContainer onImageSelected={handleImageSelected} />
-
         <AiReturnbox>
           <SubInfo>
             <span>
@@ -87,13 +89,14 @@ const MyRecipeForm = ({ post, error, loading, onEdit }) => {
 
           <Tags>
             {tagArray.map(tag => (
-              <div className="tag">#{tag}</div>
+              <div contentEditable="true" className="tag">
+                #{tag}
+              </div>
             ))}
           </Tags>
-
           <div className="twobtn">
             <Button className="margin">레시피 삭제</Button>
-            <Button onClick={onEdit}>레시피 수정</Button>
+            <Button onClick={onClickHandle}>레시피 수정</Button>
           </div>
         </AiReturnbox>
       </CreateAireturnBlock>

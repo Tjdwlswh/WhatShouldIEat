@@ -29,6 +29,7 @@ const posts = handleActions(
     [LIST_POSTS_SUCCESS]: (state, { payload: posts }) => ({
       ...state,
       posts,
+      error: null,
     }),
     [LIST_POST_FAILURE]: (state, { payload: error }) => ({
       ...state,
