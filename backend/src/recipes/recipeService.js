@@ -36,7 +36,7 @@ const recipeService = {
       await t.commit();
       return createdRecipe;
     } catch (e) {
-      await t.ㄷrollback();
+      await t.rollback();
       throw e;
     }
   },
