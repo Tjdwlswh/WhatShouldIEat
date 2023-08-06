@@ -12,7 +12,7 @@ const authAPI = {
 
   renew: async ({ password, nickName, image, token }) => {
     const formData = createFormData({ password, nickName, image });
-    return await client.put('/auth/user', formData, {
+    return await client.put('/user', formData, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -20,18 +20,20 @@ const authAPI = {
   },
 
   getUser: async token => {
-    return await client.get('/auth/user', {
+    if (!token) return;
+    return await client.get('/user', {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
   },
 
-  getUserCard: async token => {
-    return await client.get('/auth/usercard', {
+  getUserCard: async ({ token, userId = '' }) => {
+    return await client.get(`/usercard`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
+      params: { userId },
     });
   },
 

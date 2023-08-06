@@ -24,13 +24,28 @@ const commentModel = {
     const offset = (page - 1) * limit;
 
     return await db.Comment.findAll({
-      where: {
-        CommenterId: commenterId,
-      },
+      where: { commenterId },
       include: [
         {
           model: db.Recipe,
-          attributes: ['foodname', 'tags', 'foodImg'],
+          attributes: ['id', 'foodname', 'tags', 'foodImg'],
+        },
+      ],
+      order: [['createdAt', 'DESC']],
+      offset,
+      limit,
+    });
+  },
+  getMyRecipeComment: async ({ userId, page, pageSize = 10 }) => {
+    const limit = parseInt(pageSize);
+    const offset = (page - 1) * limit;
+
+    return await db.Comment.findAll({
+      where: { recipeUserId: userId },
+      include: [
+        {
+          model: db.Recipe,
+          attributes: ['id', 'foodname', 'tags', 'foodImg'],
         },
       ],
       order: [['createdAt', 'DESC']],

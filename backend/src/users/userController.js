@@ -108,10 +108,16 @@ const userController = {
       next(err);
     }
   },
-  getUser: async (req, res, next) => {
+  getUserCard: async (req, res, next) => {
     try {
-      const userId = req.user.id;
-      const user = await userService.getUsercard(userId);
+      let userId = '';
+      if (req.query.userId) {
+        userId = req.query.userId;
+      } else {
+        userId = req.user.id;
+      }
+      console.log('userId', userId);
+      const user = await userService.getUserCard(userId);
       res.status(200).json(user);
     } catch (err) {
       next(err);

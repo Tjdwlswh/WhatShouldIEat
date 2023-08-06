@@ -69,6 +69,7 @@ const create = handleActions(
     [CREATE_POST_SUCCESS]: (state, { payload: post }) => ({
       ...state,
       post,
+      postError: null,
     }),
     [CREATE_POST_FAILURE]: (state, { payload: postError }) => ({
       ...state,
@@ -77,6 +78,7 @@ const create = handleActions(
     [SAVE_POST_SUCCESS]: (state, { payload: newRecipe }) => ({
       ...state,
       myRecipe: newRecipe, // 수정된 레시피 서버에 저장 후 반환받은 레시피
+      postError: null,
       post: null,
     }),
     [SAVE_POST_FAILURE]: (state, { payload: error }) => ({

@@ -15,7 +15,7 @@ const CreateContainer = () => {
 
   useEffect(() => {
     if (post) {
-      navigate('/CreateAi');
+      navigate('/createAi');
     }
   }, [navigate, post]);
 
