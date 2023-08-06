@@ -7,8 +7,9 @@ const commentRouter = Router();
 // 댓글 등록
 commentRouter.post('/comments/:recipeId', loginRequired, commentController.addComment);
 
-// 내 댓글 조회
-commentRouter.get('/comments', loginRequired, commentController.getMyComment);
+// 댓글 조회
+commentRouter.get('/comments/my', loginRequired, commentController.getMyComment);
+commentRouter.get('/comments/received', loginRequired, commentController.getMyRecipeComment);
 
 //댓글 삭제
 commentRouter.delete(

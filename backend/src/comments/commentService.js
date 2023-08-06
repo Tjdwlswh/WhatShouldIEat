@@ -1,8 +1,8 @@
 import { commentModel } from './commentModel.js';
 
 const commentService = {
-  addComment: async ({ comment, recipeId, commenterId }) => {
-    const newComment = { comment, recipeId, commenterId };
+  addComment: async ({ comment, recipeId, commenterId, recipeUserId }) => {
+    const newComment = { comment, recipeId, commenterId, recipeUserId };
     const createComment = await commentModel.addComment(newComment);
     return createComment;
   },
@@ -17,6 +17,15 @@ const commentService = {
   },
   getMyComment: async ({ commenterId, page, pageSize }) => {
     const comments = await commentModel.getMyComment({ commenterId, page, pageSize });
+
+    if (comments) {
+      return comments;
+    } else {
+      return (comments = []);
+    }
+  },
+  getMyRecipeComment: async ({ userId, page, pageSize }) => {
+    const comments = await commentModel.getMyRecipeComment({ userId, page, pageSize });
 
     if (comments) {
       return comments;

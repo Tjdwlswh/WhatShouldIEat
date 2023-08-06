@@ -8,6 +8,10 @@ class Comment extends Sequelize.Model {
           type: Sequelize.STRING(200),
           allowNull: false,
         },
+        recipeUserId: {
+          type: Sequelize.STRING(200),
+          allowNull: false,
+        },
       },
       {
         sequelize,

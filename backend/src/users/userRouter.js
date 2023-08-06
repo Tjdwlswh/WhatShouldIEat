@@ -47,13 +47,13 @@ userRouter.get('/auth/google/callback', userController.googleCallback);
 userRouter.post('/:followingId/follow', loginRequired, userController.postFollow);
 
 // user 정보
-userRouter.get('/auth/user', loginRequired, userController.getUserInfo);
+userRouter.get('/user', loginRequired, userController.getUserInfo);
 
 //user profilecard
-userRouter.get('/auth/usercard', loginRequired, userController.getUser);
+userRouter.get('/usercard', loginRequired, userController.getUser);
 
 // user 정보수정
-userRouter.put('/auth/user', loginRequired, imgUpload, userController.editUserInfo);
+userRouter.put('/user', loginRequired, imgUpload, userController.editUserInfo);
 
 // 회원탈퇴
 userRouter.delete('/auth/user', loginRequired, userController.deleteAccount);
