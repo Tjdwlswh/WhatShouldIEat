@@ -34,12 +34,10 @@ const ImgBox = styled.div`
 `;
 
 const ImgUpload = ({ onImageSelected, imgSrc }) => {
-  const [imageURL, setImageURL] = useState('/logo.png');
+  const [imageURL, setImageURL] = useState(
+    imgSrc ? `${process.env.REACT_APP_BACK_URL}/uploads/${imgSrc}` : '/logo.png',
+  );
   const inputRef = useRef();
-
-  if (imgSrc) {
-    setImageURL(`${process.env.REACT_APP_BACK_URL}/uploads/${imgSrc}`);
-  }
 
   useEffect(() => {
     return () => {
