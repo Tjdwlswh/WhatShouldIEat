@@ -96,8 +96,8 @@ const recipeService = {
     delete recipeData.Likers;
     return recipeData;
   },
-  getRecipes: async ({lastId}) => {
-    const recipes = await recipeModel.findAll({lastId});
+  getRecipes: async lastId => {
+    const recipes = await recipeModel.findAll(lastId);
     return recipes;
   },
   updateMyRecipe: async ({ recipeId, userId, foodImg, toUpdate }) => {
