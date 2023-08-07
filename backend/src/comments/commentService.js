@@ -12,7 +12,7 @@ const commentService = {
     if (comment) {
       return comment;
     } else {
-      return (comment = []);
+      return [];
     }
   },
   deleteComment: async ({ commenterId, recipeId, commentId }) => {

@@ -96,8 +96,8 @@ const recipeService = {
     delete recipeData.Likers;
     return recipeData;
   },
-  getRecipes: async lastId => {
-    const recipes = await recipeModel.findAll(lastId);
+  getRecipes: async pageNum => {
+    const recipes = await recipeModel.findAll(pageNum);
     return recipes;
   },
   updateMyRecipe: async ({ recipeId, userId, foodImg, toUpdate }) => {
@@ -138,7 +138,7 @@ const recipeService = {
   },
   deleteMyRecipe: async (recipeId, userId) => {
     const userData = await recipeModel.findOne(recipeId);
-    if (userData && userData.UserId === userId) {
+    if (userData && userData.userId === userId) {
       await recipeModel.delete(recipeId);
       const message = '레시피를 삭제하였습니다.';
       return message;

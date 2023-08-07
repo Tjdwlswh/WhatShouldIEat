@@ -87,9 +87,8 @@ const recipeController = {
   getRecipes: async (req, res, next) => {
     try {
       //좋아요 순으로 ->최신순 && 페이지네이션 무한스크롤 적용
-      const lastId = parseInt(req.query.lastId, 10);
-      console.log('컨트롤러', lastId);
-      const recipes = await recipeService.getRecipes(lastId);
+      const pageNum = parseInt(req.query.pageNum, 10);
+      const recipes = await recipeService.getRecipes(pageNum);
       return res.status(200).json(recipes);
     } catch (err) {
       next(err);
