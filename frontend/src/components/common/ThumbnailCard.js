@@ -62,17 +62,15 @@ const HashTagLink = styled(Link)`
 `;
 
 const ThumbnailCard = ({ imgSrc, tags, foodname, recipeId }) => {
-  let hashTag = [];
-  if (tags) {
-    hashTag = tags.match(/[^#]+/g);
-  }
+  const hashTags = tags ? tags.match(/[^#]+/g) : [];
+
   return (
     <Thumbnail>
       <img src={imgSrc} alt="사진" />
       <FoodNameLink to={`/${recipeId}`}>{foodname}</FoodNameLink>
       <HashTagGroup>
-        {hashTag.map(tag => (
-          <HashTagLink to={`/${tag}`}>{`#${tag}`}</HashTagLink>
+        {hashTags.map(hashTag => (
+          <HashTagLink to={`/${hashTag}`}>{`#${hashTag}`}</HashTagLink>
         ))}
       </HashTagGroup>
     </Thumbnail>

@@ -5,6 +5,15 @@ import styled, { css } from 'styled-components';
 import { MiniProfileCard, ProfileCard } from '../../components/common/ProfileCard';
 import authAPI from '../../lib/api/auth';
 
+/*
+  ProfileCard Size
+  height: 400px;
+  width: 300px;
+
+  MiniProfileCard Size
+  96X96 6remX6rem
+*/
+
 const OuterContainer = styled.div`
   position: fixed;
   top: 6rem;
