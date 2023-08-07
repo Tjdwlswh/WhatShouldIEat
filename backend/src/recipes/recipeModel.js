@@ -2,8 +2,8 @@ import { db } from '../../models/index.js';
 import { Sequelize } from 'sequelize';
 
 const recipeModel = {
-  create: async newRecipe => {
-    return await db.Recipe.create(newRecipe);
+  create: async (newRecipe, { transaction }) => {
+    return await db.Recipe.create(newRecipe, { transaction });
   },
   findMyRecipe: async ({ userId, lastId }) => {
     console.log('1', lastId);
