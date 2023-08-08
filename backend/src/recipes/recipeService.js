@@ -18,13 +18,14 @@ const recipeService = {
     const createdIngredient = await ingredientModel.findOrCreate(newIngredient);
     //재료 모델을 레시피 모델과 연결
     await createdRecipe.addIngredients(createdIngredient.map(i => i[0]));
+    if (tags) {
+      //2.해시태그 파싱해서 저장
+      const hashtags = tags.match(/#[^\s#]*/g);
+      const newTag = await hashtagModel.findOrCreate(hashtags);
 
-    //2.해시태그 파싱해서 저장
-    const hashtags = tags.match(/#[^\s#]*/g);
-    const newTag = await hashtagModel.findOrCreate(hashtags);
-
-    //해시태그 모델을 레시피 모델과 연결
-    await createdRecipe.addHashtags(newTag.map(t => t[0]));
+      //해시태그 모델을 레시피 모델과 연결
+      await createdRecipe.addHashtags(newTag.map(t => t[0]));
+    }
 
     //3.Ai레시피와 연결
     const airecipe = await recipeModel.findAiRecipe({ id: aiRecipeId });
@@ -94,11 +95,31 @@ const recipeService = {
   },
   getRecipe: async recipeId => {
     const recipe = await recipeModel.findOne(recipeId);
-    // 좋아요 카운트로 바꾸기
-    const recipeData = recipe.toJSON();
-    recipeData.likeCount = recipe.Likers.length;
-    delete recipeData.Likers;
-    return recipeData;
+    if (recipe) {
+      const hashtagNames = recipe.Hashtags.map(tag => tag.tag);
+      const recipeData = recipe.toJSON();
+      recipeData.likeCount = recipe.Likers.length;
+      recipeData.hashtags = hashtagNames; // hashtags 필드 추가
+      delete recipeData.Likers;
+      delete recipeData.Hashtags;
+
+      return recipeData;
+    }
+    // console.log('4', recipe);
+    // const recipeData = recipe.toJSON();
+    // recipeData.likeCount = recipe.Likers.length;
+    // delete recipeData.Likers;
+    // // delete recipeData.Hashtags;
+
+    // if (recipe.Hashtags) {
+    //   console.log('5', recipe.Hashtags);
+    //   const hashtagNames = recipe.Hashtags.map(tag => tag.tag);
+    //   recipe.hashtags = hashtagNames; // hashtags 필드 추가
+    //   console.log('3', recipe);
+    //   return recipe;
+    // } else {
+    //   return recipeData;
+    // }
   },
   getRecipes: async pageNum => {
     const recipes = await recipeModel.findAll(pageNum);

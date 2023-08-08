@@ -2,7 +2,7 @@ import { db } from '../../models/index.js';
 import { Sequelize } from 'sequelize';
 
 const recipeModel = {
-  create: async (newRecipe) => {
+  create: async newRecipe => {
     return await db.Recipe.create(newRecipe);
   },
   findMyRecipe: async ({ userId, pageNum }) => {
@@ -31,14 +31,15 @@ const recipeModel = {
   },
 
   findOne: async recipeId => {
-    return await db.Recipe.findOne({
+    const result = await db.Recipe.findOne({
       where: { id: recipeId },
       include: [
         { model: db.User, attributes: ['nickName', 'profileImg'] },
         { model: db.User, as: 'Likers', attributes: ['id'] },
-        
+        { model: db.Hashtag, attributes: ['tag'], through: { attributes: [] } },
       ],
     });
+    return result;
   },
   findAll: async pageNum => {
     let offset = 0;

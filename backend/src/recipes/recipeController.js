@@ -64,7 +64,7 @@ const recipeController = {
       const userId = req.user.id;
       const pageNum = req.query.pageNum;
       const myRecipe = await recipeService.myRecipe({ userId, pageNum });
-      
+
       return res.status(200).json(myRecipe);
     } catch (err) {
       next(err);
@@ -74,7 +74,7 @@ const recipeController = {
   getRecipe: async (req, res, next) => {
     try {
       const recipeId = req.params.recipeId;
-      const recipe = await recipeService.getRecipe(recipeId);
+      const  recipe  = await recipeService.getRecipe(recipeId);
       //등록된comment조회
       const comment = await commentService.getComment(recipeId);
       const result = { recipe, comment };
