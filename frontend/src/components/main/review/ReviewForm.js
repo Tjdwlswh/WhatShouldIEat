@@ -62,7 +62,15 @@ const ReviewForm = ({ page, setPage, reviews, myComment, setMyComment }) => {
             recipeId={review.Recipe.id}
           />
           <ReviewBox>
-            <MiniProfileCardContainer userId={review.recipeUserId} />
+            {review.commenterId !== review.recipeUserId ? (
+              myComment ? (
+                <MiniProfileCardContainer userId={review.recipeUserId} />
+              ) : (
+                <MiniProfileCardContainer userId={review.commenterId} />
+              )
+            ) : (
+              <div />
+            )}
             <ReviewTextBox>{review.comment}</ReviewTextBox>
             <ReviewCreateDate>{new Date(review.createdAt).toLocaleDateString()}</ReviewCreateDate>
           </ReviewBox>
