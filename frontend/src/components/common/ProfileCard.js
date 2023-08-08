@@ -58,8 +58,14 @@ const ProviderImg = styled.img`
 const Follow = styled(Button)`
   font-size: 0.875rem;
   line-height: 1rem;
-  background-color: ${palette.main};
-  color: ${palette.gray[7]};
+  ${props =>
+    props.isFollowing
+      ? `
+    background-color: ${palette.accent};
+    color: ${palette.gray[7]}`
+      : `
+    background-color: ${palette.main};
+    color: ${palette.gray[7]}`}
 `;
 
 const StatsContainer = styled.div`
@@ -94,8 +100,10 @@ const ProfileCard = ({ props, onClickIcon, onClickFollow, onClickClose }) => {
     nickName,
     profileImg,
     recipeCount,
+    isFollowing,
     followerCount,
     followingCount,
+    followerIdList,
     followingIdList,
   } = props;
 
@@ -120,7 +128,11 @@ const ProfileCard = ({ props, onClickIcon, onClickFollow, onClickClose }) => {
             />
           )}
         </NickName>
-        {!isMine && <Follow onClick={onClickFollow}>팔로우</Follow>}
+        {!isMine && (
+          <Follow isFollowing={isFollowing} onClick={onClickFollow}>
+            {isFollowing ? '팔로우 중' : '팔로우'}
+          </Follow>
+        )}
         <StatsContainer isMine={isMine}>
           <Stat>
             <StatNumber>{followerCount}</StatNumber>

@@ -45,6 +45,8 @@ userRouter.get('/auth/google/callback', userController.googleCallback);
 
 //팔로우 신청
 userRouter.post('/follow/:followingId', loginRequired, userController.postFollow);
+//팔로우 해제
+userRouter.delete('/follow/:followingId', loginRequired, userController.removeFollow);
 
 // user 정보
 userRouter.get('/user', loginRequired, userController.getUserInfo);

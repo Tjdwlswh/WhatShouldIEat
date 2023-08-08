@@ -85,6 +85,18 @@ const userService = {
     await user.addFollowing(parseInt(followingId, 10));
     return;
   },
+
+  removeFollowing: async (followingId, followerId) => {
+    //내가 팔로우 신청하면 내가 follower, 남은 following
+    const user = await UserModel.findById(followerId);
+    if (!user) {
+      const errorMessage = 'Follower not found.';
+      throw new NotFoundException(errorMessage);
+    }
+    await user.removeFollowing(parseInt(followingId, 10));
+    return;
+  },
+
   getUserCard: async userId => {
     const { nickName, profileImg, provider, Followers, Followings } = await UserModel.findOne(
       userId,
@@ -94,6 +106,7 @@ const userService = {
     const followerCount = Followers?.length || 0;
     const followingCount = Followings?.length || 0;
     const followingIdList = Followings?.map(f => f.id) || [];
+    const followerIdList = Followers?.map(f => f.id) || [];
     const result = {
       provider,
       nickName,
@@ -101,6 +114,7 @@ const userService = {
       recipeCount,
       followerCount,
       followingCount,
+      followerIdList,
       followingIdList,
     };
     return result;
