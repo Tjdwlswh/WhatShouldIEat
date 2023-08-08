@@ -62,8 +62,8 @@ const recipeController = {
   getMyrecipes: async (req, res, next) => {
     try {
       const userId = req.user.id;
-      const lastId = req.query.lastId;
-      const myRecipe = await recipeService.myRecipe({ userId, lastId });
+      const pageNum = req.query.pageNum;
+      const myRecipe = await recipeService.myRecipe({ userId, pageNum });
 
       return res.status(200).json(myRecipe);
     } catch (err) {

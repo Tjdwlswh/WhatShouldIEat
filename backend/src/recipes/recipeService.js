@@ -83,12 +83,12 @@ const recipeService = {
     const likePlusOne = await recipe.addLikers(userId);
     return likePlusOne;
   },
-  myRecipe: async ({ userId, lastId }) => {
+  myRecipe: async ({ userId, pageNum }) => {
     //user의 id로 나의 레시피 조회
-    const myRecipe = await recipeModel.findMyRecipe({ userId, lastId });
+    const myRecipe = await recipeModel.findMyRecipe({ userId, pageNum });
     //생성된 나의 레시피가 없다면 빈 배열로 리턴하기
     if (!myRecipe) {
-      return (myRecipe = []);
+      return [];
     }
     //Likers배열 -> likeCount로
     const recipesJSON = myRecipe.map(recipe => {

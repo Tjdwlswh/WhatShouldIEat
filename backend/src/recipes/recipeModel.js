@@ -5,15 +5,14 @@ const recipeModel = {
   create: async (newRecipe, { transaction }) => {
     return await db.Recipe.create(newRecipe, { transaction });
   },
-  findMyRecipe: async ({ userId, lastId }) => {
-    console.log('1', lastId);
-
-    const where = { userId };
-    if (parseInt(lastId, 10)) {
-      where.id = { [Sequelize.Op.lt]: parseInt(lastId, 10) };
+  findMyRecipe: async ({ userId, pageNum }) => {
+    let offset = 0;
+    if (pageNum) {
+      offset = 8 * (pageNum - 1);
     }
     const recipes = await db.Recipe.findAll({
-      where,
+      where: { userId: userId },
+      offset: offset,
       limit: 8,
       include: [
         {
@@ -22,7 +21,7 @@ const recipeModel = {
           attributes: ['id'],
         },
       ],
-      order: [['createdAt', 'DESC']],
+      order: [['id', 'DESC']],
     });
     return recipes;
   },
@@ -41,17 +40,11 @@ const recipeModel = {
     });
   },
   findAll: async pageNum => {
-    console.log('1', pageNum);
-    // let where = {};
-    // if (lastId) {
-      //   where.id = { [Sequelize.Op.lt]: lastId };
-      // }
     let offset = 0;
     if (pageNum) {
       offset = 8 * (pageNum - 1);
     }
     const recipes = await db.Recipe.findAll({
-      // where,
       offset: offset,
       limit: 8,
       include: [
@@ -61,10 +54,6 @@ const recipeModel = {
           attributes: [],
         },
       ],
-      // attributes: {
-      //   include: [[Sequelize.fn(`COUNT`, Sequelize.col(`Likers.id`)), 'likeCount']],
-      // },
-      // group: ['Recipe.id'], // 중복된 행을 방지하기 위해 Recipe.id로 그룹화
       attributes: {
         include: [
           [
@@ -80,6 +69,7 @@ const recipeModel = {
     });
     return recipes;
   },
+
   update: async ({ toUpdate, recipeId }) => {
     const updatedRecipe = await db.Recipe.update(toUpdate, {
       where: { id: recipeId },
