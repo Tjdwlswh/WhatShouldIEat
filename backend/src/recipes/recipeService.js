@@ -4,29 +4,41 @@ import { hashtagModel } from '../hashtags/hashtagModel.js';
 import { getAiRecipe } from '../libs/api/recipeAPI.js';
 import { commentModel } from '../comments/commentModel.js';
 import { deleteFile } from '../libs/controlFile.js';
+import { NotFoundException } from '../libs/httpException.js';
+import { sequelize } from '../../models/index.js';
 
 const recipeService = {
   addRecipe: async ({ foodname, ingredients, recipe, tags, foodImg, userId, aiRecipeId }) => {
     const newRecipe = { foodname, ingredients, recipe, tags, foodImg, userId };
-    const createdRecipe = await recipeModel.create(newRecipe);
 
-    //1.ingridients테이블에 재료들 파싱해서 저장
-    const newIngredient = ingredients.split('|');
-    const createdIngredient = await ingredientModel.findOrCreate(newIngredient);
-    //재료 모델을 레시피 모델과 연결
-    await createdRecipe.addIngredients(createdIngredient.map(i => i[0]));
+    const t = await sequelize.transaction();
 
-    //2.해시태그 파싱해서 저장
-    const hashtags = tags.match(/#[^\s#]*/g);
-    const newTag = await hashtagModel.findOrCreate(hashtags);
-    //해시태그 모델을 레시피 모델과 연결
-    await createdRecipe.addHashtags(newTag.map(t => t[0]));
+    try {
+      const createdRecipe = await recipeModel.create(newRecipe, { transaction: t });
 
-    //3.Ai레시피와 연결
-    const airecipe = await recipeModel.findAiRecipe({ id: aiRecipeId });
-    createdRecipe.setAiRecipe(airecipe);
+      //1.ingridients테이블에 재료들 파싱해서 저장
+      const newIngredient = ingredients.split('|');
+      const createdIngredient = await ingredientModel.findOrCreate(newIngredient, { transaction: t });
+      //재료 모델을 레시피 모델과 연결
+      await createdRecipe.addIngredients(createdIngredient.map(i => i[0]), { transaction: t });
 
-    return createdRecipe;
+      //2.해시태그 파싱해서 저장
+      const hashtags = tags.match(/#[^\s#]*/g);
+      const newTag = await hashtagModel.findOrCreate(hashtags, { transaction: t });
+
+      //해시태그 모델을 레시피 모델과 연결
+      await createdRecipe.addHashtags(newTag.map(t => t[0]), { transaction: t });
+
+      //3.Ai레시피와 연결
+      const airecipe = await recipeModel.findAiRecipe({ id: aiRecipeId });
+      if (!airecipe) throw new NotFoundException('airecipe가 존재하지 않습니다.');
+      createdRecipe.setAiRecipe(airecipe);
+      await t.commit();
+      return createdRecipe;
+    } catch (e) {
+      await t.rollback();
+      throw e;
+    }
   },
   createAiRecipe: async ({ type, ingredients }) => {
     let ingredient = `재료: ${ingredients.join('|')}`;
@@ -71,12 +83,12 @@ const recipeService = {
     const likePlusOne = await recipe.addLikers(userId);
     return likePlusOne;
   },
-  myRecipe: async userId => {
+  myRecipe: async ({ userId, pageNum }) => {
     //user의 id로 나의 레시피 조회
-    const myRecipe = await recipeModel.findMyRecipe(userId);
+    const myRecipe = await recipeModel.findMyRecipe({ userId, pageNum });
     //생성된 나의 레시피가 없다면 빈 배열로 리턴하기
     if (!myRecipe) {
-      return (myRecipe = []);
+      return [];
     }
     //Likers배열 -> likeCount로
     const recipesJSON = myRecipe.map(recipe => {
@@ -96,8 +108,8 @@ const recipeService = {
     delete recipeData.Likers;
     return recipeData;
   },
-  getRecipes: async () => {
-    const recipes = await recipeModel.findAll();
+  getRecipes: async pageNum => {
+    const recipes = await recipeModel.findAll(pageNum);
     return recipes;
   },
   updateMyRecipe: async ({ recipeId, userId, foodImg, toUpdate }) => {
@@ -138,7 +150,7 @@ const recipeService = {
   },
   deleteMyRecipe: async (recipeId, userId) => {
     const userData = await recipeModel.findOne(recipeId);
-    if (userData && userData.UserId === userId) {
+    if (userData && userData.userId === userId) {
       await recipeModel.delete(recipeId);
       const message = '레시피를 삭제하였습니다.';
       return message;
