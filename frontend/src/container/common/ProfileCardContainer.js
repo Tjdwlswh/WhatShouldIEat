@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import ProfileCard from '../../components/common/ProfileCard';
 import authAPI from '../../lib/api/auth';
+import { follow } from '../../lib/api/follow';
 
 /*
   ProfileCard Size
@@ -73,9 +74,10 @@ const ProfileCardContainer = ({ userId, onClickClose }) => {
     navigate('/myaccount');
   };
 
-  const handleClickFollow = () => {
-    const { data } = await authAPI.getUserCard({ token, userId });
-    return;
+  const handleClickFollow = async () => {
+    console.log('click');
+    // const result = await follow({ token, userId });
+    // alert(result);
   };
 
   return (
