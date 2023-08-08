@@ -25,10 +25,7 @@ const RouterGuard = () => {
   const { user } = useSelector(state => state.user);
   const { auth } = useSelector(state => state.auth);
   const accessToken = useSelector(state => state.user.token);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  useEffect(() => {
-    setIsLoggedIn(localStorage.getItem('isLoggedIn') === 'true');
-  }, []);
+  const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
 
   /*********** 페이지 목록시작 ***********/
 
@@ -93,7 +90,7 @@ const RouterGuard = () => {
   }
 
   // 로그인이 필요한 페이지인 경우 로그인 상태를 확인하고 리디렉션
-  if (currentRoute.loginRequired && !isLoggedIn) {
+  if (currentRoute.loginRequired && !user) {
     return <Navigate to="/login" />;
   }
 

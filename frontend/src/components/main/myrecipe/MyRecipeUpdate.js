@@ -41,9 +41,9 @@ const MyRecipeUpdate = () => {
       lastpost: update.lastpost,
       updateError: update.updateError,
       originalPostId: update.originalPostId,
-      foodname: update.foodname,
-      ingredients: update.ingredients,
-      recipe: update.recipe,
+      foodname: update.lastpost.foodname,
+      ingredients: update.lastpost.ingredients,
+      recipe: update.lastpost.recipe,
     }),
   );
 
