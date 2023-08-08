@@ -11,34 +11,27 @@ const recipeService = {
   addRecipe: async ({ foodname, ingredients, recipe, tags, foodImg, userId, aiRecipeId }) => {
     const newRecipe = { foodname, ingredients, recipe, tags, foodImg, userId };
 
-    const t = await sequelize.transaction();
+    const createdRecipe = await recipeModel.create(newRecipe);
 
-    try {
-      const createdRecipe = await recipeModel.create(newRecipe, { transaction: t });
-
-      //1.ingridients테이블에 재료들 파싱해서 저장
-      const newIngredient = ingredients.split('|');
-      const createdIngredient = await ingredientModel.findOrCreate(newIngredient, { transaction: t });
-      //재료 모델을 레시피 모델과 연결
-      await createdRecipe.addIngredients(createdIngredient.map(i => i[0]), { transaction: t });
-
+    //1.ingridients테이블에 재료들 파싱해서 저장
+    const newIngredient = ingredients.split('|');
+    const createdIngredient = await ingredientModel.findOrCreate(newIngredient);
+    //재료 모델을 레시피 모델과 연결
+    await createdRecipe.addIngredients(createdIngredient.map(i => i[0]));
+    if (tags) {
       //2.해시태그 파싱해서 저장
       const hashtags = tags.match(/#[^\s#]*/g);
-      const newTag = await hashtagModel.findOrCreate(hashtags, { transaction: t });
+      const newTag = await hashtagModel.findOrCreate(hashtags);
 
       //해시태그 모델을 레시피 모델과 연결
-      await createdRecipe.addHashtags(newTag.map(t => t[0]), { transaction: t });
-
-      //3.Ai레시피와 연결
-      const airecipe = await recipeModel.findAiRecipe({ id: aiRecipeId });
-      if (!airecipe) throw new NotFoundException('airecipe가 존재하지 않습니다.');
-      createdRecipe.setAiRecipe(airecipe);
-      await t.commit();
-      return createdRecipe;
-    } catch (e) {
-      await t.rollback();
-      throw e;
+      await createdRecipe.addHashtags(newTag.map(t => t[0]));
     }
+
+    //3.Ai레시피와 연결
+    const airecipe = await recipeModel.findAiRecipe({ id: aiRecipeId });
+    if (!airecipe) throw new NotFoundException('airecipe가 존재하지 않습니다.');
+    createdRecipe.setAiRecipe(airecipe);
+    return createdRecipe;
   },
   createAiRecipe: async ({ type, ingredients }) => {
     let ingredient = `재료: ${ingredients.join('|')}`;
@@ -102,11 +95,31 @@ const recipeService = {
   },
   getRecipe: async recipeId => {
     const recipe = await recipeModel.findOne(recipeId);
-    // 좋아요 카운트로 바꾸기
-    const recipeData = recipe.toJSON();
-    recipeData.likeCount = recipe.Likers.length;
-    delete recipeData.Likers;
-    return recipeData;
+    if (recipe) {
+      const hashtagNames = recipe.Hashtags.map(tag => tag.tag);
+      const recipeData = recipe.toJSON();
+      recipeData.likeCount = recipe.Likers.length;
+      recipeData.hashtags = hashtagNames; // hashtags 필드 추가
+      delete recipeData.Likers;
+      delete recipeData.Hashtags;
+
+      return recipeData;
+    }
+    // console.log('4', recipe);
+    // const recipeData = recipe.toJSON();
+    // recipeData.likeCount = recipe.Likers.length;
+    // delete recipeData.Likers;
+    // // delete recipeData.Hashtags;
+
+    // if (recipe.Hashtags) {
+    //   console.log('5', recipe.Hashtags);
+    //   const hashtagNames = recipe.Hashtags.map(tag => tag.tag);
+    //   recipe.hashtags = hashtagNames; // hashtags 필드 추가
+    //   console.log('3', recipe);
+    //   return recipe;
+    // } else {
+    //   return recipeData;
+    // }
   },
   getRecipes: async pageNum => {
     const recipes = await recipeModel.findAll(pageNum);

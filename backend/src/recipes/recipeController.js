@@ -74,7 +74,7 @@ const recipeController = {
   getRecipe: async (req, res, next) => {
     try {
       const recipeId = req.params.recipeId;
-      const recipe = await recipeService.getRecipe(recipeId);
+      const  recipe  = await recipeService.getRecipe(recipeId);
       //등록된comment조회
       const comment = await commentService.getComment(recipeId);
       const result = { recipe, comment };
