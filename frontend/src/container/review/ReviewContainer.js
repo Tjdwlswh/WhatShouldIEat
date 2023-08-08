@@ -1,9 +1,7 @@
+import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import ReviewForm from '../../components/main/review/ReviewForm';
-import { useEffect, useLayoutEffect } from 'react';
 import { readReview, readMyRecipeReview } from '../../modules/review';
-import { useState } from 'react';
-import { useRef } from 'react';
 
 const ReviewContainer = () => {
   const dispatch = useDispatch();

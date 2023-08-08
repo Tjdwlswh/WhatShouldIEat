@@ -23,7 +23,7 @@ const commentModel = {
     const limit = parseInt(pageSize);
     const offset = (page - 1) * limit;
 
-    return await db.Comment.findAll({
+    const { count, rows } = await db.Comment.findAndCountAll({
       where: { commenterId },
       include: [
         {
@@ -35,12 +35,17 @@ const commentModel = {
       offset,
       limit,
     });
+
+    return {
+      totalItemsCount: count, // 총 개수 반환
+      comments: rows, // 데이터 반환
+    };
   },
   getMyRecipeComment: async ({ userId, page, pageSize = 10 }) => {
     const limit = parseInt(pageSize);
     const offset = (page - 1) * limit;
 
-    return await db.Comment.findAll({
+    const { count, rows } = await db.Comment.findAndCountAll({
       where: { recipeUserId: userId },
       include: [
         {
@@ -52,6 +57,11 @@ const commentModel = {
       offset,
       limit,
     });
+
+    return {
+      totalItemsCount: count, // 총 개수 반환
+      comments: rows, // 데이터 반환
+    };
   },
   findOne: async ({ commenterId, recipeId, commentId }) => {
     return await db.Comment.findOne({ where: { id: commentId, commenterId, recipeId } });

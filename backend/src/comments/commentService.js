@@ -16,21 +16,29 @@ const commentService = {
     }
   },
   getMyComment: async ({ commenterId, page, pageSize }) => {
-    const comments = await commentModel.getMyComment({ commenterId, page, pageSize });
+    const { comments, totalItemsCount } = await commentModel.getMyComment({
+      commenterId,
+      page,
+      pageSize,
+    });
 
     if (comments) {
-      return comments;
+      return { comments, totalItemsCount };
     } else {
-      return (comments = []);
+      return { comments: [], totalItemsCount: 0 };
     }
   },
   getMyRecipeComment: async ({ userId, page, pageSize }) => {
-    const comments = await commentModel.getMyRecipeComment({ userId, page, pageSize });
+    const { comments, totalItemsCount } = await commentModel.getMyRecipeComment({
+      userId,
+      page,
+      pageSize,
+    });
 
     if (comments) {
-      return comments;
+      return { comments, totalItemsCount };
     } else {
-      return (comments = []);
+      return { comments: [], totalItemsCount: 0 };
     }
   },
 

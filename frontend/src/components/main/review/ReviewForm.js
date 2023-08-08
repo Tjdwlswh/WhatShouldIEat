@@ -3,6 +3,7 @@ import ThumbnailCard from '../../common/ThumbnailCard';
 import palette from '../../../lib/styles/palette';
 import { MiniProfileCardContainer } from '../../../container/common/ProfileCardContainer';
 import ToggleButton from './ToggleButton';
+import PaginationBox from '../../common/PaginationBox';
 
 const ReviewContainer = styled.div`
   position: relative;
@@ -45,14 +46,14 @@ const ReviewCreateDate = styled.p`
 `;
 
 const ReviewForm = ({ page, setPage, reviews, myComment, setMyComment }) => {
-  if (!reviews) {
+  if (!reviews.comments) {
     return null;
   }
 
   return (
     <>
       <ToggleButton myComment={myComment} setMyComment={setMyComment} />
-      {reviews.map(review => (
+      {reviews.comments.map(review => (
         <ReviewContainer key={review.id}>
           <ThumbnailCard
             imgSrc={review.Recipe.foodImg}
@@ -67,6 +68,7 @@ const ReviewForm = ({ page, setPage, reviews, myComment, setMyComment }) => {
           </ReviewBox>
         </ReviewContainer>
       ))}
+      <PaginationBox page={page} setPage={setPage} totalItemsCount={reviews.totalItemsCount} />
     </>
   );
 };

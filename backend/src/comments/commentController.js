@@ -24,8 +24,12 @@ const commentController = {
     try {
       const commenterId = req.user.id;
       const { page, pageSize } = req.query;
-      const comments = await commentService.getMyComment({ commenterId, page, pageSize });
-      return res.status(200).json(comments);
+      const { comments, totalItemsCount } = await commentService.getMyComment({
+        commenterId,
+        page,
+        pageSize,
+      });
+      return res.status(200).json({ comments, totalItemsCount });
     } catch (err) {
       next(err);
     }
@@ -35,8 +39,12 @@ const commentController = {
     try {
       const userId = req.user.id;
       const { page, pageSize } = req.query;
-      const comments = await commentService.getMyRecipeComment({ userId, page, pageSize });
-      return res.status(200).json(comments);
+      const { comments, totalItemsCount } = await commentService.getMyRecipeComment({
+        userId,
+        page,
+        pageSize,
+      });
+      return res.status(200).json({ comments, totalItemsCount });
     } catch (err) {
       next(err);
     }
