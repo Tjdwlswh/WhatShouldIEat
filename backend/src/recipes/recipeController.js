@@ -64,7 +64,7 @@ const recipeController = {
       const userId = req.user.id;
       const pageNum = req.query.pageNum;
       const myRecipe = await recipeService.myRecipe({ userId, pageNum });
-
+      
       return res.status(200).json(myRecipe);
     } catch (err) {
       next(err);

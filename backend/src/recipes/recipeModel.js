@@ -2,8 +2,8 @@ import { db } from '../../models/index.js';
 import { Sequelize } from 'sequelize';
 
 const recipeModel = {
-  create: async (newRecipe, { transaction }) => {
-    return await db.Recipe.create(newRecipe, { transaction });
+  create: async (newRecipe) => {
+    return await db.Recipe.create(newRecipe);
   },
   findMyRecipe: async ({ userId, pageNum }) => {
     let offset = 0;
@@ -36,6 +36,7 @@ const recipeModel = {
       include: [
         { model: db.User, attributes: ['nickName', 'profileImg'] },
         { model: db.User, as: 'Likers', attributes: ['id'] },
+        
       ],
     });
   },
