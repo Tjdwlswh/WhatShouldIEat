@@ -20,6 +20,11 @@ const KakaoButton = styled.button`
 
   &:hover {
     filter: brightness(90%);
+    box-shadow:
+      2px 2px 4px 0 rgba(255, 255, 255, 0.5),
+      -2px -2px 4px 0 rgba(116, 125, 136, 0.5),
+      inset -2px -2px 4px 0 rgba(255, 255, 255, 0.2),
+      inset 2px 2px 4px 0 rgba(0, 0, 0, 0.4);
   }
 `;
 
