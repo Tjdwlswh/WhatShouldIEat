@@ -25,7 +25,10 @@ const RouterGuard = () => {
   const { user } = useSelector(state => state.user);
   const { auth } = useSelector(state => state.auth);
   const accessToken = useSelector(state => state.user.token);
-  const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  useEffect(() => {
+    setIsLoggedIn(localStorage.getItem('isLoggedIn') === 'true');
+  }, []);
 
   /*********** 페이지 목록시작 ***********/
 

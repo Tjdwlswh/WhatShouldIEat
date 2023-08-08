@@ -68,7 +68,7 @@ const ProfileCardContainer = ({ userId, onClickClose }) => {
       }
     };
     fetchData();
-  }, [token, userData, userId]);
+  }, [token, userId]);
 
   const handleIconClick = () => {
     navigate('/myaccount');
