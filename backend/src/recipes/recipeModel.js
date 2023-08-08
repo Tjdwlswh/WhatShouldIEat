@@ -2,12 +2,18 @@ import { db } from '../../models/index.js';
 import { Sequelize } from 'sequelize';
 
 const recipeModel = {
-  create: async newRecipe => {
-    return await db.Recipe.create(newRecipe);
+  create: async (newRecipe, { transaction }) => {
+    return await db.Recipe.create(newRecipe, { transaction });
   },
-  findMyRecipe: async userId => {
-    return await db.Recipe.findAll({
-      where: { userId },
+  findMyRecipe: async ({ userId, pageNum }) => {
+    let offset = 0;
+    if (pageNum) {
+      offset = 8 * (pageNum - 1);
+    }
+    const recipes = await db.Recipe.findAll({
+      where: { userId: userId },
+      offset: offset,
+      limit: 8,
       include: [
         {
           model: db.User,
@@ -15,8 +21,9 @@ const recipeModel = {
           attributes: ['id'],
         },
       ],
-      order: [['createdAt', 'DESC']],
+      order: [['id', 'DESC']],
     });
+    return recipes;
   },
 
   findMyRecipeCount: async userId => {
@@ -32,27 +39,37 @@ const recipeModel = {
       ],
     });
   },
-  findAll: async () => {
+  findAll: async pageNum => {
+    let offset = 0;
+    if (pageNum) {
+      offset = 8 * (pageNum - 1);
+    }
     const recipes = await db.Recipe.findAll({
+      offset: offset,
+      limit: 8,
       include: [
         {
           model: db.User,
           as: 'Likers',
           attributes: [],
-          through: { attributes: [] }, // 중간 테이블의 속성은 사용하지 않음
         },
       ],
       attributes: {
-        include: [[Sequelize.fn('COUNT', Sequelize.col('Likers.id')), 'likeCount']],
+        include: [
+          [
+            Sequelize.literal(`(SELECT COUNT(*) FROM Likeit WHERE Likeit.RecipeId = Recipe.id)`),
+            'likeCount',
+          ],
+        ],
       },
-      group: ['Recipe.id'], // 중복된 행을 방지하기 위해 Recipe.id로 그룹화
       order: [
-        [Sequelize.literal('likeCount'), 'DESC'],
-        ['createdAt', 'DESC'],
+        [Sequelize.literal('likeCount'), 'DESC'], // likeCount를 기준으로 내림차순 정렬
+        ['id', 'DESC'], // id를 기준으로 내림차순 정렬
       ],
     });
     return recipes;
   },
+
   update: async ({ toUpdate, recipeId }) => {
     const updatedRecipe = await db.Recipe.update(toUpdate, {
       where: { id: recipeId },
