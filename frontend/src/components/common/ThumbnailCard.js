@@ -1,6 +1,8 @@
-import styled from 'styled-components';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import styled from 'styled-components';
 import palette from '../../lib/styles/palette';
+import imgSrcConverter from '../../lib/utils/imgSrcConverter';
 
 /*
   레시피 썸네일 144X144 이미지 소스, 태그, 요리이름
@@ -62,17 +64,18 @@ const HashTagLink = styled(Link)`
 `;
 
 const ThumbnailCard = ({ imgSrc, tags, foodname, recipeId }) => {
-  let hashTag = [];
-  if (tags) {
-    hashTag = tags.match(/[^#]+/g);
-  }
+  const hashTags = tags ? tags.match(/[^#]+/g) : [];
+
+  const [imageError, setImageError] = useState(false);
+  const imgAttribute = imgSrcConverter(imgSrc, imageError, setImageError);
+
   return (
     <Thumbnail>
-      <img src={imgSrc} alt="사진" />
+      <img {...imgAttribute} alt="사진" />
       <FoodNameLink to={`/${recipeId}`}>{foodname}</FoodNameLink>
       <HashTagGroup>
-        {hashTag.map(tag => (
-          <HashTagLink to={`/${tag}`}>{`#${tag}`}</HashTagLink>
+        {hashTags.map(hashTag => (
+          <HashTagLink to={`/${hashTag}`}>{`#${hashTag}`}</HashTagLink>
         ))}
       </HashTagGroup>
     </Thumbnail>

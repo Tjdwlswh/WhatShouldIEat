@@ -1,8 +1,9 @@
 import styled from 'styled-components';
 import ThumbnailCard from '../../common/ThumbnailCard';
 import palette from '../../../lib/styles/palette';
-import { MiniProfileCardContainer } from '../../../container/common/ProfileCardContainer';
-import { useEffect } from 'react';
+import MiniProfileCardContainer from '../../../container/common/MiniProfileCardContainer';
+import ToggleButton from './ToggleButton';
+import PaginationBox from '../../common/PaginationBox';
 
 const ReviewContainer = styled.div`
   position: relative;
@@ -44,32 +45,38 @@ const ReviewCreateDate = styled.p`
   color: ${palette.text};
 `;
 
-const ReviewForm = ({ page, setPage, reviews }) => {
-  useEffect(() => {
-    setPage(1);
-  });
-
-  if (!reviews) {
+const ReviewForm = ({ page, setPage, reviews, myComment, setMyComment }) => {
+  if (!reviews?.comments) {
     return null;
   }
 
   return (
     <>
-      {reviews.map(review => (
+      <ToggleButton myComment={myComment} setMyComment={setMyComment} />
+      {reviews.comments.map(review => (
         <ReviewContainer key={review.id}>
           <ThumbnailCard
-            imgSrc={'logo.png'}
+            imgSrc={review.Recipe.foodImg}
             tags={review.Recipe.tags}
             foodname={review.Recipe.foodname}
             recipeId={review.Recipe.id}
           />
           <ReviewBox>
-            <MiniProfileCardContainer userId={review.recipeUserId} />
+            {review.commenterId !== review.recipeUserId ? (
+              myComment ? (
+                <MiniProfileCardContainer userId={review.recipeUserId} />
+              ) : (
+                <MiniProfileCardContainer userId={review.commenterId} />
+              )
+            ) : (
+              <div />
+            )}
             <ReviewTextBox>{review.comment}</ReviewTextBox>
             <ReviewCreateDate>{new Date(review.createdAt).toLocaleDateString()}</ReviewCreateDate>
           </ReviewBox>
         </ReviewContainer>
       ))}
+      <PaginationBox page={page} setPage={setPage} totalItemsCount={reviews.totalItemsCount} />
     </>
   );
 };

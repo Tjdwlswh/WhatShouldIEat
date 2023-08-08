@@ -20,6 +20,11 @@ const GoogleButton = styled.button`
 
   &:hover {
     filter: brightness(90%);
+    box-shadow:
+      2px 2px 4px 0 rgba(255, 255, 255, 0.5),
+      -2px -2px 4px 0 rgba(116, 125, 136, 0.5),
+      inset -2px -2px 4px 0 rgba(255, 255, 255, 0.2),
+      inset 2px 2px 4px 0 rgba(0, 0, 0, 0.4);
   }
 `;
 
@@ -41,7 +46,7 @@ const GoogleLoginButton = () => {
 
   return (
     <GoogleButton onClick={handleClick}>
-      <Image src={process.env.PUBLIC_URL + '/assets/img/icons/google.png'} alt="구글 로그인 버튼" />
+      <Image src={`${process.env.PUBLIC_URL}/assets/img/icons/google.png`} alt="구글 로그인 버튼" />
       <span>Google 계정으로 로그인</span>
     </GoogleButton>
   );

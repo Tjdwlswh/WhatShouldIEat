@@ -1,18 +1,31 @@
 import { useSelector } from 'react-redux';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import styled, { css } from 'styled-components';
-import { MiniProfileCard, ProfileCard } from '../../components/common/ProfileCard';
+import styled from 'styled-components';
+import ProfileCard from '../../components/common/ProfileCard';
 import authAPI from '../../lib/api/auth';
+import { follow } from '../../lib/api/follow';
+
+/*
+  ProfileCard Size
+  height: 400px;
+  width: 300px;
+
+  MiniProfileCard Size
+  96X96 6remX6rem
+*/
 
 const OuterContainer = styled.div`
   position: fixed;
+  ${props =>
+    !props.userId &&
+    `
   top: 6rem;
   left: 2rem;
-
   @media (max-width: 1740px) {
     display: none;
   }
+  `}
   height: 400px;
   width: 300px;
   background-color: white;
@@ -24,8 +37,7 @@ const OuterContainer = styled.div`
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.08);
 `;
 
-// const ProfileCardContainer = ({ email }) => {
-const ProfileCardContainer = ({ userId }) => {
+const ProfileCardContainer = ({ userId, onClickClose }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const [show, setShow] = useState(false);
@@ -34,8 +46,8 @@ const ProfileCardContainer = ({ userId }) => {
 
   useEffect(() => {
     const { pathname } = location;
-    setShow(pathname !== '/myaccount' && userData);
-  }, [location]);
+    setShow(pathname !== '/myaccount' && token);
+  }, [location, token]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -43,7 +55,13 @@ const ProfileCardContainer = ({ userId }) => {
         if (token) {
           const { data } = await authAPI.getUserCard({ token, userId });
           data.isMine = !userId;
-          setUserData(data);
+          setUserData(current => {
+            const newUserDate = {
+              ...current,
+              ...data,
+            };
+            return newUserDate;
+          });
         }
       } catch (err) {
         console.log(err);
@@ -56,34 +74,24 @@ const ProfileCardContainer = ({ userId }) => {
     navigate('/myaccount');
   };
 
+  const handleClickFollow = async () => {
+    console.log('click');
+    // const result = await follow({ token, userId });
+    // alert(result);
+  };
+
   return (
     show && (
-      <OuterContainer>
-        <ProfileCard props={userData} onClickIcon={handleIconClick} />
+      <OuterContainer userId={userId}>
+        <ProfileCard
+          props={userData}
+          onClickFollow={handleClickFollow}
+          onClickClose={onClickClose}
+          onClickIcon={handleIconClick}
+        />
       </OuterContainer>
     )
   );
 };
 
-const MiniProfileCardContainer = ({ userId }) => {
-  const [userData, setUserData] = useState({});
-  const { token } = useSelector(state => state.user);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        if (token) {
-          const { data } = await authAPI.getUserCard({ token, userId });
-          setUserData(data);
-        }
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    fetchData();
-  }, [token, userId]);
-
-  return <MiniProfileCard nickName={userData.nickName} profileImg={userData.profileImg} />;
-};
-
-export { ProfileCardContainer, MiniProfileCardContainer };
+export default ProfileCardContainer;

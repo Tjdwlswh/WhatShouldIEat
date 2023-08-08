@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import palette from '../../lib/styles/palette';
-import { Link } from 'react-router-dom';
-import { useState } from 'react';
+import imgSrcConverter from '../../lib/utils/imgSrcConverter';
+import Button from './Button';
 
 const Container = styled.div`
   width: 90%;
@@ -20,6 +21,15 @@ const Card = styled.div`
   align-items: center;
   color: ${palette.text};
   justify-content: flex-end;
+`;
+
+const Close = styled.div`
+  position: absolute;
+  top: 25px;
+  right: 30px;
+  font-weight: bold;
+  font-size: 1.5rem;
+  cursor: pointer;
 `;
 
 const Avatar = styled.img`
@@ -45,16 +55,18 @@ const ProviderImg = styled.img`
   cursor: pointer;
 `;
 
-const Email = styled.h2`
+const Follow = styled(Button)`
   font-size: 0.875rem;
-  line-height: 1.25rem;
+  line-height: 1rem;
+  background-color: ${palette.main};
+  color: ${palette.gray[7]};
 `;
 
 const StatsContainer = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-between;
-  margin-top: 1.5rem;
+  ${props => (props.isMine ? `margin-top: 1.5rem;` : `margin-top: 0.5rem;`)}
   padding-top: 1.5rem;
   border-top: 1px solid ${palette.accent};
   color: ${palette.main};
@@ -74,38 +86,7 @@ const StatLabel = styled.p`
   color: ${palette.text};
 `;
 
-const MiniCard = styled.div`
-  height: 100%;
-  width: 6rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  color: ${palette.text};
-`;
-
-const MiniAvatar = styled.img`
-  width: 6rem;
-  height: 6rem;
-  border-radius: 50%;
-  border: 4px solid ${palette.main};
-`;
-
-const MiniNickName = styled.div`
-  width: 100%;
-  color: ${palette.accent};
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  font-size: 1rem;
-  font-weight: bold;
-  text-align: center;
-
-  &:hover {
-    overflow: visible;
-  }
-`;
-
-const ProfileCard = ({ props, onClickIcon }) => {
+const ProfileCard = ({ props, onClickIcon, onClickFollow, onClickClose }) => {
   const [imageError, setImageError] = useState(false);
   const {
     isMine,
@@ -118,21 +99,17 @@ const ProfileCard = ({ props, onClickIcon }) => {
     followingIdList,
   } = props;
 
-  const handleImageError = () => {
-    setImageError(true);
+  const imgAttribute = imgSrcConverter(profileImg, imageError, setImageError);
+
+  const handleClickBubble = e => {
+    e.stopPropagation();
   };
+
   return (
-    <Container>
+    <Container onClick={handleClickBubble}>
       <Card>
-        <Avatar
-          src={
-            imageError
-              ? `${process.env.REACT_APP_BACK_URL}/uploads/${profileImg}`
-              : `${process.env.PUBLIC_URL}/logo.png`
-          }
-          alt="Profile Picture"
-          onError={handleImageError}
-        />
+        {!isMine && <Close onClick={onClickClose}>X</Close>}
+        <Avatar {...imgAttribute} alt="Profile Picture" />
         <NickName>
           {nickName}
           {isMine && (
@@ -143,8 +120,8 @@ const ProfileCard = ({ props, onClickIcon }) => {
             />
           )}
         </NickName>
-        {/* <Email>{email}</Email> */}
-        <StatsContainer>
+        {!isMine && <Follow onClick={onClickFollow}>팔로우</Follow>}
+        <StatsContainer isMine={isMine}>
           <Stat>
             <StatNumber>{followerCount}</StatNumber>
             <StatLabel>Followers</StatLabel>
@@ -163,26 +140,4 @@ const ProfileCard = ({ props, onClickIcon }) => {
   );
 };
 
-const MiniProfileCard = ({ nickName, profileImg }) => {
-  const [imageError, setImageError] = useState(false);
-
-  const handleImageError = () => {
-    setImageError(true);
-  };
-  return (
-    <MiniCard>
-      <MiniAvatar
-        src={
-          imageError
-            ? `${process.env.REACT_APP_BACK_URL}/uploads/${profileImg}`
-            : `${process.env.PUBLIC_URL}/logo.png`
-        }
-        alt="Profile Picture"
-        onError={handleImageError}
-      />
-      <MiniNickName>{nickName}</MiniNickName>
-    </MiniCard>
-  );
-};
-
-export { ProfileCard, MiniProfileCard };
+export default ProfileCard;

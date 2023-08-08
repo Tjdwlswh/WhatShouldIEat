@@ -30,14 +30,17 @@ const Loading = () => {
   const dispatch = useDispatch();
   const { loading, message } = useSelector(state => state.loading);
   const handleBackgroundClick = e => {
-    e.preventDefault();
     dispatch(finishLoading());
+  };
+
+  const handleClickImg = e => {
+    e.stopPropagation();
   };
 
   return (
     loading && (
       <Background onClick={handleBackgroundClick}>
-        <img src={loader} alt="로딩 중" />
+        <img src={loader} alt="로딩 중" onClickCapture={handleClickImg} />
         <h1>{message}</h1>
       </Background>
     )

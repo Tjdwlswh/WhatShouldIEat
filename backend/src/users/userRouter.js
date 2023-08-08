@@ -44,7 +44,7 @@ userRouter.get('/auth/google/login', userController.googleLogin);
 userRouter.get('/auth/google/callback', userController.googleCallback);
 
 //팔로우 신청
-userRouter.post('/:followingId/follow', loginRequired, userController.postFollow);
+userRouter.post('/follow/:followingId', loginRequired, userController.postFollow);
 
 // user 정보
 userRouter.get('/user', loginRequired, userController.getUserInfo);

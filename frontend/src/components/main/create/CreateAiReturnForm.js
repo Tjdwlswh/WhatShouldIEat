@@ -83,6 +83,8 @@ const CreateAiReturnForm = () => {
     setImage(file);
   };
 
+  console.log(recipe);
+
   useEffect(() => {
     if (myRecipe) {
       const { email } = user;
@@ -102,7 +104,7 @@ const CreateAiReturnForm = () => {
             <div className="one" contentEditable="true">
               {ingredients}
             </div>
-            <div className="two" contentEditable="true">
+            <div className="two" contentEditable="true" value={input} onChange={onChange}>
               {recipe}
             </div>
 
