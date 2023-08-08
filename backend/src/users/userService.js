@@ -36,8 +36,8 @@ const userService = {
 
   getUser: async ({ email }) => {
     // 유저 정보 조회
-    const { nickName, profileImg, provider } = await UserModel.findByEmail(email);
-    const user = { email, nickName, profileImg, provider };
+    const { id, nickName, profileImg, provider } = await UserModel.findByEmail(email);
+    const user = { id, email, nickName, profileImg, provider };
     return user;
   },
 

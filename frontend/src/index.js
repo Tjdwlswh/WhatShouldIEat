@@ -11,7 +11,7 @@ import createSagaMiddleware from 'redux-saga';
 import { CookiesProvider } from 'react-cookie';
 import HeaderContainer from './container/common/HeaderContainer';
 import Loading from './components/common/Loading';
-import { ProfileCardContainer } from './container/common/ProfileCardContainer';
+import ProfileCardContainer from './container/common/ProfileCardContainer';
 
 const sagaMiddleware = createSagaMiddleware();
 const store = configureStore({

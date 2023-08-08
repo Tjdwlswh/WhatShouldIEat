@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import ThumbnailCard from '../../common/ThumbnailCard';
 import palette from '../../../lib/styles/palette';
-import { MiniProfileCardContainer } from '../../../container/common/ProfileCardContainer';
+import MiniProfileCardContainer from '../../../container/common/MiniProfileCardContainer';
 import ToggleButton from './ToggleButton';
 import PaginationBox from '../../common/PaginationBox';
 
@@ -46,7 +46,7 @@ const ReviewCreateDate = styled.p`
 `;
 
 const ReviewForm = ({ page, setPage, reviews, myComment, setMyComment }) => {
-  if (!reviews.comments) {
+  if (!reviews?.comments) {
     return null;
   }
 
