@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import palette from '../../lib/styles/palette';
-import { Link } from 'react-router-dom';
-import { useState } from 'react';
+import imgSrcConverter from '../../lib/utils/imgSrcConverter';
 
 const Container = styled.div`
   width: 90%;
@@ -118,21 +118,12 @@ const ProfileCard = ({ props, onClickIcon }) => {
     followingIdList,
   } = props;
 
-  const handleImageError = () => {
-    setImageError(true);
-  };
+  const imgAttribute = imgSrcConverter(profileImg, imageError, setImageError);
+
   return (
     <Container>
       <Card>
-        <Avatar
-          src={
-            imageError
-              ? `${process.env.REACT_APP_BACK_URL}/uploads/${profileImg}`
-              : `${process.env.PUBLIC_URL}/logo.png`
-          }
-          alt="Profile Picture"
-          onError={handleImageError}
-        />
+        <Avatar {...imgAttribute} alt="Profile Picture" />
         <NickName>
           {nickName}
           {isMine && (
@@ -165,21 +156,14 @@ const ProfileCard = ({ props, onClickIcon }) => {
 
 const MiniProfileCard = ({ nickName, profileImg }) => {
   const [imageError, setImageError] = useState(false);
+  const imgAttribute = imgSrcConverter(profileImg, imageError, setImageError);
 
   const handleImageError = () => {
     setImageError(true);
   };
   return (
     <MiniCard>
-      <MiniAvatar
-        src={
-          imageError
-            ? `${process.env.REACT_APP_BACK_URL}/uploads/${profileImg}`
-            : `${process.env.PUBLIC_URL}/logo.png`
-        }
-        alt="Profile Picture"
-        onError={handleImageError}
-      />
+      <MiniAvatar {...imgAttribute} alt="Profile Picture" onError={handleImageError} />
       <MiniNickName>{nickName}</MiniNickName>
     </MiniCard>
   );

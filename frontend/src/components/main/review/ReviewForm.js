@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import ThumbnailCard from '../../common/ThumbnailCard';
 import palette from '../../../lib/styles/palette';
 import { MiniProfileCardContainer } from '../../../container/common/ProfileCardContainer';
-import { useEffect } from 'react';
+import ToggleButton from './ToggleButton';
 
 const ReviewContainer = styled.div`
   position: relative;
@@ -44,21 +44,18 @@ const ReviewCreateDate = styled.p`
   color: ${palette.text};
 `;
 
-const ReviewForm = ({ page, setPage, reviews }) => {
-  useEffect(() => {
-    setPage(1);
-  });
-
+const ReviewForm = ({ page, setPage, reviews, myComment, setMyComment }) => {
   if (!reviews) {
     return null;
   }
 
   return (
     <>
+      <ToggleButton myComment={myComment} setMyComment={setMyComment} />
       {reviews.map(review => (
         <ReviewContainer key={review.id}>
           <ThumbnailCard
-            imgSrc={'logo.png'}
+            imgSrc={review.Recipe.foodImg}
             tags={review.Recipe.tags}
             foodname={review.Recipe.foodname}
             recipeId={review.Recipe.id}

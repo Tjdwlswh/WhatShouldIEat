@@ -48,7 +48,7 @@ const KakaoLoginButton = () => {
   return (
     <KakaoButton onClick={handleClick}>
       <Image
-        src={process.env.PUBLIC_URL + '/assets/img/icons/kakao.png'}
+        src={`${process.env.PUBLIC_URL}/assets/img/icons/kakao.png`}
         alt="카카오 로그인 버튼"
       />
       카카오 로그인

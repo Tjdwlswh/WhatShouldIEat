@@ -8,7 +8,7 @@ import ImgUpload from '../../components/common/ImgUpload';
     <ImgUploadContainer onImageSelected={handleImageSelected} imgSrc={imgSrc}/>
 
   콜백함수를 prop으로 전달해서 사용
-  API 통신 이후 file 초기화 필수
+  API 통신 이후 file 초기화 필수 => setImage(null);
 */
 const ImgUploadContainer = ({ onImageSelected, imgSrc }) => {
   return <ImgUpload onImageSelected={onImageSelected} imgSrc={imgSrc} />;

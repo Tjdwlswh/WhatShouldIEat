@@ -43,13 +43,13 @@ const AccountContainer = () => {
     }
   }, [auth, authError, dispatch, token]);
 
-  const onChange = e => {
+  const handleChange = e => {
     const { value, name } = e.target;
     dispatch(changeField({ form: 'renew', key: name, value }));
     dispatch(changeField({ form: 'renew', key: 'message', value: null }));
   };
 
-  const onSubmit = e => {
+  const handleSubmit = e => {
     e.preventDefault();
     const { password, passwordConfirm, nickName } = form;
 
@@ -78,8 +78,8 @@ const AccountContainer = () => {
     <AuthForm
       type="renew"
       form={form}
-      onChange={onChange}
-      onSubmit={onSubmit}
+      onChange={handleChange}
+      onSubmit={handleSubmit}
       error={error}
       onImageSelected={handleImageSelected}
       imgSrc={profileImg}

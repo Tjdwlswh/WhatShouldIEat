@@ -46,7 +46,7 @@ const GoogleLoginButton = () => {
 
   return (
     <GoogleButton onClick={handleClick}>
-      <Image src={process.env.PUBLIC_URL + '/assets/img/icons/google.png'} alt="구글 로그인 버튼" />
+      <Image src={`${process.env.PUBLIC_URL}/assets/img/icons/google.png`} alt="구글 로그인 버튼" />
       <span>Google 계정으로 로그인</span>
     </GoogleButton>
   );
