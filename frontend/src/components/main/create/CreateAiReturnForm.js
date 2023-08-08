@@ -74,6 +74,8 @@ const CreateAiReturnForm = () => {
     dispatch(savePost({ foodname, ingredients, recipe, tags, aiRecipeId: id, token }));
   };
 
+  console.log(recipe);
+
   useEffect(() => {
     if (myRecipe) {
       const { email } = user;
@@ -96,7 +98,7 @@ const CreateAiReturnForm = () => {
             <div className="one" contentEditable="true">
               {ingredients}
             </div>
-            <div className="two" contentEditable="true">
+            <div className="two" contentEditable="true" value={input} onChange={onChange}>
               {recipe}
             </div>
 

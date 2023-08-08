@@ -17,9 +17,6 @@ const PostListContainer = () => {
   }));
   const { token } = useSelector(state => state.user);
 
-  console.log(token);
-  console.log(user);
-
   useEffect(() => {
     const tag = searchParams.get('tag');
     const page = parseInt(searchParams.get('page'), 10) || 1;
