@@ -91,7 +91,8 @@ const StatNoLink = styled.div`
   text-align: center;
 `;
 
-const StatNumber = styled.h3`
+const StatNumber = styled.p`
+  font-size: 1.875rem;
   font-weight: bold;
 `;
 

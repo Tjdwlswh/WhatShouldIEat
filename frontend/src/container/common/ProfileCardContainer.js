@@ -56,7 +56,7 @@ const ProfileCardContainer = ({ userId, onClickClose }) => {
         if (token) {
           const { data } = await authAPI.getUserCard({ token, userId });
           setIsFollowing(data.followerIdList.includes(user?.id));
-          data.isMine = !userId;
+          data.isMine = userId ? user?.id === userId : true;
           setUserData(current => {
             const newUserDate = {
               ...current,

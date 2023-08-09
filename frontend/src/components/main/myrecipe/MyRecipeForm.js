@@ -14,6 +14,7 @@ import palette from '../../../lib/styles/palette';
 import TagUpdate from '../../common/Tags';
 import { setOriginalPost } from '../../../modules/update';
 import { startLoading, finishLoading } from '../../../modules/loading';
+import CommentTemp from '../../common/comment/CommentTemp';
 
 const SubInfo = styled.div`
   margin-top: 1rem;
@@ -112,6 +113,7 @@ const MyRecipeForm = ({ post, error, loading }) => {
             <Button className="margin">레시피 삭제</Button>
             <Button onClick={onClickHandle}>레시피 수정</Button>
           </div>
+          <CommentTemp />
         </AiReturnbox>
       </CreateAireturnBlock>
     </>

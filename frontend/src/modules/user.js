@@ -46,7 +46,7 @@ function* getUserSaga(action) {
 
 function* getUserFailureSaga(action) {
   try {
-    yield call(authAPI.refresh);
+    const result = yield call(authAPI.refresh);
     const renewToken = cookies.get('token');
     yield put(setToken(renewToken));
     if (renewToken) yield put(getUser(renewToken));
