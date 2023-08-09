@@ -14,6 +14,7 @@ import {
 import palette from '../../../lib/styles/palette';
 import TagUpdate from '../../common/Tags';
 import { setOriginalPost } from '../../../modules/update';
+import { startLoading, finishLoading } from '../../../modules/loading';
 
 const SubInfo = styled.div`
   margin-top: 1rem;
@@ -48,6 +49,16 @@ const Tags = styled.div`
 const MyRecipeForm = ({ post, error, loading }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { lastpost } = useSelector(({ update, loading }) => ({
+    lastpost: update.lastpost,
+    // updateError: update.updateError,
+    // originalPostId: update.originalPostId,
+    // foodname: update.lastpost.foodname,
+    // ingredients: update.lastpost.ingredients,
+    // recipe: update.lastpost.recipe,
+    loading: loading['update/UPDATE_POST'],
+  }));
+
   if (error) {
     if (error.response && error.response.status === 404) {
       return <CreateAireturnBlock>존재하지 않는 포스트 입니다.</CreateAireturnBlock>;
@@ -68,7 +79,10 @@ const MyRecipeForm = ({ post, error, loading }) => {
   const { comment } = post;
 
   const onClickHandle = () => {
+    dispatch(startLoading('setOriginal'));
     dispatch(setOriginalPost(post.recipe));
+    dispatch(finishLoading('setOriginal'));
+
     navigate('/myrecipeUpdate');
   };
 
@@ -87,10 +101,10 @@ const MyRecipeForm = ({ post, error, loading }) => {
             </span>
             <span>{new Date(createdAt).toLocaleDateString()}</span>
           </SubInfo>
-          <h3>요리이름 : {foodname}</h3>
+          <h3>요리이름 :{lastpost ? lastpost.foodname : foodname}</h3>
           <label className="divbox">
-            <div className="one">재료 : {ingredients}</div>
-            <div className="two">레시피 : {recipe}</div>
+            <div className="one">재료 : {lastpost ? lastpost.ingredients : ingredients}</div>
+            <div className="two">레시피 : {lastpost ? lastpost.recipe : recipe}</div>
           </label>
 
           <Tags>
