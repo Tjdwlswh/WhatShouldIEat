@@ -50,7 +50,7 @@ const Tags = styled.div`
 const MyRecipeForm = ({ post, error, loading, user, recipeId, token }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { lastpost } = useSelector(({ update, loading }) => ({
+  const { lastpost } = useSelector(({ update, loading, user }) => ({
     lastpost: update.lastpost,
     loading: loading['update/UPDATE_POST'],
   }));
@@ -89,10 +89,12 @@ const MyRecipeForm = ({ post, error, loading, user, recipeId, token }) => {
     setModal(false);
   };
 
+  console.log(token);
   const onRemove = async () => {
     try {
       const { email } = user;
-      await removePost(recipeId, token, userId);
+      await removePost({ recipeId, token });
+
       navigate(`/${email}`);
     } catch (e) {
       console.log(e);
