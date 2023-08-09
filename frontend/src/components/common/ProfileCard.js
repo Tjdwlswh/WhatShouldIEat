@@ -39,9 +39,14 @@ const Avatar = styled.img`
   border: 4px solid ${palette.main};
 `;
 
-const NickName = styled.h1`
+const NickName = styled.div`
+  width: 100%;
   color: ${palette.accent};
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: center;
   font-weight: bold;
+  ${props => (props.nickName?.length > 10 ? `font-size: 1rem;` : `font-size: 2rem;`)}
   margin-top: 1.25rem;
   margin-bottom: 0.25rem;
 `;
@@ -82,7 +87,12 @@ const Stat = styled(Link)`
   text-align: center;
 `;
 
-const StatNumber = styled.h3`
+const StatNoLink = styled.div`
+  text-align: center;
+`;
+
+const StatNumber = styled.p`
+  font-size: 1.875rem;
   font-weight: bold;
 `;
 
@@ -118,7 +128,7 @@ const ProfileCard = ({ props, onClickIcon, onClickFollow, onClickClose }) => {
       <Card>
         {!isMine && <Close onClick={onClickClose}>X</Close>}
         <Avatar {...imgAttribute} alt="Profile Picture" />
-        <NickName>
+        <NickName nickName={nickName}>
           {nickName}
           {isMine && (
             <ProviderImg
@@ -134,14 +144,14 @@ const ProfileCard = ({ props, onClickIcon, onClickFollow, onClickClose }) => {
           </Follow>
         )}
         <StatsContainer isMine={isMine}>
-          <Stat>
+          <StatNoLink>
             <StatNumber>{followerCount}</StatNumber>
             <StatLabel>Followers</StatLabel>
-          </Stat>
-          <Stat>
+          </StatNoLink>
+          <StatNoLink>
             <StatNumber>{followingCount}</StatNumber>
             <StatLabel>Followings</StatLabel>
-          </Stat>
+          </StatNoLink>
           <Stat to="/myrecipe">
             <StatNumber>{recipeCount}</StatNumber>
             <StatLabel>Recipes</StatLabel>

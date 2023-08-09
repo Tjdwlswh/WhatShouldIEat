@@ -67,7 +67,7 @@ const MyRecipeUpdate = () => {
         : null;
 
     const divId = ref.current.id;
-    const content = ref.current.textContent;
+    const content = ref.current.value;
     dispatch(
       changefield({
         form: 'lastpost',
@@ -136,28 +136,31 @@ const MyRecipeUpdate = () => {
       <CreateAireturnBlock>
         <ImgUploadContainer onImageSelected={handleImageSelected} imgSrc={lastpost.foodImg} />
         <AiReturnbox>
-          <h3 contentEditable="true" id="foodname" ref={foodnameRef} onInput={handleChange}>
-            {lastpost.foodname}
-          </h3>
+          <input
+            className="one"
+            id="foodname"
+            ref={foodnameRef}
+            onInput={handleChange}
+            placeholder="요리 이름"
+            defaultValue={lastpost.foodname}
+          ></input>
           <section className="divbox">
-            <div
+            <input
               className="one"
-              contentEditable="true"
               id="ingredients"
               ref={ingredientsRef}
-              onInput={handleChange}
-            >
-              {lastpost.ingredients}
-            </div>
-            <div
+              placeholder="재료"
+              onChange={handleChange}
+              defaultValue={lastpost.ingredients}
+            ></input>
+            <input
               className="two"
-              contentEditable="true"
               id="recipe"
               ref={recipeRef}
-              onInput={handleChange}
-            >
-              {lastpost.recipe}
-            </div>
+              placeholder="레시피"
+              onChange={handleChange}
+              defaultValue={lastpost.recipe}
+            ></input>
 
             <TagBoxBlock>
               <div className="three">

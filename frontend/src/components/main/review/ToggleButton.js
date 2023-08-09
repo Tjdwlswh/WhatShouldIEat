@@ -27,11 +27,13 @@ const ToggleSwitch = styled(Button)`
   border-radius: 0px;
 `;
 
-const ToggleButton = ({ myComment, setMyComment }) => {
+const ToggleButton = ({ myComment, setMyComment, setPage }) => {
   const handleClickMyComment = () => {
+    setPage(1);
     setMyComment(true);
   };
   const handleClickMyRecipeComment = e => {
+    setPage(1);
     setMyComment(false);
   };
   return (

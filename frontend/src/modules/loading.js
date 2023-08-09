@@ -28,6 +28,7 @@ const loading = handleActions(
       ...state,
       // [action.payload]: false,
       loading: false,
+      message: null,
     }),
     [SET_MESSAGE]: (state, { payload: message }) => ({
       ...state,

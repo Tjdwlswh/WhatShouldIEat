@@ -46,7 +46,7 @@ function* getUserSaga(action) {
 
 function* getUserFailureSaga(action) {
   try {
-    yield call(authAPI.refresh);
+    const result = yield call(authAPI.refresh);
     const renewToken = cookies.get('token');
     yield put(setToken(renewToken));
     if (renewToken) yield put(getUser(renewToken));
@@ -64,7 +64,7 @@ export function* userSaga() {
 
 const initialState = {
   user: null,
-  checkError: null,
+  checkState: null,
   token: null,
 };
 
@@ -77,15 +77,19 @@ const user = handleActions(
         token,
       };
     },
+    [GET_USER]: state => ({
+      ...state,
+      checkState: false,
+    }),
     [GET_USER_SUCCESS]: (state, { payload: user }) => ({
       ...state,
       user,
-      checkError: null,
+      checkState: true,
     }),
     [GET_USER_FAILURE]: (state, { payload: error }) => ({
       ...state,
       user: null,
-      checkError: error,
+      checkState: error,
     }),
     [LOGOUT_SUCCESS]: state => {
       cookies.remove('token');

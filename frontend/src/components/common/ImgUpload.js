@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import Button from './Button';
+import imgSrcConverter from '../../lib/utils/imgSrcConverter';
 
 const Wrapper = styled.div`
   display: flex;
@@ -34,9 +35,9 @@ const ImgBox = styled.div`
 `;
 
 const ImgUpload = ({ onImageSelected, imgSrc }) => {
-  const [imageURL, setImageURL] = useState(
-    imgSrc ? `${process.env.REACT_APP_BACK_URL}/uploads/${imgSrc}` : '/logo.png',
-  );
+  const [imageURL, setImageURL] = useState(imgSrc);
+  const [imageError, setImageError] = useState(false);
+  const imgAttribute = imgSrcConverter(imageURL, imageError, setImageError);
   const inputRef = useRef();
 
   useEffect(() => {
@@ -47,9 +48,10 @@ const ImgUpload = ({ onImageSelected, imgSrc }) => {
 
   const saveImage = e => {
     e.preventDefault();
+    setImageError(false);
     const image = e.target.files[0];
 
-    if (image.size > 5 * 1024 * 1024) {
+    if (image?.size > 5 * 1024 * 1024) {
       alert('업로드 가능한 최대 용량은 5MB입니다. ');
       return;
     }
@@ -77,7 +79,7 @@ const ImgUpload = ({ onImageSelected, imgSrc }) => {
   return (
     <Wrapper>
       <ImgBox>
-        <img src={imageURL} alt="preview" />
+        <img {...imgAttribute} alt="preview" />
       </ImgBox>
       <input
         type="file"

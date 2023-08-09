@@ -7,7 +7,7 @@
 const imgSrcConverter = (imgSrc, imageError, setImageError) => {
   let imgUrl;
   if (imgSrc) {
-    if (imgSrc.startsWith('http')) {
+    if (imgSrc.startsWith('http') || imgSrc.startsWith('blob:')) {
       imgUrl = imgSrc;
     } else {
       imgUrl = `${process.env.REACT_APP_BACK_URL}/uploads/${imgSrc}`;

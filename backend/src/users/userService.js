@@ -52,6 +52,11 @@ const userService = {
       data.profileImg = '';
       const { profileImg } = await UserModel.findByEmail(email);
       deleteFile(profileImg);
+    } else {
+      const { profileImg } = await UserModel.findByEmail(email);
+      if (profileImg) {
+        deleteFile(profileImg);
+      }
     }
     const editedUser = await UserModel.update(data, email);
     return editedUser;

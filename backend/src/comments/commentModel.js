@@ -13,10 +13,10 @@ const commentModel = {
         {
           model: db.User,
           as: 'commenter',
-          attributes: ['nickName'],
+          attributes: ['id', 'nickName', 'profileImg'],
         },
       ],
-      order: [['createdAt', 'DESC']],
+      order: [['createdAt', 'ASC']],
     });
   },
   getMyComment: async ({ commenterId, page, pageSize = 10 }) => {
