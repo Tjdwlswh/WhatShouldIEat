@@ -29,7 +29,15 @@ const MyRecipeContainer = () => {
 
   return (
     <div>
-      <MyRecipeForm post={post} loading={loading} error={error} />;
+      <MyRecipeForm
+        post={post}
+        loading={loading}
+        error={error}
+        user={user}
+        token={token}
+        recipeId={recipeId}
+      />
+      ;
     </div>
   );
 };

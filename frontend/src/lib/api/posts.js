@@ -62,6 +62,16 @@ export const updatePost = async ({ recipeId, token, foodname, ingredients, recip
   );
 };
 
+export const removePost = async ({ recipeId, token }) => {
+  return await client({
+    method: 'delete',
+    url: `/myrecipes/${recipeId}`,
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
+
 export const listPosts = async ({ token, email, tag, page }) => {
   return await client.get('/myrecipes', {
     headers: {
