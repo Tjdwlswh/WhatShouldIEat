@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, Navigate } from 'react-router-dom';
 import { Cookies } from 'react-cookie';
@@ -20,9 +20,9 @@ import LeavePage from './LeavePage';
 const RouterGuard = () => {
   const location = useLocation();
   const dispatch = useDispatch();
-  const [userLoaded, setUserLoaded] = useState(false);
+  // const [userLoaded, setUserLoaded] = useState(false);
   const { pathname } = location;
-  const { user } = useSelector(state => state.user);
+  const { user, checkState } = useSelector(state => state.user);
   const { auth } = useSelector(state => state.auth);
   const accessToken = useSelector(state => state.user.token);
   const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
@@ -73,14 +73,14 @@ const RouterGuard = () => {
     dispatch(getUser(accessToken));
   }, [accessToken, dispatch, auth]);
 
-  useLayoutEffect(() => {
-    if (user) {
-      setUserLoaded(true);
-    }
-  }, [user]);
+  // useLayoutEffect(() => {
+  //   if (user) {
+  //     setUserLoaded(true);
+  //   }
+  // }, [user]);
 
   // 로그인된 상태면 정보를 가져오는 동안 대기
-  if (!userLoaded && isLoggedIn) {
+  if (!checkState && isLoggedIn) {
     return null;
   }
 
