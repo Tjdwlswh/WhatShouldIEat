@@ -51,7 +51,7 @@ const ImgUpload = ({ onImageSelected, imgSrc }) => {
     e.preventDefault();
     const image = e.target.files[0];
 
-    if (image.size > 5 * 1024 * 1024) {
+    if (image?.size > 5 * 1024 * 1024) {
       alert('업로드 가능한 최대 용량은 5MB입니다. ');
       return;
     }

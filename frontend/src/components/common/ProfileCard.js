@@ -39,9 +39,14 @@ const Avatar = styled.img`
   border: 4px solid ${palette.main};
 `;
 
-const NickName = styled.h1`
+const NickName = styled.div`
+  width: 100%;
   color: ${palette.accent};
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: center;
   font-weight: bold;
+  ${props => (props.nickName?.length > 10 ? `font-size: 1rem;` : `font-size: 2rem;`)}
   margin-top: 1.25rem;
   margin-bottom: 0.25rem;
 `;
@@ -122,7 +127,7 @@ const ProfileCard = ({ props, onClickIcon, onClickFollow, onClickClose }) => {
       <Card>
         {!isMine && <Close onClick={onClickClose}>X</Close>}
         <Avatar {...imgAttribute} alt="Profile Picture" />
-        <NickName>
+        <NickName nickName={nickName}>
           {nickName}
           {isMine && (
             <ProviderImg
