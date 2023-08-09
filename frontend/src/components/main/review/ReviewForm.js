@@ -52,7 +52,7 @@ const ReviewForm = ({ page, setPage, reviews, myComment, setMyComment }) => {
 
   return (
     <>
-      <ToggleButton myComment={myComment} setMyComment={setMyComment} />
+      <ToggleButton myComment={myComment} setMyComment={setMyComment} setPage={setPage} />
       {reviews.comments.map(review => (
         <ReviewContainer key={review.id}>
           <ThumbnailCard

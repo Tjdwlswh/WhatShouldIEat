@@ -44,7 +44,7 @@ export const TagForm = styled.form`
 
 export const TagListBlock = styled.div`
   display: flex;
-  margin-top: 0%.5rem;
+  margin-top: 0.5rem;
 `;
 
 export const Tag = styled.div`
