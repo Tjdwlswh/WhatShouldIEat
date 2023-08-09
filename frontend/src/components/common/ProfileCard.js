@@ -82,6 +82,10 @@ const Stat = styled(Link)`
   text-align: center;
 `;
 
+const StatNoLink = styled.div`
+  text-align: center;
+`;
+
 const StatNumber = styled.h3`
   font-weight: bold;
 `;
@@ -134,14 +138,14 @@ const ProfileCard = ({ props, onClickIcon, onClickFollow, onClickClose }) => {
           </Follow>
         )}
         <StatsContainer isMine={isMine}>
-          <Stat>
+          <StatNoLink>
             <StatNumber>{followerCount}</StatNumber>
             <StatLabel>Followers</StatLabel>
-          </Stat>
-          <Stat>
+          </StatNoLink>
+          <StatNoLink>
             <StatNumber>{followingCount}</StatNumber>
             <StatLabel>Followings</StatLabel>
-          </Stat>
+          </StatNoLink>
           <Stat to="/myrecipe">
             <StatNumber>{recipeCount}</StatNumber>
             <StatLabel>Recipes</StatLabel>
