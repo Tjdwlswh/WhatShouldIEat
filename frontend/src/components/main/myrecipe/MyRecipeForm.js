@@ -12,7 +12,7 @@ import {
 } from '../create/AiComponents';
 import palette from '../../../lib/styles/palette';
 import TagUpdate from '../../common/Tags';
-import { setOriginalPost } from '../../../modules/update';
+import { setOriginalPost, unloadUpdate } from '../../../modules/update';
 import { startLoading, finishLoading } from '../../../modules/loading';
 
 const SubInfo = styled.div`
@@ -57,6 +57,12 @@ const MyRecipeForm = ({ post, error, loading }) => {
     // recipe: update.lastpost.recipe,
     loading: loading['update/UPDATE_POST'],
   }));
+
+  useEffect(() => {
+    return () => {
+      dispatch(unloadUpdate());
+    };
+  }, [dispatch]);
 
   if (error) {
     if (error.response && error.response.status === 404) {
