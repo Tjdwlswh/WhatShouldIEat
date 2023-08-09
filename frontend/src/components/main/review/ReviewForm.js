@@ -49,7 +49,7 @@ const ReviewCreateDate = styled.p`
 const ReviewForm = ({ page, setPage, reviews, myComment, setMyComment }) => {
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, []);
+  }, [page]);
 
   if (!reviews?.comments) {
     return null;
