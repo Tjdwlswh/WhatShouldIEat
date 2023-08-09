@@ -3,6 +3,9 @@ import styled from 'styled-components';
 import Responsive from '../../common/Responsive';
 import { Link } from 'react-router-dom';
 import palette from '../../../lib/styles/palette';
+import { useDispatch, useSelector } from 'react-redux';
+import { setOriginalPost } from '../../../modules/update';
+import { unloadUpdate } from '../../../modules/update';
 
 const RecipeGroup = styled(Responsive)`
   display: flex;
@@ -84,8 +87,16 @@ const Tags = styled.span`
 const ItemList = ({ post, user }) => {
   const { foodname, tags, foodImg } = post;
   const tagArray = tags.split('#');
+  const dispatch = useDispatch();
+
   tagArray.shift('');
   console.log(tagArray);
+
+  useEffect(() => {
+    return () => {
+      dispatch(unloadUpdate());
+    };
+  }, [dispatch, post.recipe]);
 
   //foodImg 이거 나중에 사용하기
 

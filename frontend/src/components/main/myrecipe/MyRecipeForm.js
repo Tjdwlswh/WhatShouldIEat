@@ -58,11 +58,13 @@ const MyRecipeForm = ({ post, error, loading }) => {
     loading: loading['update/UPDATE_POST'],
   }));
 
-  useEffect(() => {
-    return () => {
-      dispatch(unloadUpdate());
-    };
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(setOriginalPost(post.recipe));
+
+  //   return () => {
+  //     dispatch(unloadUpdate());
+  //   };
+  // }, [dispatch, post.recipe]);
 
   if (error) {
     if (error.response && error.response.status === 404) {
