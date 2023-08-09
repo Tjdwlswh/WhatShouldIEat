@@ -99,7 +99,6 @@ const userController = {
       const followerId = req.user.id; //나
       const followingId = req.params.followingId; //너
 
-      console.log('1', followerId, followingId);
       // 팔로우 신청하면 클라에 보내줘야할 자료에 맞게 바꿀수도 있음.
       await userService.addFollowing(followingId, followerId);
 
@@ -108,6 +107,19 @@ const userController = {
       next(err);
     }
   },
+  removeFollow: async (req, res, next) => {
+    try {
+      const followerId = req.user.id;
+      const followingId = req.params.followingId;
+
+      await userService.removeFollowing(followingId, followerId);
+
+      res.status(200).json({ result: '팔로우를 시작합니다.' });
+    } catch (err) {
+      next(err);
+    }
+  },
+
   getUserCard: async (req, res, next) => {
     try {
       let userId = '';

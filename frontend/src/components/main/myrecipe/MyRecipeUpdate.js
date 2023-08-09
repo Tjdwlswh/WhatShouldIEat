@@ -1,7 +1,7 @@
 import Button from '../../common/Button';
 import React, { useState, useCallback, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { updatePost, changefield } from '../../../modules/update';
+import { updatePost, changefield, unloadUpdate } from '../../../modules/update';
 import {
   CreateAireturnBlock,
   ImgUpload,
@@ -36,16 +36,16 @@ const MyRecipeUpdate = () => {
   const [image, setImage] = useState(null);
   const { token } = useSelector(state => state.user);
   const { user } = useSelector(state => state.user);
-  const { lastpost, updateError, originalPostId, foodname, ingredients, recipe } = useSelector(
-    ({ update }) => ({
+  const { lastpost, updateError, originalPostId, foodname, ingredients, recipe, loading } =
+    useSelector(({ update, loading }) => ({
       lastpost: update.lastpost,
       updateError: update.updateError,
       originalPostId: update.originalPostId,
       foodname: update.lastpost.foodname,
       ingredients: update.lastpost.ingredients,
       recipe: update.lastpost.recipe,
-    }),
-  );
+      loading: loading['update/UPDATE_POST'],
+    }));
 
   console.log(originalPostId);
 
@@ -117,7 +117,10 @@ const MyRecipeUpdate = () => {
       const recipeId = originalPostId;
       const { email } = user;
       dispatch(updatePost({ recipeId, token, foodname, ingredients, recipe }));
-      navigate(`/${email}/${originalPostId}`);
+      if (!loading) {
+        navigate(`/${email}/${originalPostId}`);
+        dispatch(unloadUpdate());
+      }
     }
   };
 
@@ -136,7 +139,7 @@ const MyRecipeUpdate = () => {
           <h3 contentEditable="true" id="foodname" ref={foodnameRef} onInput={handleChange}>
             {lastpost.foodname}
           </h3>
-          <label className="divbox">
+          <section className="divbox">
             <div
               className="one"
               contentEditable="true"
@@ -168,7 +171,7 @@ const MyRecipeUpdate = () => {
                 <button type="submit">추가</button>
               </TagForm>
             </TagBoxBlock>
-          </label>
+          </section>
           <div className="twobtn">
             <Button onClick={handleClickSave}>수정 완료</Button>
           </div>

@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import ProfileCard from '../../components/common/ProfileCard';
 import authAPI from '../../lib/api/auth';
-import { follow } from '../../lib/api/follow';
+import { addFollow, removeFollow } from '../../lib/api/follow';
 
 /*
   ProfileCard Size
@@ -42,7 +42,8 @@ const ProfileCardContainer = ({ userId, onClickClose }) => {
   const location = useLocation();
   const [show, setShow] = useState(false);
   const [userData, setUserData] = useState({});
-  const { token } = useSelector(state => state.user);
+  const [isFollowing, setIsFollowing] = useState(false);
+  const { token, user } = useSelector(state => state.user);
 
   useEffect(() => {
     const { pathname } = location;
@@ -54,10 +55,12 @@ const ProfileCardContainer = ({ userId, onClickClose }) => {
       try {
         if (token) {
           const { data } = await authAPI.getUserCard({ token, userId });
+          setIsFollowing(data.followerIdList.includes(user?.id));
           data.isMine = !userId;
           setUserData(current => {
             const newUserDate = {
               ...current,
+              isFollowing,
               ...data,
             };
             return newUserDate;
@@ -68,16 +71,20 @@ const ProfileCardContainer = ({ userId, onClickClose }) => {
       }
     };
     fetchData();
-  }, [token, userId]);
+  }, [token, userId, user?.id, isFollowing]);
 
   const handleIconClick = () => {
     navigate('/myaccount');
   };
 
   const handleClickFollow = async () => {
-    console.log('click');
-    // const result = await follow({ token, userId });
-    // alert(result);
+    if (isFollowing) {
+      await removeFollow({ token, followingId: userId });
+      setIsFollowing(false);
+    } else {
+      await addFollow({ token, followingId: userId });
+      setIsFollowing(true);
+    }
   };
 
   return (

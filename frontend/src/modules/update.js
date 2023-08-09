@@ -10,6 +10,9 @@ const SET_ORIGINAL_POST = 'update/SET_ORIGINAL_POST';
 const [UPDATE_POST, UPDATE_POST_SUCCESS, UPDATE_POST_FAILURE] =
   createRequestActionTypes('update/UPDATE_POST');
 
+const UNLOAD_UPDATE = 'update/UNLOAD_UPDATE';
+//수정 페이지 벗어날 때 데이터 비우기
+
 export const setOriginalPost = createAction(SET_ORIGINAL_POST, lastpost => lastpost);
 export const updatePost = createAction(
   UPDATE_POST,
@@ -26,6 +29,8 @@ export const changefield = createAction(CHANGE_FIELD, ({ form, key, value }) => 
   key, //(recipe, ingredients, tag, foodname)
   value, //바꾸려는 값
 }));
+
+export const unloadUpdate = createAction(UNLOAD_UPDATE);
 
 const updatePostSaga = createRequestSaga(UPDATE_POST, postsAPI.updatePost);
 export function* updateSaga() {
@@ -62,6 +67,7 @@ const update = handleActions(
       ...state,
       updateError,
     }),
+    [UNLOAD_UPDATE]: () => initialState,
   },
   initialState,
 );
