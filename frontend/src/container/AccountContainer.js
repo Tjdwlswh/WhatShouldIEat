@@ -1,21 +1,16 @@
-import React, { useDispatch, useSelector } from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { changeField, initializeForm, renew } from '../modules/auth';
-import { useState } from 'react';
 import AuthForm from '../components/auth/AuthForm';
-import { useEffect } from 'react';
-import { getUser } from '../modules/user';
 
 const AccountContainer = () => {
   const [error, setError] = useState(null);
   const [image, setImage] = useState(null);
   const dispatch = useDispatch();
-  const { form, auth, authError } = useSelector(state => ({
-    form: state.auth.renew,
-    auth: state.auth.auth,
-    authError: state.auth.authError,
-  }));
-  const { email, nickName, provider, profileImg } = useSelector(state => state.user.user) || {};
   const token = useSelector(state => state.user.token);
+  const form = useSelector(state => state.auth.renew);
+  const { authError } = useSelector(state => state.auth);
+  const { email, nickName, provider, profileImg } = useSelector(state => state.user.user) || {};
 
   useEffect(() => {
     dispatch(initializeForm('renew'));
@@ -37,11 +32,7 @@ const AccountContainer = () => {
       setError('정보 수정 실패');
       return;
     }
-    if (auth) {
-      // dispatch(changeField({ form: 'renew', key: 'message', value: auth.message }));
-      dispatch(getUser(token));
-    }
-  }, [auth, authError, dispatch, token]);
+  }, [authError, dispatch, token]);
 
   const handleChange = e => {
     const { value, name } = e.target;

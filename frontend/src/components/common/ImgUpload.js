@@ -38,7 +38,6 @@ const ImgUpload = ({ onImageSelected, imgSrc }) => {
   const [imageURL, setImageURL] = useState(imgSrc);
   const [imageError, setImageError] = useState(false);
   const imgAttribute = imgSrcConverter(imageURL, imageError, setImageError);
-
   const inputRef = useRef();
 
   useEffect(() => {
@@ -49,6 +48,7 @@ const ImgUpload = ({ onImageSelected, imgSrc }) => {
 
   const saveImage = e => {
     e.preventDefault();
+    setImageError(false);
     const image = e.target.files[0];
 
     if (image?.size > 5 * 1024 * 1024) {

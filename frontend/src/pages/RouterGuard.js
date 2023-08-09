@@ -90,7 +90,7 @@ const RouterGuard = () => {
   }
 
   // 로그인이 필요한 페이지인 경우 로그인 상태를 확인하고 리디렉션
-  if (currentRoute.loginRequired && !user) {
+  if (currentRoute.loginRequired && !user && !isLoggedIn) {
     return <Navigate to="/login" />;
   }
 

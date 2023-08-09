@@ -1,7 +1,8 @@
 import { createAction, handleActions } from 'redux-actions';
 import { produce } from 'immer';
 import { createRequestSaga, createRequestActionTypes } from '../lib/createRequestSaga';
-import { takeLatest } from 'redux-saga/effects';
+import { takeLatest, put, select } from 'redux-saga/effects';
+import { getUser } from './user';
 import authAPI from '../lib/api/auth';
 
 //로그인, 회원가입 상태관리
@@ -42,6 +43,11 @@ export const renew = createAction(RENEW, ({ password, nickName, image, token }) 
   token,
 }));
 
+function* renewGetUserSaga(action) {
+  const { token } = yield select(state => state.user);
+  yield put(getUser(token));
+}
+
 const registerSaga = createRequestSaga(REGISTER, authAPI.register);
 const loginSaga = createRequestSaga(LOGIN, authAPI.login);
 const renewSaga = createRequestSaga(RENEW, authAPI.renew);
@@ -50,6 +56,7 @@ export function* authSaga() {
   yield takeLatest(REGISTER, registerSaga);
   yield takeLatest(LOGIN, loginSaga);
   yield takeLatest(RENEW, renewSaga);
+  yield takeLatest(RENEW_SUCCESS, renewGetUserSaga);
 }
 
 const initialState = {

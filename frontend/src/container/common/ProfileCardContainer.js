@@ -71,7 +71,7 @@ const ProfileCardContainer = ({ userId, onClickClose }) => {
       }
     };
     fetchData();
-  }, [token, userId, user?.id, isFollowing]);
+  }, [token, userId, user, isFollowing]);
 
   const handleIconClick = () => {
     navigate('/myaccount');
