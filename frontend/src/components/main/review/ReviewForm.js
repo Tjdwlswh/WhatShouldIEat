@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import styled from 'styled-components';
 import ThumbnailCard from '../../common/ThumbnailCard';
 import palette from '../../../lib/styles/palette';
@@ -46,10 +47,13 @@ const ReviewCreateDate = styled.p`
 `;
 
 const ReviewForm = ({ page, setPage, reviews, myComment, setMyComment }) => {
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, []);
+
   if (!reviews?.comments) {
     return null;
   }
-
   return (
     <>
       <ToggleButton myComment={myComment} setMyComment={setMyComment} setPage={setPage} />
