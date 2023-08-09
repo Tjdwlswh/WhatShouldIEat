@@ -7,13 +7,13 @@ export const createRequestActionTypes = type => {
   return [type, SUCCESS, FAILURE];
 };
 
-export function createRequestSaga(type, request) {
+export function createRequestSaga(type, request, message) {
   const SUCCESS = `${type}_SUCCESS`;
   const FAILURE = `${type}_FAILURE`;
 
   return function* (action) {
     //action은 register(username, password) or login(username, password)
-    yield put(startLoading(type));
+    yield put(startLoading(message));
     try {
       const response = yield call(request, action.payload);
       yield put({
@@ -26,7 +26,13 @@ export function createRequestSaga(type, request) {
         payload: e,
         error: true,
       });
+      if (e.response.data.error === 'TokenExpiredError: jwt expired') {
+        // yield put(getUser());
+        yield put({
+          type: 'user/GET_USER_FAILURE',
+        });
+      }
     }
-    yield put(finishLoading(type));
+    yield put(finishLoading());
   };
 }

@@ -2,13 +2,15 @@ import express from 'express';
 import cookieParser from 'cookie-parser';
 import morgan from 'morgan';
 import cors from 'cors';
+import swaggerUi from 'swagger-ui-express';
+import swaggerFile from '../swagger-output.json' assert { type: 'json' };
 import { initializePassport } from './middlewares/passport/index.js';
 import { sequelize } from '../models/index.js';
 import { errorMiddleWare } from './middlewares/errorMiddleWare.js';
 import { imgUploadRouter } from './imgUploads/imgUploadRouter.js';
 import { userRouter } from './users/userRouter.js';
-import { followRouter } from './follows/followRouter.js';
 import { recipeRouter } from './recipes/recipeRouter.js';
+import { commentRouter } from './comments/commentRouter.js';
 const app = express();
 const passport = initializePassport();
 
@@ -39,9 +41,11 @@ app.get('/', (req, res) => {
   res.send('Hello, #뭐해먹지?');
 });
 
+app.use('/api/uploads', express.static('uploads'));
 // app.use('/auth', userRouter);
 
-app.use([imgUploadRouter, userRouter, followRouter, recipeRouter]);
+app.use([imgUploadRouter, userRouter, recipeRouter, commentRouter]);
+app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
 app.use(errorMiddleWare);
 

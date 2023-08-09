@@ -41,9 +41,10 @@ const Spacer = styled.div`
 const UserInfo = styled.div`
   font-weight: 800;
   margin-right: 1rem;
+  cursor: pointer;
 `;
 
-const Header = ({ user, onLogout }) => {
+const Header = ({ user, onLogout, handleEmailClick }) => {
   return (
     <>
       <HeaderBlock>
@@ -54,9 +55,11 @@ const Header = ({ user, onLogout }) => {
           <Link to="/create" className="link">
             레시피 생성
           </Link>
-          <Link to="/myrecipe" className="link">
-            나의 레시피
-          </Link>
+          {user && (
+            <Link to={`/${user.email}`} className="link">
+              나의 레시피
+            </Link>
+          )}
           <Link to="/recommend" className="link">
             추천 레시피
           </Link>
@@ -65,7 +68,7 @@ const Header = ({ user, onLogout }) => {
           </Link>
           {user ? (
             <div className="right">
-              <UserInfo>{user.email}</UserInfo>
+              <UserInfo onClick={handleEmailClick}>{user.nickName}</UserInfo>
               <Button onClick={onLogout}>로그아웃</Button>
             </div>
           ) : (

@@ -27,6 +27,10 @@ class User extends Sequelize.Model {
           allowNull: false,
           defaultValue: 'local',
         },
+        socialToken: {
+          type: Sequelize.STRING(300),
+          allowNull: true,
+        },
         refreshToken: {
           type: Sequelize.STRING(300),
           allowNull: true,
@@ -46,8 +50,8 @@ class User extends Sequelize.Model {
   }
 
   static associate(db) {
-    db.User.hasMany(db.Recipe);
-    db.User.belongsToMany(db.Recipe, { through: 'Like' });
+    db.User.hasMany(db.Recipe, { foreignKey: 'userId', sourceKey: 'id' });
+    db.User.belongsToMany(db.Recipe, { through: 'Likeit' });
     db.User.belongsToMany(db.User, {
       foreignKey: 'followingId',
       as: 'Followers',

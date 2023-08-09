@@ -1,6 +1,8 @@
-import styled, { css } from 'styled-components';
+import { useDispatch } from 'react-redux';
+import styled from 'styled-components';
+import { startLoading } from '../../modules/loading';
 
-const buttonStyle = css`
+const GoogleButton = styled.button`
   border: none;
   border-radius: 4px;
   background-color: #ffffff;
@@ -18,6 +20,11 @@ const buttonStyle = css`
 
   &:hover {
     filter: brightness(90%);
+    box-shadow:
+      2px 2px 4px 0 rgba(255, 255, 255, 0.5),
+      -2px -2px 4px 0 rgba(116, 125, 136, 0.5),
+      inset -2px -2px 4px 0 rgba(255, 255, 255, 0.2),
+      inset 2px 2px 4px 0 rgba(0, 0, 0, 0.4);
   }
 `;
 
@@ -30,18 +37,16 @@ const Image = styled.img`
 `;
 
 const GoogleLoginButton = () => {
-  const GoogleButton = styled.button`
-    ${buttonStyle}
-  `;
-
+  const dispatch = useDispatch();
   const handleClick = e => {
     e.preventDefault();
-    window.location.href = 'http://localhost:5000/auth/google/login';
+    dispatch(startLoading());
+    window.location.href = `${process.env.REACT_APP_BACK_URL}/auth/google/login`;
   };
 
   return (
     <GoogleButton onClick={handleClick}>
-      <Image src={process.env.PUBLIC_URL + '/assets/img/icons/google.png'} alt="구글 로그인 버튼" />
+      <Image src={`${process.env.PUBLIC_URL}/assets/img/icons/google.png`} alt="구글 로그인 버튼" />
       <span>Google 계정으로 로그인</span>
     </GoogleButton>
   );

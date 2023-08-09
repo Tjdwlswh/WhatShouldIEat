@@ -1,17 +1,14 @@
-// redux 와 components 연결
-//로그인, 회원가입후 뒤로가기 했을때 input값 초기화
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { changeField, initializeForm, login } from '../modules/auth';
 import AuthForm from '../components/auth/AuthForm';
-import { useNavigate } from 'react-router-dom';
-// import { check } from '../modules/user';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 const LoginForm = () => {
-  console.log('process.env.REACT_APP_DEV_BACK_URL', process.env.REACT_APP_DEV_BACK_URL);
   const [error, setError] = useState(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
   const { form, auth, authError } = useSelector(state => ({
     form: state.auth.login,
     auth: state.auth.auth,
@@ -32,6 +29,10 @@ const LoginForm = () => {
   const onSubmit = e => {
     e.preventDefault();
     const { email, password } = form;
+    if ([email, password].includes('')) {
+      setError('빈칸을 모두 입력하세요');
+      return;
+    }
     dispatch(login({ email, password }));
   };
 
@@ -40,15 +41,17 @@ const LoginForm = () => {
   }, [dispatch]);
 
   useEffect(() => {
+    if (searchParams.get('status')) {
+      setError('탈퇴한 계정입니다.');
+    }
+  }, [searchParams]);
+  useEffect(() => {
     if (authError) {
-      setError('로그인 실패');
-      console.log(authError);
+      setError(authError.response.data.error);
       return;
     }
     if (auth) {
-      console.log('로그인성공');
-      navigate('/');
-      // dispatch(check()); //쿠키로
+      console.log(auth.message);
     }
   }, [auth, authError, navigate]);
 

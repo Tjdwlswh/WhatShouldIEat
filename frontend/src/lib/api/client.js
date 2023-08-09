@@ -1,11 +1,8 @@
-// import axios from 'axios';
-// import { useSelector } from 'react-redux';
+import axios from 'axios';
 
-// const client = axios.create({
-//   withCredentials: true,
-//   headers: {
-//     Authorization: `Bearer ${token}`,
-//   },
-// });
+const client = axios.create({
+  baseURL: `${process.env.REACT_APP_BACK_URL}`,
+  withCredentials: true,
+});
 
-// export default client;
+export default client;

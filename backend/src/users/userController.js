@@ -9,7 +9,7 @@ import {
 import { userService } from './userService.js';
 
 const userController = {
-  //회원가입 -완료
+  // 회원가입 -완료
   register: async (req, res, next) => {
     try {
       const { email, password, nickName } = req.body;
@@ -30,13 +30,13 @@ const userController = {
       next(err);
     }
   },
-  //local로그인 (이메일-비번사용)
+  // local로그인 (이메일-비번사용)
   login: localAuthenticate,
 
   logout: async (req, res, next) => {
     try {
-      res.clearCookie();
-      const email = req.currentUserEmail;
+      res.clearCookie('refreshToken');
+      const { email } = req.user;
       await userService.clearTokenInDB(email);
       res.status(200).json({ message: '로그아웃 성공' });
     } catch (err) {
@@ -44,19 +44,46 @@ const userController = {
     }
   },
 
-  //google로그인
+  // google로그인
   googleLogin: googleAuthenticate,
   googleCallback: googleCallbackAuthenticate,
 
-  //카카오 로그인
+  // 카카오 로그인
   kakaoLogin: kakaoAuthenticate,
   kakaoCallback: kakaoCallbackAuthenticate,
 
-  getUser: async (req, res, next) => {
+  // 회원 정보 조회
+  getUserInfo: async (req, res, next) => {
     try {
-      const email = req.currentUserEmail;
-      const user = await userService.user({ email });
+      const { email } = req.user;
+      const user = await userService.getUser({ email });
       res.status(200).json(user);
+    } catch (err) {
+      next(err);
+    }
+  },
+
+  // 회원 정보 수정
+  editUserInfo: async (req, res, next) => {
+    try {
+      const { email } = req.user;
+      const { nickName, password, image } = req.body;
+      const profileImg = req.file ? req.file.filename : undefined;
+      const data = { nickName, profileImg, password, image };
+      const editedUser = await userService.editUser({ data, email });
+      res.status(200).json({ message: '수정이 완료되었습니다.' });
+    } catch (err) {
+      next(err);
+    }
+  },
+
+  // 회원 탈퇴
+  deleteAccount: async (req, res, next) => {
+    try {
+      const { email } = req.user;
+      const removedUser = await userService.deleteUser({ email });
+      res.clearCookie();
+      res.status(200).json({ message: '탈퇴가 완료되었습니다.' });
     } catch (err) {
       next(err);
     }
@@ -65,17 +92,45 @@ const userController = {
   // 리프레시 토큰 검증
   refreshToken: refreshAuthenticate,
 
-  //팔로우 신청
+  // 팔로우 신청
   postFollow: async (req, res, next) => {
     try {
-      //내가 팔로우 신청하면 내가 follower, 남은 following
-      console.log('req.user', req.user);
+      // 내가 팔로우 신청하면 내가 follower, 남은 following
       const followerId = req.user.id; //나
-      const followingId = req.params.id; //너
+      const followingId = req.params.followingId; //너
 
-      const result = await userService.addFollowing(followingId, followerId);
+      // 팔로우 신청하면 클라에 보내줘야할 자료에 맞게 바꿀수도 있음.
+      await userService.addFollowing(followingId, followerId);
 
       res.status(200).json({ result: '팔로우를 시작합니다.' });
+    } catch (err) {
+      next(err);
+    }
+  },
+  removeFollow: async (req, res, next) => {
+    try {
+      const followerId = req.user.id;
+      const followingId = req.params.followingId;
+
+      await userService.removeFollowing(followingId, followerId);
+
+      res.status(200).json({ result: '팔로우를 시작합니다.' });
+    } catch (err) {
+      next(err);
+    }
+  },
+
+  getUserCard: async (req, res, next) => {
+    try {
+      let userId = '';
+      if (req.query.userId) {
+        userId = req.query.userId;
+      } else {
+        userId = req.user.id;
+      }
+      console.log('userId', userId);
+      const user = await userService.getUserCard(userId);
+      res.status(200).json(user);
     } catch (err) {
       next(err);
     }

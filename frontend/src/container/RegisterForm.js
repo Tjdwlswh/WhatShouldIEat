@@ -11,11 +11,10 @@ const RegisterForm = () => {
   const [error, setError] = useState(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { form, auth, authError, user } = useSelector(state => ({
+  const { form, auth, authError } = useSelector(state => ({
     form: state.auth.register,
     auth: state.auth.auth,
     authError: state.auth.authError,
-    user: state.user.user,
   }));
   const onChange = e => {
     const { value, name } = e.target;
@@ -26,6 +25,11 @@ const RegisterForm = () => {
         value,
       }),
     );
+    if (form.password.length < 6) {
+      setError('비밀번호는 6글자 이상 설정하세요');
+    } else {
+      setError('');
+    }
   };
 
   const onSubmit = e => {
@@ -70,9 +74,10 @@ const RegisterForm = () => {
     if (auth) {
       console.log('회원가입 성공');
       console.log(auth);
+      navigate('/');
       // dispatch(check());
     }
-  }, [auth, authError, dispatch]);
+  }, [auth, authError, navigate]);
 
   // useEffect(() => {
   //   if (auth) {
@@ -80,17 +85,6 @@ const RegisterForm = () => {
   //     console.log(auth);
   //   }
   // }, [auth]);
-
-  useEffect(() => {
-    if (auth) {
-      navigate('/');
-      try {
-        localStorage.setItem('auth', JSON.stringify(user));
-      } catch (e) {
-        console.log('localStorage is not working');
-      }
-    }
-  }, [navigate, auth]);
 
   return (
     <AuthForm type="register" form={form} onChange={onChange} onSubmit={onSubmit} error={error} />

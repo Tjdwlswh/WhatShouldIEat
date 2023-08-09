@@ -25,6 +25,11 @@ const palette = {
     '#0c8599',
     '#0b7285',
   ],
+  main: '#ffb30e',
+
+  accent: '#f17228',
+
+  text: '#616161',
 };
 
 export default palette;

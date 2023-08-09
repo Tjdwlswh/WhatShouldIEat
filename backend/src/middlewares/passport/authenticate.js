@@ -4,7 +4,9 @@ import setCookie from '../../utils/setCookie.js';
 // 로컬 로그인
 const localAuthenticate = async (req, res, next) => {
   passport.authenticate('local', { session: false }, (err, user, info) => {
-    if (err) next(err);
+    if (err) {
+      return next(err);
+    }
     if (info) {
       const error = new Error(info.message);
       error.status = 404;
@@ -23,14 +25,16 @@ const googleCallbackAuthenticate = async (req, res, next) => {
     'google',
     { session: false, failureRedirect: `${process.env.FRONT_URL}/login` },
     (err, user, info) => {
-      if (err) return next(err);
+      if (err) {
+        return res.status(403).redirect(`${process.env.FRONT_URL}/login?status=fail`);
+      }
       if (info) {
         // 에러처리하면 정상 작동 중에도 크래시
       }
 
       const { token, refreshToken } = user;
       setCookie(res, token, refreshToken);
-      res.status(303).redirect(`${process.env.FRONT_URL}`);
+      return res.status(303).redirect(`${process.env.FRONT_URL}`);
     },
   )(req, res, next);
 };
@@ -44,7 +48,9 @@ const kakaoCallbackAuthenticate = async (req, res, next) => {
     'kakao',
     { session: false, failureRedirect: `${process.env.FRONT_URL}/login` },
     (err, user, info) => {
-      if (err) return next(err);
+      if (err) {
+        return res.status(403).redirect(`${process.env.FRONT_URL}/login?status=fail`);
+      }
       if (info) {
         // 에러처리하면 정상 작동 중에도 크래시
       }

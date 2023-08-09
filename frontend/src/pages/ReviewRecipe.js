@@ -1,13 +1,11 @@
-import HeaderContainer from '../container/common/HeaderContainer';
-import ReviewForm from '../components/main/review/ReviewForm';
 import ReviewTemp from '../components/main/review/ReviewTemp';
+import ReviewContainer from '../container/review/ReviewContainer';
 
 const ReviewRecipe = () => {
   return (
     <div>
-      <HeaderContainer />
       <ReviewTemp>
-        <ReviewForm />
+        <ReviewContainer />
       </ReviewTemp>
     </div>
   );

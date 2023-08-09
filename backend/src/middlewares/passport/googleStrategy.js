@@ -1,12 +1,12 @@
 import { Strategy } from 'passport-google-oauth20';
-import { UserModel } from '../../users/userModels.js';
+import { UserModel } from '../../users/userModel.js';
 import JwtSign from '../../utils/jwtSign.js';
 
 const GoogleStrategy = new Strategy(
   {
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: '/auth/google/callback',
+    callbackURL: process.env.GOOGLE_CALLBACK,
   },
   async (accessToken, refreshToken, profile, done) => {
     try {
@@ -20,14 +20,15 @@ const GoogleStrategy = new Strategy(
         {
           email,
           nickName,
+          provider,
           profileImg,
+          socialToken: accessToken,
           refreshToken,
         },
         email,
       );
       return done(null, { token, refreshToken });
     } catch (err) {
-      console.log('user');
       return done(err);
     }
   },

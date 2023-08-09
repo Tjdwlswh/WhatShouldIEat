@@ -1,5 +1,5 @@
-import { Strategy, ExtractJwt } from 'passport-jwt';
-import { UserModel } from '../../users/userModels.js';
+import { Strategy } from 'passport-jwt';
+import { UserModel } from '../../users/userModel.js';
 import JwtSign from '../../utils/jwtSign.js';
 import cookieParser from 'cookie-parser';
 
@@ -30,14 +30,14 @@ const JwtStrategy = new Strategy(
       const { email } = payload;
       const user = await UserModel.findByEmail(email);
       if (user) {
-        done(null, user);
+        return done(null, user);
       } else {
         error.status = 404;
         error.message = '회원 정보가 없습니다.';
-        done(error, false);
+        return done(error, false);
       }
     } catch (error) {
-      done(error, false);
+      return done(error, false);
     }
   },
 );
@@ -57,16 +57,16 @@ const RefreshJwtStrategy = new Strategy(
         // DB 리프레시 토큰 갱신
         user.refreshToken = refreshToken;
         await user.save();
-        done(null, { token, refreshToken });
+        return done(null, { token, refreshToken });
       } else {
         const error = new Error();
         error.status = 401;
         error.message = '토큰이 일치하지 않습니다. 다시 로그인하세요.';
-        done(error, false);
+        return done(error, false);
       }
     } catch (error) {
       error.status = 404;
-      done(error, false);
+      return done(error, false);
     }
   },
 );

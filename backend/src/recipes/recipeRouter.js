@@ -4,20 +4,33 @@ import { upload } from '../imgUploads/imgUploadRouter.js';
 import { recipeController } from './recipeController.js';
 
 const recipeRouter = Router();
-const imgUpload = upload.single('foodImg');
+const imgUpload = upload.single('image');
 
 //나의레시피로 생성
-recipeRouter.post('/myrecipes', imgUpload, recipeController);
+recipeRouter.post('/myrecipes', loginRequired, imgUpload, recipeController.postMyrecipe);
 
 //인공지능 레시피 생성
-recipeRouter.post('/create_recipe', loginRequired, recipeController.createRecipe);
+recipeRouter.post('/airecipe', loginRequired, recipeController.createAiRecipe);
 
-//나의 레시피 조회
+// 인공지능 레시피 조회, 현재 쓸 일 없음
+// recipeRouter.get('/airecipe/:id', loginRequired, recipeController.getAiRecipe);
 
-//추천레시피 조회
+// 레시피에 좋아요 추가
+recipeRouter.post('/:recipeId/like', loginRequired, recipeController.postLike);
+
+//나의 레시피 목록조회
+recipeRouter.get('/myrecipes', loginRequired, recipeController.getMyrecipes);
+
+//상세 레시피 조회
+recipeRouter.get('/recipes/:recipeId', loginRequired, recipeController.getRecipe);
+
+//추천레시피 목록조회 - 로그인필요없음
+recipeRouter.get('/recipes', recipeController.getRecipes);
 
 //나의레시피 수정
+recipeRouter.put('/myrecipes/:recipeId', loginRequired, imgUpload, recipeController.updateMyRecipe);
 
-//나의 레시피 삭제
+//나의 레시피 삭제 (hashtag테이블에 파싱되어 저장된 데이터는 남아있음)
+recipeRouter.delete('/myrecipes/:recipeId', loginRequired, recipeController.deleteMyRecipe);
 
 export { recipeRouter };

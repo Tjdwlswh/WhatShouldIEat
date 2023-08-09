@@ -14,9 +14,19 @@ const buttonStyle = css`
   box-shadow: 0 4px 8px 1px rgba(0, 0, 0, 0.3);
 
   background: ${palette.gray[8]};
+
   &:hover {
-    background: ${palette.gray[6]};
+    box-shadow:
+      4px 4px 6px 0 rgba(255, 255, 255, 0.5),
+      -4px -4px 6px 0 rgba(116, 125, 136, 0.5),
+      inset -4px -4px 6px 0 rgba(255, 255, 255, 0.2),
+      inset 4px 4px 6px 0 rgba(0, 0, 0, 0.4);
   }
+  &:active {
+    position: relative;
+    top: 1px;
+  }
+
   ${props =>
     props.fullWidth &&
     css`
@@ -25,6 +35,10 @@ const buttonStyle = css`
       width: 100%;
       display: block;
       font-size: 1.125rem;
+      &:active {
+        position: relative;
+        top: 2px;
+      }
     `}
 
   ${props =>

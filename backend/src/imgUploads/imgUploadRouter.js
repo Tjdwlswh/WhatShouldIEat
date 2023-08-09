@@ -2,6 +2,8 @@ import { Router } from 'express';
 import multer from 'multer';
 import path from 'path';
 
+// 사진을 지우려고 할 때 image는 'delete'문자로 옴. 그 외에는 파일 또는 undefined
+
 const imgUploadRouter = Router();
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -11,7 +13,7 @@ const storage = multer.diskStorage({
     cb(null, new Date().valueOf() + path.extname(file.originalname));
   },
 });
-const limits = { fieldsize: 10 * 1024 * 1024 };
+const limits = { fieldsize: 5 * 1024 * 1024 };
 const filter = (req, file, callback) => {
   const fileType = file.mimetype.split('/')[1];
 
