@@ -14,6 +14,8 @@ import palette from '../../../lib/styles/palette';
 import TagUpdate from '../../common/Tags';
 import { setOriginalPost, unloadUpdate } from '../../../modules/update';
 import { startLoading, finishLoading } from '../../../modules/loading';
+import AskRemoveModal from './AskRemoveModal';
+import { removePost } from '../../../lib/api/posts';
 
 const SubInfo = styled.div`
   margin-top: 1rem;
@@ -45,27 +47,14 @@ const Tags = styled.div`
   }
 `;
 
-const MyRecipeForm = ({ post, error, loading }) => {
+const MyRecipeForm = ({ post, error, loading, user, recipeId, token }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { lastpost } = useSelector(({ update, loading }) => ({
     lastpost: update.lastpost,
-    // updateError: update.updateError,
-    // originalPostId: update.originalPostId,
-    // foodname: update.lastpost.foodname,
-    // ingredients: update.lastpost.ingredients,
-    // recipe: update.lastpost.recipe,
     loading: loading['update/UPDATE_POST'],
   }));
-
-  // useEffect(() => {
-  //   dispatch(setOriginalPost(post.recipe));
-
-  //   return () => {
-  //     dispatch(unloadUpdate());
-  //   };
-  // }, [dispatch, post.recipe]);
-
+  const [modal, setModal] = useState(false);
   if (error) {
     if (error.response && error.response.status === 404) {
       return <CreateAireturnBlock>존재하지 않는 포스트 입니다.</CreateAireturnBlock>;
@@ -77,7 +66,7 @@ const MyRecipeForm = ({ post, error, loading }) => {
     return null;
   }
 
-  const { foodname, ingredients, recipe, createdAt, tags, User } = post.recipe;
+  const { foodname, ingredients, recipe, createdAt, tags, User, userId } = post.recipe;
 
   const tagArray = tags.split('#');
   tagArray.shift();
@@ -91,6 +80,28 @@ const MyRecipeForm = ({ post, error, loading }) => {
     dispatch(finishLoading('setOriginal'));
 
     navigate('/myrecipeUpdate');
+  };
+
+  const onRemoveClick = () => {
+    setModal(true);
+  };
+  const onCancel = () => {
+    setModal(false);
+  };
+
+  const onRemove = async () => {
+    try {
+      const { email } = user;
+      await removePost(recipeId, token, userId);
+      navigate(`/${email}`);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const onConfirm = () => {
+    setModal(false);
+    onRemove();
   };
 
   return (
@@ -117,11 +128,14 @@ const MyRecipeForm = ({ post, error, loading }) => {
             ))}
           </Tags>
           <div className="twobtn">
-            <Button className="margin">레시피 삭제</Button>
+            <Button onClick={onRemoveClick} className="margin">
+              레시피 삭제
+            </Button>
             <Button onClick={onClickHandle}>레시피 수정</Button>
           </div>
         </AiReturnbox>
       </CreateAireturnBlock>
+      <AskRemoveModal visible={modal} onConfirm={onConfirm} onCancel={onCancel} />
     </>
   );
 };
