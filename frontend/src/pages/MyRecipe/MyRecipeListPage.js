@@ -6,7 +6,6 @@ import PaginationContainer from '../../container/PaginationContainer';
 const MyRecipeListPage = () => {
   return (
     <>
-      {' '}
       <PostListContainer />
       <PaginationContainer />
     </>

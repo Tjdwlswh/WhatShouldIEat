@@ -12,10 +12,11 @@ const RecommendContainer = () => {
   const { recommend, error, loading, user } = useSelector(({ recommend, loading, user }) => ({
     recommend: recommend.posts,
     error: recommend.error,
-    loading: loading['posts/LIST_POSTS'],
+    loading: loading['posts/LIST_RECOMMEND'],
     user: user.user,
   }));
   const { token } = useSelector(state => state.user);
+  console.log(recommend);
 
   useEffect(() => {
     const tag = searchParams.get('tag');

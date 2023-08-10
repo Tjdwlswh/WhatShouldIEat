@@ -3,7 +3,7 @@ import Pagination from '../components/main/Pagination';
 import { useSelector } from 'react-redux';
 import { useParams, useSearchParams } from 'react-router-dom';
 
-const PaginationContainer = () => {
+const PaginationContainer2 = () => {
   const [searchParams] = useSearchParams();
 
   const { email } = useParams();
@@ -13,13 +13,15 @@ const PaginationContainer = () => {
 
   const { lastPage, recommend, loading } = useSelector(({ recommend, loading }) => ({
     lastPage: recommend.lastPage,
-    posts: recommend.posts,
+    recommend: recommend.posts,
     loading: loading['posts/LIST_RECOMMEND'],
   }));
+
+  console.log(recommend);
 
   if (!recommend || loading) return null;
 
   return <Pagination tag={tag} email={email} page={parseInt(page, 10)} lastPage={lastPage} />;
 };
 
-export default PaginationContainer;
+export default PaginationContainer2;
