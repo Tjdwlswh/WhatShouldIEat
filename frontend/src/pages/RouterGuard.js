@@ -53,16 +53,7 @@ const RouterGuard = () => {
 
   /********** 페이지 목록 끝 ***********/
 
-  // const uri = pathname.split(/\/(\d+)$/);
-  // let currentRoute = {};
   const currentRoute = routes.find(route => route.path === pathname);
-
-  // // 동적 주소 조회
-  // if (uri.length > 2) {
-  //   currentRoute = routes.filter(route => route.path.startsWith(`${uri[0]}/`))[0];
-  // } else {
-  //   currentRoute = routes.find(route => route.path === uri[0]);
-  // }
 
   useEffect(() => {
     const cookies = new Cookies();

@@ -1,15 +1,12 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams, useNavigate, useLocation } from 'react-router-dom';
+import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
 import { readPost, unloadPost } from '../../modules/myrecipe';
 import MyRecipeForm from '../../components/main/myrecipe/MyRecipeForm';
-import qs from 'qs';
 
 const MyRecipeContainer = () => {
-  const { search } = useLocation();
-  const { postId } = qs.parse(search, {
-    ignoreQueryPrefix: true,
-  });
+  const [searchParams] = useSearchParams();
+  const postId = searchParams.get('postId');
 
   const navigate = useNavigate();
   const dispatch = useDispatch();

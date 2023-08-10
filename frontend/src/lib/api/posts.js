@@ -72,21 +72,21 @@ export const removePost = async ({ recipeId, token }) => {
   });
 };
 
-export const listPosts = async ({ token, email, tag, page }) => {
+export const listPosts = async ({ token, userId, tag, page }) => {
   return await client.get('/myrecipes', {
     headers: {
       Authorization: `Bearer ${token}`,
     },
-    params: { email, tag, page },
+    params: { userId, tag, page },
   });
 };
 
-export const recommendPosts = async ({ token, email, tag, page }) => {
+export const recommendPosts = async ({ token, userId, tag, page }) => {
   return await client.get('/recipes', {
     headers: {
       Authorization: `Bearer ${token}`,
     },
-    params: { email, tag, page },
+    params: { userId, tag, page },
   });
 };
 

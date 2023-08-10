@@ -6,8 +6,8 @@ import { useParams, useSearchParams } from 'react-router-dom';
 
 const RecommendContainer = () => {
   const dispatch = useDispatch();
-  const { email } = useParams();
   const [searchParams] = useSearchParams();
+  const userId = searchParams.get('userId');
 
   const { recommend, error, loading, user } = useSelector(({ recommend, loading, user }) => ({
     recommend: recommend.posts,
@@ -20,8 +20,8 @@ const RecommendContainer = () => {
   useEffect(() => {
     const tag = searchParams.get('tag');
     const page = parseInt(searchParams.get('page'), 10) || 1;
-    dispatch(recommendPosts(token, email, tag, page));
-  }, [dispatch, token, email, searchParams]);
+    dispatch(recommendPosts(token, userId, tag, page));
+  }, [dispatch, token, userId, searchParams]);
 
   return <RecommendForm loading={loading} error={error} recommend={recommend} user={user} />;
 };

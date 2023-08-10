@@ -74,7 +74,7 @@ const recipeController = {
   getRecipe: async (req, res, next) => {
     try {
       const recipeId = req.params.recipeId;
-      const  recipe  = await recipeService.getRecipe(recipeId);
+      const recipe = await recipeService.getRecipe(recipeId);
       //등록된comment조회
       const comment = await commentService.getComment(recipeId);
       const result = { recipe, comment };
@@ -86,8 +86,14 @@ const recipeController = {
   //추천레시피 조회
   getRecipes: async (req, res, next) => {
     try {
-      //좋아요 순으로 ->최신순 && 페이지네이션 무한스크롤 적용
+      const userId = req.query?.userId;
       const pageNum = parseInt(req.query.pageNum, 10);
+      //좋아요 순으로 ->최신순 && 페이지네이션 무한스크롤 적용
+      if (userId) {
+        //userId가 쿼리로 들어올 경우:다른사람의 레시피 목록
+        const recipes = await recipeService.myRecipe({ userId, pageNum });
+        return res.status(200).json(recipes);
+      }
       const recipes = await recipeService.getRecipes(pageNum);
       return res.status(200).json(recipes);
     } catch (err) {
