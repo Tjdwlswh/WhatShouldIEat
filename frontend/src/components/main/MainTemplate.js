@@ -10,6 +10,7 @@ const MainTemplateBlock = styled.section`
   position: relative;
   display: block;
   background-color: ${palette.main} !important;
+  background-image: url('../../../public/img/bg_image.jpg');
   padding-top: 3rem;
   padding-bottom: 3rem;
   overflow: hidden;
