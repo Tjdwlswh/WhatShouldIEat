@@ -19,6 +19,7 @@ export function createRequestSaga(type, request, message) {
       yield put({
         type: SUCCESS,
         payload: response.data,
+        meta: response,
       });
     } catch (e) {
       yield put({

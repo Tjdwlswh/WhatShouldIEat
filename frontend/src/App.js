@@ -1,6 +1,7 @@
 import './App.css';
 import { Route, Routes } from 'react-router-dom';
 import RouterGuard from './pages/RouterGuard';
+import RecommendRecipe from './pages/RecommendRecipe';
 
 function App() {
   return (
@@ -10,9 +11,9 @@ function App() {
       <Route path="/register" element={<RouterGuard />} />
       <Route path="/create" element={<RouterGuard />} />
       <Route path="/createAi" element={<RouterGuard />} />
-      <Route path="/myrecipeUpdate" element={<RouterGuard />} />
+      <Route path="myrecipeUpdate" element={<RouterGuard />} />
 
-      <Route path="/:email">
+      <Route path=":email">
         <Route index element={<RouterGuard />} />
         <Route path=":postId" element={<RouterGuard />} />
       </Route>
@@ -21,7 +22,7 @@ function App() {
       <Route path="/myrecipe" element={<RouterGuard />} />
       {/* ㅡㅡㅡㅡㅡㅡ */}
 
-      <Route path="/recommend" element={<RouterGuard />} />
+      <Route path="/recipes" element={<RecommendRecipe />} />
       <Route path="/review" element={<RouterGuard />} />
       <Route path="/myaccount" element={<RouterGuard />} />
       <Route path="/leave" element={<RouterGuard />} />

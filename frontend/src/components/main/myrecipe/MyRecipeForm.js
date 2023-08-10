@@ -70,9 +70,11 @@ const MyRecipeForm = ({ post, error, loading, user, recipeId, token }) => {
   const { foodname, ingredients, recipe, createdAt, tags, User, userId } = post.recipe;
 
   const tagArray = tags.split('#');
-  tagArray.shift();
 
-  console.log(tagArray);
+  const newArray = tagArray.filter(tag => {
+    return tag !== '';
+  });
+
   const { comment } = post;
 
   const onClickHandle = () => {
@@ -90,7 +92,6 @@ const MyRecipeForm = ({ post, error, loading, user, recipeId, token }) => {
     setModal(false);
   };
 
-  console.log(token);
   const onRemove = async () => {
     try {
       const { email } = user;
@@ -124,7 +125,7 @@ const MyRecipeForm = ({ post, error, loading, user, recipeId, token }) => {
           </label>
 
           <Tags>
-            {tagArray.map(tag => (
+            {newArray.map(tag => (
               <div contentEditable="true" className="tag">
                 #{tag}
               </div>
