@@ -92,7 +92,6 @@ const ItemList = ({ post, user }) => {
   const dispatch = useDispatch();
 
   tagArray.shift('');
-  console.log(tagArray);
 
   useEffect(() => {
     return () => {

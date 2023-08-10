@@ -47,8 +47,6 @@ const MyRecipeUpdate = () => {
       loading: loading['update/UPDATE_POST'],
     }));
 
-  console.log(originalPostId);
-
   const foodnameRef = useRef(null);
   const ingredientsRef = useRef(null);
   const recipeRef = useRef(null);

@@ -13,7 +13,7 @@ const PageNumber = styled.div``;
 
 const buildLink = ({ email, tag, page }) => {
   const query = qs.stringify({ tag, page });
-  return email ? `/${email}?${query}` : `/recommend/?${query}`;
+  return email ? `/${email}?${query}` : `/recipes/?${query}`;
 };
 
 const Pagination = ({ page, lastPage, email, tag }) => {

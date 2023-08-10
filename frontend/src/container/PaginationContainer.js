@@ -17,8 +17,6 @@ const PaginationContainer = () => {
     loading: loading['posts/LIST_POSTS'],
   }));
 
-  console.log(posts);
-
   if (!posts || loading) return null;
 
   return <Pagination tag={tag} email={email} page={parseInt(page, 10)} lastPage={lastPage} />;

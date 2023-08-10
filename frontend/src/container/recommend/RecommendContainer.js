@@ -16,7 +16,6 @@ const RecommendContainer = () => {
     user: user.user,
   }));
   const { token } = useSelector(state => state.user);
-  console.log(recommend);
 
   useEffect(() => {
     const tag = searchParams.get('tag');

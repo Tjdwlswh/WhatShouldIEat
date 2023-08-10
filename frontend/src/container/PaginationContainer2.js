@@ -17,8 +17,6 @@ const PaginationContainer2 = () => {
     loading: loading['posts/LIST_RECOMMEND'],
   }));
 
-  console.log(recommend);
-
   if (!recommend || loading) return null;
 
   return <Pagination tag={tag} email={email} page={parseInt(page, 10)} lastPage={lastPage} />;

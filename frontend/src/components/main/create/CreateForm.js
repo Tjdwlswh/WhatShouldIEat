@@ -124,7 +124,6 @@ const CreateForm = ({ ingredients, onChangeTags, onChangeCheck }) => {
   const [isFixedChecked, setIsFixedChecked] = useState(false);
   const [isFlexibleChecked, setIsFlexibleChecked] = useState(false);
 
-  console.log(check);
   const insertTag = useCallback(
     (ingredient, check) => {
       if (!ingredient) return;

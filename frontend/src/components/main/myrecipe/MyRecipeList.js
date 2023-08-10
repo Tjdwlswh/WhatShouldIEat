@@ -91,8 +91,9 @@ const ItemList = ({ post, user }) => {
   const tagArray = tags.split('#');
   const dispatch = useDispatch();
 
-  tagArray.shift('');
-  console.log(tagArray);
+  const newArray = tagArray.filter(tag => {
+    return tag !== '';
+  });
 
   useEffect(() => {
     return () => {
@@ -116,7 +117,7 @@ const ItemList = ({ post, user }) => {
               </SubInfo>
               <TagGruop>
                 <Tags>
-                  {tagArray.map(tag => (
+                  {newArray.map(tag => (
                     <Link className="tags" to={`/?tag=${tag}`} key={tag}>
                       #{tag}
                     </Link>
