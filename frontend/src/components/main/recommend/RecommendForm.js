@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Responsive from '../../common/Responsive';
 import { Link } from 'react-router-dom';
@@ -6,6 +6,8 @@ import palette from '../../../lib/styles/palette';
 import { useDispatch, useSelector } from 'react-redux';
 import { setOriginalPost } from '../../../modules/update';
 import { unloadUpdate } from '../../../modules/update';
+import imgSrcConverter from '../../../lib/utils/imgSrcConverter';
+import numberToUnit from '../../../lib/utils/numberToUnit';
 
 const RecipeGroup = styled(Responsive)`
   display: flex;
@@ -41,12 +43,24 @@ const Description = styled.div`
   align-items: center;
 `;
 
-const Logo = styled.img`
+const Like = styled.div`
+  position: relative;
   border-radius: 4px;
-  width: 50px;
-  object-fit: cover;
-  height: 50px;
+  width: 20px;
+  height: 20px;
+  background-image: url('${process.env.PUBLIC_URL}/heart.png');
+  background-repeat: no-repeat;
+  background-size: cover;
 `;
+
+const LikeCount = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: red;
+`;
+
 const NameGroup = styled.div`
   display: flex;
   flex-direction: column;
@@ -90,6 +104,9 @@ const ItemList = ({ post, user }) => {
   const { foodname, tags, foodImg } = post;
   const tagArray = tags.split('#');
   const dispatch = useDispatch();
+  const [imageError, setImageError] = useState(false);
+  const imgAttribute = imgSrcConverter(foodImg, imageError, setImageError);
+  const likeCount = numberToUnit(post.likeCount);
 
   tagArray.shift('');
 
@@ -105,9 +122,11 @@ const ItemList = ({ post, user }) => {
     <RecipeGroup className="flex">
       <Link className="flex" to={`/recipe?userId=${post.userId}&postId=${post.id}`}>
         <Recipe>
-          <Thumbnail>{<img src={'/logo.png'} alt="음식사진" />}</Thumbnail>
+          <Thumbnail>{<img {...imgAttribute} alt="음식사진" />}</Thumbnail>
           <Description>
-            <Logo src="/logo192.png" alt="로고" />
+            <Like>
+              <LikeCount>{likeCount}</LikeCount>
+            </Like>
             <NameGroup>
               <SubInfo>
                 <span className="title">{foodname}</span>
