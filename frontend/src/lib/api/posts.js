@@ -45,21 +45,13 @@ export const readPost = async ({ recipeId, token }) => {
   });
 };
 
-export const updatePost = async ({ recipeId, token, foodname, ingredients, recipe }) => {
-  return await client.put(
-    `/myrecipes/${recipeId}`,
-    {
-      foodname,
-      ingredients,
-      recipe,
-      recipeId,
+export const updatePost = async ({ recipeId, token, foodname, ingredients, recipe, image }) => {
+  const formData = createFormData({ recipeId, foodname, ingredients, recipe, image });
+  return await client.put(`/myrecipes/${recipeId}`, formData, {
+    headers: {
+      Authorization: `Bearer ${token}`,
     },
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    },
-  );
+  });
 };
 
 export const removePost = async ({ recipeId, token }) => {

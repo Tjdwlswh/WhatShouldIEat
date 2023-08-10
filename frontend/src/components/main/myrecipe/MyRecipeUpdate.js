@@ -113,7 +113,8 @@ const MyRecipeUpdate = () => {
   const handleClickSave = () => {
     if (originalPostId) {
       const recipeId = originalPostId;
-      dispatch(updatePost({ recipeId, token, foodname, ingredients, recipe }));
+      dispatch(updatePost({ recipeId, token, foodname, ingredients, recipe, image }));
+      setImage(null);
       if (!loading) {
         navigate(`/recipe?postId=${originalPostId}`);
         dispatch(unloadUpdate());

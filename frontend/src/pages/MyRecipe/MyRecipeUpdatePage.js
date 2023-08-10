@@ -5,7 +5,7 @@ import MyRecipeUpdateTemp from '../../components/main/myrecipe/MyRecipeUpdateTem
 const MyRecipeUpdatePage = () => {
   return (
     <MyRecipeUpdateTemp>
-      <MyRecipeUpdate></MyRecipeUpdate>
+      <MyRecipeUpdate />
     </MyRecipeUpdateTemp>
   );
 };
