@@ -78,7 +78,7 @@ const recipeService = {
   },
   myRecipe: async ({ userId, pageNum }) => {
     //user의 id로 나의 레시피 조회
-    const myRecipe = await recipeModel.findMyRecipe({ userId, pageNum });
+    const { totalItemsCount, myRecipe } = await recipeModel.findMyRecipe({ userId, pageNum });
     //생성된 나의 레시피가 없다면 빈 배열로 리턴하기
     if (!myRecipe) {
       return [];
@@ -91,6 +91,7 @@ const recipeService = {
       return recipeData;
     });
 
+    recipesJSON.totalItemsCount = totalItemsCount;
     return recipesJSON;
   },
   getRecipe: async recipeId => {
@@ -122,7 +123,8 @@ const recipeService = {
     // }
   },
   getRecipes: async pageNum => {
-    const recipes = await recipeModel.findAll(pageNum);
+    const { totalItemsCount, recipes } = await recipeModel.findAll(pageNum);
+    recipes.totalItemsCount = totalItemsCount;
     return recipes;
   },
   updateMyRecipe: async ({ recipeId, userId, foodImg, toUpdate }) => {

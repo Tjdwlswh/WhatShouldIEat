@@ -10,7 +10,7 @@ const recipeModel = {
     if (pageNum) {
       offset = 8 * (pageNum - 1);
     }
-    const recipes = await db.Recipe.findAll({
+    const { count, rows } = await db.Recipe.findAndCountAll({
       where: { userId: userId },
       offset: offset,
       limit: 8,
@@ -23,7 +23,7 @@ const recipeModel = {
       ],
       order: [['id', 'DESC']],
     });
-    return recipes;
+    return { totalItemsCount: count, myRecipe: rows };
   },
 
   findMyRecipeCount: async userId => {
@@ -46,7 +46,7 @@ const recipeModel = {
     if (pageNum) {
       offset = 8 * (pageNum - 1);
     }
-    const recipes = await db.Recipe.findAll({
+    const { count, rows } = await db.Recipe.findAndCountAll({
       offset: offset,
       limit: 8,
       include: [
@@ -69,7 +69,7 @@ const recipeModel = {
         ['id', 'DESC'], // id를 기준으로 내림차순 정렬
       ],
     });
-    return recipes;
+    return { totalItemsCount: count, recipes: rows };
   },
 
   update: async ({ toUpdate, recipeId }) => {
