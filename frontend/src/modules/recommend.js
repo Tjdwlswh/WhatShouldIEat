@@ -22,7 +22,6 @@ export function* recommendSaga() {
 const initialState = {
   posts: null,
   error: null,
-  lastPage: 1,
 };
 
 const recommend = handleActions(
@@ -31,7 +30,6 @@ const recommend = handleActions(
       ...state,
       posts,
       error: null,
-      lastPage: parseInt(response.headers['last-page'], 10),
     }),
     [LIST_RECOMMEND_FAILURE]: (state, { payload: error }) => ({
       ...state,

@@ -9,11 +9,12 @@ const PostListContainer = () => {
   const { email } = useParams();
   const [searchParams] = useSearchParams();
 
-  const { posts, error, loading, user } = useSelector(({ posts, loading, user }) => ({
+  const { posts, error, loading, user, lastPost } = useSelector(({ posts, loading, user }) => ({
     posts: posts.posts,
     error: posts.error,
     loading: loading['posts/LIST_POSTS'],
     user: user.user,
+    lastPost: posts.lastPost,
   }));
   const { token } = useSelector(state => state.user);
 

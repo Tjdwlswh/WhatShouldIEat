@@ -11,13 +11,17 @@ const PaginationContainer2 = () => {
 
   const page = parseInt(searchParams.get('page'), 10) || 1;
 
-  const { lastPage, recommend, loading } = useSelector(({ recommend, loading }) => ({
-    lastPage: recommend.lastPage,
+  const { recommend, loading } = useSelector(({ recommend, loading }) => ({
     recommend: recommend.posts,
     loading: loading['posts/LIST_RECOMMEND'],
   }));
 
   if (!recommend || loading) return null;
+
+  const lastPage = Math.ceil(recommend.length / 10);
+
+  console.log(recommend);
+  console.log(lastPage);
 
   return <Pagination tag={tag} email={email} page={parseInt(page, 10)} lastPage={lastPage} />;
 };
