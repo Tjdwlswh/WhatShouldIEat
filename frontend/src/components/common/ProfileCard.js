@@ -106,6 +106,7 @@ const ProfileCard = ({ props, onClickIcon, onClickFollow, onClickClose }) => {
   const [imageError, setImageError] = useState(false);
   const {
     isMine,
+    userId,
     provider,
     nickName,
     profileImg,
@@ -152,7 +153,7 @@ const ProfileCard = ({ props, onClickIcon, onClickFollow, onClickClose }) => {
             <StatNumber>{followingCount}</StatNumber>
             <StatLabel>Followings</StatLabel>
           </StatNoLink>
-          <Stat to="/myrecipe">
+          <Stat to={isMine ? '/myrecipes' : `/recipes?userId=${userId}`}>
             <StatNumber>{recipeCount}</StatNumber>
             <StatLabel>Recipes</StatLabel>
           </Stat>

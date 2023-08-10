@@ -45,21 +45,25 @@ export const readPost = async ({ recipeId, token }) => {
   });
 };
 
-export const updatePost = async ({ recipeId, token, foodname, ingredients, recipe }) => {
-  return await client.put(
-    `/myrecipes/${recipeId}`,
-    {
-      foodname,
-      ingredients,
-      recipe,
-      recipeId,
-    },
+export const postLike = async ({ recipeId, token, like }) => {
+  return await client.post(
+    `/like/${recipeId}`,
+    { like },
     {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     },
   );
+};
+
+export const updatePost = async ({ recipeId, token, foodname, ingredients, recipe, image }) => {
+  const formData = createFormData({ recipeId, foodname, ingredients, recipe, image });
+  return await client.put(`/myrecipes/${recipeId}`, formData, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
 };
 
 export const removePost = async ({ recipeId, token }) => {
@@ -72,21 +76,21 @@ export const removePost = async ({ recipeId, token }) => {
   });
 };
 
-export const listPosts = async ({ token, email, tag, page }) => {
+export const listPosts = async ({ token, userId, tag, page }) => {
   return await client.get('/myrecipes', {
     headers: {
       Authorization: `Bearer ${token}`,
     },
-    params: { email, tag, page },
+    params: { userId, tag, page },
   });
 };
 
-export const recommendPosts = async ({ token, email, tag, page }) => {
+export const recommendPosts = async ({ token, userId, tag, page }) => {
   return await client.get('/recipes', {
     headers: {
       Authorization: `Bearer ${token}`,
     },
-    params: { email, tag, page },
+    params: { userId, tag, page },
   });
 };
 

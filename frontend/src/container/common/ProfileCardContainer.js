@@ -61,6 +61,7 @@ const ProfileCardContainer = ({ userId, onClickClose }) => {
             const newUserDate = {
               ...current,
               isFollowing,
+              userId,
               ...data,
             };
             return newUserDate;

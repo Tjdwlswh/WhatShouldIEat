@@ -48,7 +48,25 @@ const Tags = styled.div`
   }
 `;
 
-const MyRecipeForm = ({ post, error, loading, user, recipeId, token }) => {
+const ButtonBox = styled.div`
+  display: flex;
+  flex-direction: row-reverse;
+`;
+
+const LikeButton = styled.div`
+  display: block;
+  white-space: nowrap;
+  cursor: pointer;
+  font-size: 2rem;
+  color: ${palette.accent};
+  transition: all 0.2s linear;
+  &:hover {
+    transform: scale(1.1);
+  }
+`;
+
+const MyRecipeForm = ({ post, error, loading, user, recipeId, token, like, setLike }) => {
+  console.log('like', like);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { lastpost } = useSelector(({ update, loading, user }) => ({
@@ -58,9 +76,17 @@ const MyRecipeForm = ({ post, error, loading, user, recipeId, token }) => {
   const [modal, setModal] = useState(false);
   if (error) {
     if (error.response && error.response.status === 404) {
-      return <CreateAireturnBlock>존재하지 않는 포스트 입니다.</CreateAireturnBlock>;
+      return (
+        <>
+          <CreateAireturnBlock>존재하지 않는 포스트 입니다.</CreateAireturnBlock>
+        </>
+      );
     }
-    return <CreateAireturnBlock>오류 발생</CreateAireturnBlock>;
+    return (
+      <>
+        <CreateAireturnBlock>오류 발생</CreateAireturnBlock>
+      </>
+    );
   }
 
   if (loading || !post) {
@@ -74,8 +100,6 @@ const MyRecipeForm = ({ post, error, loading, user, recipeId, token }) => {
   const newArray = tagArray.filter(tag => {
     return tag !== '';
   });
-
-  const { comment } = post;
 
   const onClickHandle = () => {
     dispatch(startLoading('setOriginal'));
@@ -94,10 +118,9 @@ const MyRecipeForm = ({ post, error, loading, user, recipeId, token }) => {
 
   const onRemove = async () => {
     try {
-      const { email } = user;
       await removePost({ recipeId, token });
 
-      navigate(`/${email}`);
+      navigate('/myrecipes');
     } catch (e) {
       console.log(e);
     }
@@ -106,6 +129,10 @@ const MyRecipeForm = ({ post, error, loading, user, recipeId, token }) => {
   const onConfirm = () => {
     setModal(false);
     onRemove();
+  };
+
+  const handleClickHeart = () => {
+    setLike(!like);
   };
 
   return (
@@ -123,7 +150,6 @@ const MyRecipeForm = ({ post, error, loading, user, recipeId, token }) => {
             <div className="one">재료 : {lastpost ? lastpost.ingredients : ingredients}</div>
             <div className="two">레시피 : {lastpost ? lastpost.recipe : recipe}</div>
           </label>
-
           <Tags>
             {newArray.map(tag => (
               <div contentEditable="true" className="tag">
@@ -131,12 +157,17 @@ const MyRecipeForm = ({ post, error, loading, user, recipeId, token }) => {
               </div>
             ))}
           </Tags>
-          <div className="twobtn">
-            <Button onClick={onRemoveClick} className="margin">
-              레시피 삭제
-            </Button>
-            <Button onClick={onClickHandle}>레시피 수정</Button>
-          </div>
+          <ButtonBox>
+            <LikeButton onClick={handleClickHeart}>{like ? '💕' : '🤍'}</LikeButton>
+            {userId === user?.id && (
+              <div className="twobtn">
+                <Button onClick={onRemoveClick} className="margin">
+                  레시피 삭제
+                </Button>
+                <Button onClick={onClickHandle}>레시피 수정</Button>
+              </div>
+            )}
+          </ButtonBox>
           <CommentTemp />
         </AiReturnbox>
       </CreateAireturnBlock>
