@@ -12,7 +12,9 @@ const RecipeGroup = styled(Responsive)`
   flex-wrap: wrap;
   gap: 8px;
   padding: 8px;
-  flex: 1;
+  .flex {
+    display: flex;
+  }
 `;
 
 const Recipe = styled.div`
@@ -101,8 +103,8 @@ const ItemList = ({ post, user }) => {
   //foodImg 이거 나중에 사용하기
 
   return (
-    <div className="flex">
-      <Link to={`/${user.email}/${post.id}`}>
+    <RecipeGroup className="flex">
+      <Link className="flex" to={`/${user.email}/${post.id}`}>
         <Recipe>
           <Thumbnail>{<img src={'/logo.png'} alt="음식사진" />}</Thumbnail>
           <Description>
@@ -125,7 +127,7 @@ const ItemList = ({ post, user }) => {
           </Description>
         </Recipe>
       </Link>
-    </div>
+    </RecipeGroup>
   );
 };
 
@@ -135,10 +137,10 @@ const MyRecipeList = ({ posts, loading, error, user }) => {
   }
 
   return (
-    <div>
+    <div style={{ marginTop: 50 }}>
       <RecipeGroup>
         {!loading && posts && (
-          <div>
+          <div className="flex">
             {posts.map(post => (
               <ItemList user={user} post={post} key={post.id}></ItemList>
             ))}

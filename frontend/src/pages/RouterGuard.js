@@ -41,7 +41,7 @@ const RouterGuard = () => {
     // 임시 my레시피 주소
     { path: '/myrecipe', component: MyRecipeListPage, loginRequired: true },
 
-    { path: '/recommend', component: RecommendRecipe, loginRequired: true },
+    // { path: '/recommend', component: RecommendRecipe, loginRequired: true },
     { path: '/review', component: ReviewRecipe, loginRequired: true },
     { path: '/myaccount', component: AccountPage, loginRequired: true },
     { path: '/leave', component: LeavePage, loginRequired: true },
