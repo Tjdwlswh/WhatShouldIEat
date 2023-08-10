@@ -45,18 +45,18 @@ const StyleForm = styled.div`
     'Segoe UI Emoji',
     'Segoe UI Symbol';
   .logo {
-    font-size: 1.88832rem;
+    font-size: 2rem;
     color: #f9fafd;
     font-weight: 900;
     line-height: 1;
     margin-top: 0;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.8rem;
   }
   .description {
     color: #616161;
     font-size: 1.5736rem;
     margin-top: 0;
-    margin-bottom: 3rem;
+    margin-bottom: 0.3rem;
     font-weight: 700;
     line-height: 1.2;
   }
@@ -71,6 +71,7 @@ const WhiteBlock = styled.div`
   word-wrap: break-word;
   background-color: #fffefe;
   background-clip: border-box;
+  margin-top: 2rem;
   border: 1px solid rgba(0, 0, 0, 0.125);
   border-radius: 0.5rem;
   text-align: center;
@@ -103,8 +104,8 @@ const WhiteBlock = styled.div`
       'Segoe UI Symbol';
     cursor: pointer;
     text-transform: none;
-    margin-bottom: 1rem;
-    font-size: 10px;
+    margin-bottom: 0.2rem;
+    font-size: 11px;
     line-height: inherit;
     border-top-left-radius: 0.5rem;
     border-top-right-radius: 0.5rem;
@@ -176,9 +177,9 @@ const InputButton = styled.button`
   text-align: center;
   vertical-align: middle;
   border: 1px solid transparent;
-  padding: 0.7rem;
-  font-size: 0.6rem;
-  border-radius: 0.2rem;
+  padding: 0.5rem;
+  font-size: 0.7rem;
+  border-radius: 0.4rem;
   @media (max-width: 576px) {
     .auto {
       flex: 0 0 auto;
@@ -197,11 +198,8 @@ const MainForm = () => {
       </StyleImgBox>
       <StyleForm>
         <h1 className="logo">요리하실려구요?</h1>
-        <h1 className="description">
-          무엇을 먹을지 고민하지 마시고
-          <br />
-          AI로 레시피를 생성하여 요리하세요!
-        </h1>
+        <h1 className="description">오늘은 뭐해먹지 고민하지 마시고</h1>
+        <h1 className="description">AI가 만들어준 레시피로 요리하세요!</h1>
         <WhiteBlock>
           <div className="card_body">
             <nav>
