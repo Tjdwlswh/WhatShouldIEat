@@ -56,7 +56,7 @@ const Header = ({ user, onLogout, handleEmailClick }) => {
             레시피 생성
           </Link>
           {user && (
-            <Link to={`/${user.email}`} className="link">
+            <Link to={`/myrecipes`} className="link">
               나의 레시피
             </Link>
           )}

@@ -105,6 +105,8 @@ const recipeService = {
       delete recipeData.Hashtags;
 
       return recipeData;
+    } else {
+      throw new NotFoundException('레시피가 존재하지 않습니다');
     }
     // console.log('4', recipe);
     // const recipeData = recipe.toJSON();

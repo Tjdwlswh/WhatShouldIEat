@@ -76,7 +76,11 @@ const refreshAuthenticate = async (req, res, next) => {
       return next(error);
     }
     const { token, refreshToken } = user;
-    setCookie(res, token, refreshToken);
+    if (req.params.logout === 'token') {
+      setCookie(res, token);
+    } else {
+      setCookie(res, token, refreshToken);
+    }
     res.status(200).json({ message: '토큰 재발급 완료' });
   })(req, res, next);
 };

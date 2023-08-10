@@ -105,7 +105,7 @@ const ItemList = ({ post, user }) => {
 
   return (
     <RecipeGroup className="flex">
-      <Link className="flex" to={`/${user.email}/${post.id}`}>
+      <Link className="flex" to={`/recipe?userId=${post.userId}&postId=${post.id}`}>
         <Recipe>
           <Thumbnail>{<img src={'/logo.png'} alt="음식사진" />}</Thumbnail>
           <Description>

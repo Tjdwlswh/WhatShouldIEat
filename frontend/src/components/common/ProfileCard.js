@@ -152,7 +152,7 @@ const ProfileCard = ({ props, onClickIcon, onClickFollow, onClickClose }) => {
             <StatNumber>{followingCount}</StatNumber>
             <StatLabel>Followings</StatLabel>
           </StatNoLink>
-          <Stat to="/myrecipe">
+          <Stat to="/myrecipes">
             <StatNumber>{recipeCount}</StatNumber>
             <StatLabel>Recipes</StatLabel>
           </Stat>

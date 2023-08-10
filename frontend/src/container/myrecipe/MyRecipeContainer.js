@@ -1,11 +1,16 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { readPost, unloadPost } from '../../modules/myrecipe';
 import MyRecipeForm from '../../components/main/myrecipe/MyRecipeForm';
+import qs from 'qs';
 
 const MyRecipeContainer = () => {
-  const { postId } = useParams();
+  const { search } = useLocation();
+  const { postId } = qs.parse(search, {
+    ignoreQueryPrefix: true,
+  });
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { post, error, loading, token, user, commentInfo } = useSelector(
@@ -37,7 +42,6 @@ const MyRecipeContainer = () => {
         token={token}
         recipeId={recipeId}
       />
-      ;
     </div>
   );
 };

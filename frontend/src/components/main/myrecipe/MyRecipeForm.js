@@ -58,9 +58,17 @@ const MyRecipeForm = ({ post, error, loading, user, recipeId, token }) => {
   const [modal, setModal] = useState(false);
   if (error) {
     if (error.response && error.response.status === 404) {
-      return <CreateAireturnBlock>존재하지 않는 포스트 입니다.</CreateAireturnBlock>;
+      return (
+        <>
+          <CreateAireturnBlock>존재하지 않는 포스트 입니다.</CreateAireturnBlock>
+        </>
+      );
     }
-    return <CreateAireturnBlock>오류 발생</CreateAireturnBlock>;
+    return (
+      <>
+        <CreateAireturnBlock>오류 발생</CreateAireturnBlock>
+      </>
+    );
   }
 
   if (loading || !post) {
