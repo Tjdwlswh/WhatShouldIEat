@@ -12,7 +12,9 @@ const RecipeGroup = styled(Responsive)`
   flex-wrap: wrap;
   gap: 8px;
   padding: 8px;
-  flex: 1;
+  .flex {
+    display: flex;
+  }
 `;
 
 const Recipe = styled.div`
@@ -89,8 +91,9 @@ const ItemList = ({ post, user }) => {
   const tagArray = tags.split('#');
   const dispatch = useDispatch();
 
-  tagArray.shift('');
-  console.log(tagArray);
+  const newArray = tagArray.filter(tag => {
+    return tag !== '';
+  });
 
   useEffect(() => {
     return () => {
@@ -101,8 +104,8 @@ const ItemList = ({ post, user }) => {
   //foodImg 이거 나중에 사용하기
 
   return (
-    <div className="flex">
-      <Link to={`/${user.email}/${post.id}`}>
+    <RecipeGroup className="flex">
+      <Link className="flex" to={`/${user.email}/${post.id}`}>
         <Recipe>
           <Thumbnail>{<img src={'/logo.png'} alt="음식사진" />}</Thumbnail>
           <Description>
@@ -114,7 +117,7 @@ const ItemList = ({ post, user }) => {
               </SubInfo>
               <TagGruop>
                 <Tags>
-                  {tagArray.map(tag => (
+                  {newArray.map(tag => (
                     <Link className="tags" to={`/?tag=${tag}`} key={tag}>
                       #{tag}
                     </Link>
@@ -125,7 +128,7 @@ const ItemList = ({ post, user }) => {
           </Description>
         </Recipe>
       </Link>
-    </div>
+    </RecipeGroup>
   );
 };
 
@@ -135,10 +138,10 @@ const MyRecipeList = ({ posts, loading, error, user }) => {
   }
 
   return (
-    <div>
+    <div style={{ marginTop: 50 }}>
       <RecipeGroup>
         {!loading && posts && (
-          <div>
+          <div className="flex">
             {posts.map(post => (
               <ItemList user={user} post={post} key={post.id}></ItemList>
             ))}

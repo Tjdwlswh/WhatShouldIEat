@@ -8,6 +8,7 @@ import post, { postSaga } from './myrecipe';
 import posts, { postsSaga } from './myrecipelist';
 import update, { updateSaga } from './update';
 import review, { reviewSaga } from './review';
+import recommend, { recommendSaga } from './recommend';
 
 const rootReducer = combineReducers({
   auth,
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
   posts,
   update,
   review,
+  recommend,
 });
 
 export function* rootSaga() {
@@ -29,6 +31,7 @@ export function* rootSaga() {
     postsSaga(),
     reviewSaga(),
     updateSaga(),
+    recommendSaga(),
   ]);
 }
 

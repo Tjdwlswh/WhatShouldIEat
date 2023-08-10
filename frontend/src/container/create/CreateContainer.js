@@ -19,8 +19,6 @@ const CreateContainer = () => {
     }
   }, [navigate, post]);
 
-  console.log(ingredients, type);
-
   const onChangeTags = nextTags => {
     dispatch(changeField({ key: 'ingredients', value: nextTags }));
   };

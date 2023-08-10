@@ -81,4 +81,13 @@ export const listPosts = async ({ token, email, tag, page }) => {
   });
 };
 
+export const recommendPosts = async ({ token, email, tag, page }) => {
+  return await client.get('/recipes', {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    params: { email, tag, page },
+  });
+};
+
 //나중에 페이지네이션 하게된다면 email, tag, page, 값을 받아와야 할듯 email 대신에 UserId || nickName 값을 받아와도 됨

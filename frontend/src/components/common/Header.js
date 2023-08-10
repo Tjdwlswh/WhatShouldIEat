@@ -60,7 +60,7 @@ const Header = ({ user, onLogout, handleEmailClick }) => {
               나의 레시피
             </Link>
           )}
-          <Link to="/recommend" className="link">
+          <Link to="/recipes" className="link">
             추천 레시피
           </Link>
           <Link to="/review" className="link">
