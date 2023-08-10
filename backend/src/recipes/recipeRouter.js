@@ -16,13 +16,13 @@ recipeRouter.post('/airecipe', loginRequired, recipeController.createAiRecipe);
 // recipeRouter.get('/airecipe/:id', loginRequired, recipeController.getAiRecipe);
 
 // 레시피에 좋아요 추가
-recipeRouter.post('/:recipeId/like', loginRequired, recipeController.postLike);
+recipeRouter.post('/like/:recipeId', loginRequired, recipeController.postLike);
 
 //나의 레시피 목록조회
 recipeRouter.get('/myrecipes', loginRequired, recipeController.getMyrecipes);
 
 //상세 레시피 조회
-recipeRouter.get('/recipes/:recipeId', loginRequired, recipeController.getRecipe);
+recipeRouter.get('/recipes/:recipeId', recipeController.getRecipe);
 
 //추천레시피 목록조회 - 로그인필요없음
 recipeRouter.get('/recipes', recipeController.getRecipes);

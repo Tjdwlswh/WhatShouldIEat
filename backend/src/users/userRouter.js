@@ -61,7 +61,7 @@ userRouter.put('/user', loginRequired, imgUpload, userController.editUserInfo);
 userRouter.delete('/auth/user', loginRequired, userController.deleteAccount);
 
 // refrechToken 검증
-userRouter.get('/auth/refresh', userController.refreshToken);
+userRouter.get('/auth/refresh/:logout', userController.refreshToken);
 
 // 로그아웃
 userRouter.get('/auth/logout', loginRequired, userController.logout);

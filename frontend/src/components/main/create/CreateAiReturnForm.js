@@ -87,9 +87,9 @@ const CreateAiReturnForm = () => {
 
   useEffect(() => {
     if (myRecipe) {
-      const { email } = user;
-      const { id } = myRecipe;
-      navigate(`/${email}/${id}`);
+      const userId = user?.id;
+      const postId = myRecipe?.id;
+      navigate(`/recipe?userId=${userId}&postId=${postId}`);
     }
   }, [myRecipe, navigate, user, id]);
 

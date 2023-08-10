@@ -6,9 +6,9 @@ import { takeLatest } from 'redux-saga/effects';
 const [LIST_RECOMMEND, LIST_RECOMMEND_SUCCESS, LIST_RECOMMEND_FAILURE] =
   createRequestActionTypes('posts/LIST_RECOMMEND');
 
-export const recommendPosts = createAction(LIST_RECOMMEND, (token, email, tag, page) => ({
+export const recommendPosts = createAction(LIST_RECOMMEND, (token, userId, tag, page) => ({
   token,
-  email,
+  userId,
   tag,
   page,
 }));

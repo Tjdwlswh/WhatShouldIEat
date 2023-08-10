@@ -45,8 +45,8 @@ const authAPI = {
     });
   },
 
-  refresh: async () => {
-    return await client.get('/auth/refresh');
+  refresh: async logout => {
+    return await client.get(`/auth/refresh/${logout}`);
   },
 
   leave: async token => {

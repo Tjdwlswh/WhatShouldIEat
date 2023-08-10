@@ -72,7 +72,7 @@ const ThumbnailCard = ({ imgSrc, tags, foodname, recipeId }) => {
   return (
     <Thumbnail>
       <img {...imgAttribute} alt="사진" />
-      <FoodNameLink to={`/${recipeId}`}>{foodname}</FoodNameLink>
+      <FoodNameLink to={`/recipe?postId=${recipeId}`}>{foodname}</FoodNameLink>
       <HashTagGroup>
         {hashTags?.map(hashTag => (
           <HashTagLink to={`/${hashTag}`}>{`#${hashTag}`}</HashTagLink>

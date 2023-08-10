@@ -1,5 +1,5 @@
 import { createAction, handleActions } from 'redux-actions';
-import { takeLatest, call, put } from 'redux-saga/effects';
+import { takeLatest, call, put, select, delay } from 'redux-saga/effects';
 import authAPI from '../lib/api/auth';
 import { createRequestActionTypes } from '../lib/createRequestSaga';
 import { Cookies } from 'react-cookie';
@@ -26,7 +26,7 @@ function* logoutSaga(action) {
 
 function* logoutFailureSaga(action) {
   try {
-    yield call(authAPI.refresh);
+    yield call(authAPI.refresh, 'token');
     const renewToken = cookies.get('token');
     yield call(authAPI.logout, renewToken);
     yield put({ type: LOGOUT_SUCCESS });
@@ -46,10 +46,12 @@ function* getUserSaga(action) {
 
 function* getUserFailureSaga(action) {
   try {
-    const result = yield call(authAPI.refresh);
-    const renewToken = cookies.get('token');
+    const result = yield call(authAPI.refresh, 'refreshToken');
+    const renewToken = yield cookies.get('token');
     yield put(setToken(renewToken));
-    if (renewToken) yield put(getUser(renewToken));
+    if (renewToken) {
+      yield put(getUser(renewToken));
+    }
   } catch (error) {
     yield put(logout());
   }
@@ -79,12 +81,12 @@ const user = handleActions(
     },
     [GET_USER]: state => ({
       ...state,
-      checkState: false,
+      checkState: 'loading',
     }),
     [GET_USER_SUCCESS]: (state, { payload: user }) => ({
       ...state,
       user,
-      checkState: true,
+      checkState: null,
     }),
     [GET_USER_FAILURE]: (state, { payload: error }) => ({
       ...state,

@@ -35,13 +35,16 @@ const RouterGuard = () => {
     { path: '/register', component: RegisterPage, logoutRequired: true },
     { path: '/create', component: CreateRecipe },
     { path: '/createAi', component: CreateAiReturn, loginRequired: true },
-    { path: `/myrecipeUpdate`, component: MyRecipeUpdatePage, loginRequired: true },
-    { path: `/${user?.email}`, component: MyRecipeListPage, loginRequired: true },
-    { path: `/${user?.email}/`, component: MyRecipePage, loginRequired: true },
-    // 임시 my레시피 주소
-    { path: '/myrecipe', component: MyRecipeListPage, loginRequired: true },
 
-    // { path: '/recommend', component: RecommendRecipe, loginRequired: true },
+    // { path: `/${user?.email}`, component: MyRecipeListPage, loginRequired: true },
+    // { path: `/${user?.email}/`, component: MyRecipePage, loginRequired: true },
+    { path: `/myrecipeUpdate`, component: MyRecipeUpdatePage, loginRequired: true },
+
+    { path: '/recipe', component: MyRecipePage },
+
+    { path: '/myrecipes', component: MyRecipeListPage, loginRequired: true },
+    // { path: `/myrecipes/:postId`, component: MyRecipePage, loginRequired: true },
+    { path: '/recipes', component: RecommendRecipe },
     { path: '/review', component: ReviewRecipe, loginRequired: true },
     { path: '/myaccount', component: AccountPage, loginRequired: true },
     { path: '/leave', component: LeavePage, loginRequired: true },
@@ -50,15 +53,7 @@ const RouterGuard = () => {
 
   /********** 페이지 목록 끝 ***********/
 
-  const uri = pathname.split(/\/(\d+)$/);
-  let currentRoute = {};
-
-  // 동적 주소 조회
-  if (uri.length > 2) {
-    currentRoute = routes.filter(route => route.path.startsWith(`${uri[0]}/`))[0];
-  } else {
-    currentRoute = routes.find(route => route.path === uri[0]);
-  }
+  const currentRoute = routes.find(route => route.path === pathname);
 
   useEffect(() => {
     const cookies = new Cookies();
@@ -79,11 +74,6 @@ const RouterGuard = () => {
   //   }
   // }, [user]);
 
-  // 로그인된 상태면 정보를 가져오는 동안 대기
-  if (!checkState && isLoggedIn) {
-    return null;
-  }
-
   // 등록된 라우트가 아닌 주소로 들어오면 404 페이지로 이동
   if (!currentRoute) {
     return <Navigate to="/404" />;
@@ -100,7 +90,7 @@ const RouterGuard = () => {
   }
 
   const Component = currentRoute.component;
-  return <Component />;
+  return (!checkState && isLoggedIn) || !currentRoute.loginRequired ? <Component /> : null;
 };
 
 export default RouterGuard;

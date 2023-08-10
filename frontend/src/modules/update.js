@@ -16,12 +16,13 @@ const UNLOAD_UPDATE = 'update/UNLOAD_UPDATE';
 export const setOriginalPost = createAction(SET_ORIGINAL_POST, lastpost => lastpost);
 export const updatePost = createAction(
   UPDATE_POST,
-  ({ token, foodname, ingredients, recipe, recipeId }) => ({
+  ({ token, foodname, ingredients, recipe, recipeId, image }) => ({
     token,
     foodname,
     ingredients,
     recipe,
     recipeId,
+    image,
   }),
 );
 export const changefield = createAction(CHANGE_FIELD, ({ form, key, value }) => ({

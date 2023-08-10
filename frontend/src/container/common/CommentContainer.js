@@ -27,7 +27,7 @@ const CommentContatiner = () => {
   return (
     <>
       <CommentList comments={comments} userId={user?.id} onClickDelete={handleDelete} />
-      <CommentInput onChange={handleChange} onClick={handleClick} comment={comment} />
+      {!!user && <CommentInput onChange={handleChange} onClick={handleClick} comment={comment} />}
     </>
   );
 };
