@@ -51,9 +51,15 @@ const recipeController = {
     try {
       const recipeId = req.params.recipeId;
       const userId = req.user.id;
-      const likePlusOne = await recipeService.addLike(recipeId, userId);
+      const { like } = req.body;
 
-      res.status(201).json(likePlusOne);
+      if (like) {
+        const likePlusOne = await recipeService.addLike(recipeId, userId);
+        res.status(201).json(likePlusOne);
+      } else {
+        const likeMinusOne = await recipeService.subLike(recipeId, userId);
+        res.status(201).json(likeMinusOne);
+      }
     } catch (err) {
       next(err);
     }

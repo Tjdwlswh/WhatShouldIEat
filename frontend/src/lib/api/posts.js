@@ -45,6 +45,18 @@ export const readPost = async ({ recipeId, token }) => {
   });
 };
 
+export const postLike = async ({ recipeId, token, like }) => {
+  return await client.post(
+    `/like/${recipeId}`,
+    { like },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
+  );
+};
+
 export const updatePost = async ({ recipeId, token, foodname, ingredients, recipe, image }) => {
   const formData = createFormData({ recipeId, foodname, ingredients, recipe, image });
   return await client.put(`/myrecipes/${recipeId}`, formData, {

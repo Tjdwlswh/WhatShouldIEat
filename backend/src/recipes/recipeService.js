@@ -76,6 +76,17 @@ const recipeService = {
     const likePlusOne = await recipe.addLikers(userId);
     return likePlusOne;
   },
+  subLike: async (recipeId, userId) => {
+    const recipe = await recipeModel.findOne(recipeId);
+    if (!recipe) {
+      const errMessage = '레시피를 찾을 수가 없습니다.';
+      throw new Error(errMessage);
+    }
+    //레시피에 Liker제거
+    const likeMinusOne = await recipe.removeLikers(userId);
+    return likeMinusOne;
+  },
+
   myRecipe: async ({ userId, pageNum }) => {
     //user의 id로 나의 레시피 조회
     const { totalItemsCount, myRecipe } = await recipeModel.findMyRecipe({ userId, pageNum });
@@ -101,7 +112,7 @@ const recipeService = {
       const recipeData = recipe.toJSON();
       recipeData.likeCount = recipe.Likers.length;
       recipeData.hashtags = hashtagNames; // hashtags 필드 추가
-      delete recipeData.Likers;
+      recipeData.Likers = recipe.Likers.map(liker => liker.Likeit.UserId);
       delete recipeData.Hashtags;
 
       return recipeData;

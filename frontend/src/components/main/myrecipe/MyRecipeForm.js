@@ -48,7 +48,25 @@ const Tags = styled.div`
   }
 `;
 
-const MyRecipeForm = ({ post, error, loading, user, recipeId, token }) => {
+const ButtonBox = styled.div`
+  display: flex;
+  flex-direction: row-reverse;
+`;
+
+const LikeButton = styled.div`
+  display: block;
+  white-space: nowrap;
+  cursor: pointer;
+  font-size: 2rem;
+  color: ${palette.accent};
+  transition: all 0.2s linear;
+  &:hover {
+    transform: scale(1.1);
+  }
+`;
+
+const MyRecipeForm = ({ post, error, loading, user, recipeId, token, like, setLike }) => {
+  console.log('like', like);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { lastpost } = useSelector(({ update, loading, user }) => ({
@@ -113,6 +131,10 @@ const MyRecipeForm = ({ post, error, loading, user, recipeId, token }) => {
     onRemove();
   };
 
+  const handleClickHeart = () => {
+    setLike(!like);
+  };
+
   return (
     <>
       <CreateAireturnBlock>
@@ -135,14 +157,17 @@ const MyRecipeForm = ({ post, error, loading, user, recipeId, token }) => {
               </div>
             ))}
           </Tags>
-          {userId === user?.id && (
-            <div className="twobtn">
-              <Button onClick={onRemoveClick} className="margin">
-                레시피 삭제
-              </Button>
-              <Button onClick={onClickHandle}>레시피 수정</Button>
-            </div>
-          )}
+          <ButtonBox>
+            <LikeButton onClick={handleClickHeart}>{like ? '💕' : '🤍'}</LikeButton>
+            {userId === user?.id && (
+              <div className="twobtn">
+                <Button onClick={onRemoveClick} className="margin">
+                  레시피 삭제
+                </Button>
+                <Button onClick={onClickHandle}>레시피 수정</Button>
+              </div>
+            )}
+          </ButtonBox>
           <CommentTemp />
         </AiReturnbox>
       </CreateAireturnBlock>
