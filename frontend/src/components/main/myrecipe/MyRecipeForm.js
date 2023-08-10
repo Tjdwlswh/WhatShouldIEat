@@ -83,8 +83,6 @@ const MyRecipeForm = ({ post, error, loading, user, recipeId, token }) => {
     return tag !== '';
   });
 
-  const { comment } = post;
-
   const onClickHandle = () => {
     dispatch(startLoading('setOriginal'));
     dispatch(setOriginalPost(post.recipe));
@@ -102,10 +100,9 @@ const MyRecipeForm = ({ post, error, loading, user, recipeId, token }) => {
 
   const onRemove = async () => {
     try {
-      const { email } = user;
       await removePost({ recipeId, token });
 
-      navigate(`/${email}`);
+      navigate('/myrecipes');
     } catch (e) {
       console.log(e);
     }
@@ -131,7 +128,6 @@ const MyRecipeForm = ({ post, error, loading, user, recipeId, token }) => {
             <div className="one">재료 : {lastpost ? lastpost.ingredients : ingredients}</div>
             <div className="two">레시피 : {lastpost ? lastpost.recipe : recipe}</div>
           </label>
-
           <Tags>
             {newArray.map(tag => (
               <div contentEditable="true" className="tag">
@@ -139,12 +135,14 @@ const MyRecipeForm = ({ post, error, loading, user, recipeId, token }) => {
               </div>
             ))}
           </Tags>
-          <div className="twobtn">
-            <Button onClick={onRemoveClick} className="margin">
-              레시피 삭제
-            </Button>
-            <Button onClick={onClickHandle}>레시피 수정</Button>
-          </div>
+          {userId === user?.id && (
+            <div className="twobtn">
+              <Button onClick={onRemoveClick} className="margin">
+                레시피 삭제
+              </Button>
+              <Button onClick={onClickHandle}>레시피 수정</Button>
+            </div>
+          )}
           <CommentTemp />
         </AiReturnbox>
       </CreateAireturnBlock>

@@ -113,10 +113,9 @@ const MyRecipeUpdate = () => {
   const handleClickSave = () => {
     if (originalPostId) {
       const recipeId = originalPostId;
-      const { email } = user;
       dispatch(updatePost({ recipeId, token, foodname, ingredients, recipe }));
       if (!loading) {
-        navigate(`/${email}/${originalPostId}`);
+        navigate(`/recipe?postId=${originalPostId}`);
         dispatch(unloadUpdate());
       }
     }
