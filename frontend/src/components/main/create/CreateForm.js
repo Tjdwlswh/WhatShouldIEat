@@ -6,9 +6,14 @@ import CreateActionButtonContainer from '../../../container/create/Actionbutton'
 
 const CreateBlock = styled.div`
   display: flex;
+  background-image: url('recipe.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  color: white;
 
   .select {
-    background-color: #d4e2d4;
+    background: rgba(0, 0, 0, 0.25);
     padding: 1rem;
     border-radius: 5px;
     margin: 1rem;
@@ -16,7 +21,7 @@ const CreateBlock = styled.div`
   }
 
   h4 {
-    color: ${palette.gray[8]};
+    color: white;
     margin-top: 0;
     margin-bottom: 0.5rem;
   }
@@ -58,7 +63,7 @@ const CreateBlock = styled.div`
 
 const Tag = styled.div`
   margin-right: 0.5rem;
-  color: ${palette.gray[7]};
+  color: white;
   cursor: pointer;
   &:hover {
     opacity: 0.5;
@@ -67,7 +72,7 @@ const Tag = styled.div`
 const Ingredient = styled.div`
   padding: 0.5rem;
   border-radius: 5px;
-  background-color: #dbc4f0;
+  background-color: rgba(0, 0, 0, 0.5);
   font-size: 1.5rem;
   font-weight: bold;
   width: 100%;
