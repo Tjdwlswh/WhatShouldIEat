@@ -10,9 +10,9 @@ const MainTemplateBlock = styled.section`
   position: relative;
   display: block;
   background-image: url('bg_image.jpg');
-  background-size: 100% 140%;
+  background-size: cover;
   background-repeat: no-repeat;
-  background-position: center;
+  background-position: center 30%;
   padding-top: 3rem;
   padding-bottom: 3rem;
   overflow: hidden;

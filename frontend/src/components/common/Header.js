@@ -28,6 +28,9 @@ const Wrapper = styled(Responsive)`
     font-size: 1.125rem;
     font-weight: bold;
     margin-right: 2rem;
+    &:hover {
+      color: #ffb30e;
+    }
   }
 
   .right {
@@ -50,6 +53,9 @@ const Wrapper = styled(Responsive)`
   .userone {
     margin-right: 2rem;
     margin-bottom: 0.25rem;
+    &:hover {
+      color: #ffb30e;
+    }
   }
   .usertwo {
   }

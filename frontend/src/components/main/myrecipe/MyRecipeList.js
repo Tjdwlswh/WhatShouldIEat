@@ -10,6 +10,23 @@ import imgSrcConverter from '../../../lib/utils/imgSrcConverter';
 import numberToUnit from '../../../lib/utils/numberToUnit';
 import PaginationBox from '../../common/PaginationBox';
 
+const DivBox = styled.div`
+  height: calc(100vh - 500px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+
+  .link {
+    display: block;
+    font-size: 2rem;
+    text-decoration-line: underline;
+    line-height: 1;
+    color: #ffb30e;
+  }
+`;
+
 const RecipeGroup = styled(Responsive)`
   gap: 8px;
   padding: 8px;
@@ -120,8 +137,6 @@ const ItemList = ({ post, user }) => {
     };
   }, [dispatch, post.recipe]);
 
-  //foodImg 이거 나중에 사용하기
-
   return (
     <RecipeGroup className="flex">
       <Link className="flex" to={`/recipe?userId=${post.userId}&postId=${post.id}`}>
@@ -162,19 +177,30 @@ const MyRecipeList = ({ totalItemsCount, page, setPage, posts, loading, error, u
     return <div> 에러가 발생했습니다. </div>;
   }
 
+  console.log(posts);
+
   return (
-    <div style={{ marginTop: 100 }}>
-      <RecipeGroup>
-        {!loading && posts && (
-          <div className="flex">
-            {posts.map(post => (
-              <ItemList user={user} post={post} key={post.id}></ItemList>
-            ))}
-          </div>
-        )}
-      </RecipeGroup>
+    <DivBox style={{ marginTop: 100 }}>
+      {posts.length === 0 ? (
+        <>
+          <div>나의 레시피를 생성해보세요!</div>
+          <Link className="link" to={'/create'}>
+            만들러가기
+          </Link>
+        </>
+      ) : (
+        <RecipeGroup>
+          {!loading && posts && (
+            <div className="flex">
+              {posts.map(post => (
+                <ItemList user={user} post={post} key={post.id}></ItemList>
+              ))}
+            </div>
+          )}
+        </RecipeGroup>
+      )}
       <PaginationBox page={page} setPage={setPage} totalItemsCount={totalItemsCount} />
-    </div>
+    </DivBox>
   );
 };
 

@@ -8,8 +8,11 @@ import { Link } from '../../node_modules/react-router-dom/dist/index';
 import styled from 'styled-components';
 
 const DivLink = styled.div`
+  padding: 0.5rem;
   h3 {
     text-align: center;
+    font-size: 2rem;
+    font-weight: bold;
   }
 `;
 

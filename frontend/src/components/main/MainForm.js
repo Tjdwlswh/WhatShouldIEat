@@ -46,14 +46,14 @@ const StyleForm = styled.div`
     'Segoe UI Symbol';
   .logo {
     font-size: 2rem;
-    color: black;
+    color: rgba(230, 230, 255, 1);
     font-weight: 900;
     line-height: 1;
     margin-top: 0;
     margin-bottom: 0.8rem;
   }
   .description {
-    color: black;
+    color: rgba(230, 230, 255, 1);
     font-size: 1.5736rem;
     margin-top: 0;
     margin-bottom: 0.3rem;
