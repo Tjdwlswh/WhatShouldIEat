@@ -89,7 +89,10 @@ const create = handleActions(
       ...state,
       postError: error,
     }),
-    [UNLOAD_CREATE]: () => initialState,
+    [UNLOAD_CREATE]: state => ({
+      ...state,
+      myRecipe: null,
+    }),
   },
   initialState,
 );
