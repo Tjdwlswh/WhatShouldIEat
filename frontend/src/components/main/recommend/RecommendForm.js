@@ -152,7 +152,11 @@ const ItemList = ({ post, user }) => {
   );
 };
 
-const RecommendForm = ({ recommend, loading, error, user }) => {
+const RecommendForm = ({ totalItemsCount, page, setPage, recommend, loading, error, user }) => {
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [page]);
+
   if (error) {
     return <div> 에러가 발생했습니다. </div>;
   }
@@ -168,7 +172,7 @@ const RecommendForm = ({ recommend, loading, error, user }) => {
           </div>
         )}
       </RecipeGroup>
-      {/* <PaginationBox page={page} setPage={setPage} totalItemsCount={} */}
+      <PaginationBox page={page} setPage={setPage} totalItemsCount={totalItemsCount} />
     </div>
   );
 };
