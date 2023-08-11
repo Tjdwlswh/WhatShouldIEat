@@ -180,13 +180,15 @@ const MyRecipeList = ({ totalItemsCount, page, setPage, posts, loading, error, u
   console.log(posts);
 
   return (
-    <DivBox style={{ marginTop: 100 }}>
+    <div style={{ marginTop: 100 }}>
       {posts.length === 0 ? (
         <>
-          <div>나의 레시피를 생성해보세요!</div>
-          <Link className="link" to={'/create'}>
-            만들러가기
-          </Link>
+          <DivBox>
+            <div>나의 레시피를 생성해보세요!</div>
+            <Link className="link" to={'/create'}>
+              만들러가기
+            </Link>
+          </DivBox>
         </>
       ) : (
         <RecipeGroup>
@@ -200,7 +202,7 @@ const MyRecipeList = ({ totalItemsCount, page, setPage, posts, loading, error, u
         </RecipeGroup>
       )}
       <PaginationBox page={page} setPage={setPage} totalItemsCount={totalItemsCount} />
-    </DivBox>
+    </div>
   );
 };
 
