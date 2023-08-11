@@ -27,7 +27,7 @@ const Recipe = styled.div`
 `;
 
 const Thumbnail = styled.div`
-  width: 100%;
+  width: 200px;
   height: 200px;
 
   img {
