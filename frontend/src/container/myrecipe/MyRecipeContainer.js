@@ -36,9 +36,9 @@ const MyRecipeContainer = () => {
 
   useEffect(() => {
     dispatch(readPost({ recipeId, token }));
-    // return () => {
-    //   dispatch(unloadPost());
-    // };
+    return () => {
+      dispatch(unloadPost());
+    };
   }, [dispatch, recipeId, token, commentInfo]);
 
   return (

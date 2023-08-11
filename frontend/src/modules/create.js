@@ -11,6 +11,8 @@ const [CREATE_POST, CREATE_POST_SUCCESS, CREATE_POST_FAILURE] =
 const [SAVE_POST, SAVE_POST_SUCCESS, SAVE_POST_FAILURE] =
   createRequestActionTypes('create/SAVE_POST');
 
+const UNLOAD_CREATE = 'post/UNLOAD_CREATE';
+
 export const changeField = createAction(CHANGE_FIELD, ({ key, value }) => ({
   key,
   value,
@@ -20,6 +22,8 @@ export const createPost = createAction(CREATE_POST, ({ ingredients, type, token 
   type,
   token,
 }));
+
+export const unloadcreate = createAction(UNLOAD_CREATE);
 
 export const savePost = createAction(
   SAVE_POST,
@@ -84,6 +88,10 @@ const create = handleActions(
     [SAVE_POST_FAILURE]: (state, { payload: error }) => ({
       ...state,
       postError: error,
+    }),
+    [UNLOAD_CREATE]: state => ({
+      ...state,
+      myRecipe: null,
     }),
   },
   initialState,

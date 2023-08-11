@@ -12,6 +12,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { savePost } from '../../../modules/create';
 import ImgUploadContainer from '../../../container/common/ImgUploadContainer';
+import { unloadcreate } from '../../../modules/create';
 
 export const TagItem = React.memo(({ tag, onRemove }) => (
   <Tag onClick={() => onRemove(tag)}> #{tag} </Tag>
@@ -90,8 +91,12 @@ const CreateAiReturnForm = () => {
       const userId = user?.id;
       const postId = myRecipe?.id;
       navigate(`/recipe?userId=${userId}&postId=${postId}`);
+
+      return () => {
+        dispatch(unloadcreate());
+      };
     }
-  }, [myRecipe, navigate, user, id]);
+  }, [myRecipe, navigate, user, id, dispatch]);
 
   return (
     <>

@@ -146,10 +146,15 @@ const MyRecipeForm = ({ post, error, loading, user, recipeId, token, like, setLi
             </span>
             <span>{new Date(createdAt).toLocaleDateString()}</span>
           </SubInfo>
-          <h3>요리이름 :{lastpost ? lastpost.foodname : foodname}</h3>
+          <h5>요리이름</h5>
+          <h3>{lastpost ? lastpost.foodname : foodname}</h3>
           <label className="divbox">
-            <div className="one">재료 : {lastpost ? lastpost.ingredients : ingredients}</div>
-            <div className="two">레시피 : {lastpost ? lastpost.recipe : recipe}</div>
+            <h5 className="mar">재료</h5>
+            <div className="one">{lastpost ? lastpost.ingredients : ingredients}</div>
+            <div>
+              <h5 className="mar">레시피</h5>
+              <div className="two">{lastpost ? lastpost.recipe : recipe}</div>
+            </div>
           </label>
           <Tags>
             {newArray.map(tag => (
