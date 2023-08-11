@@ -7,12 +7,7 @@ const CreateAiReturnTempBlock = styled.section`
   padding: 3rem;
 `;
 
-const Container = styled(Responsive)`
-  @media (min-width: 576px) {
-    margin-right: auto;
-    margin-left: auto;
-  }
-`;
+const Container = styled(Responsive)``;
 
 const FlexBox = styled.div`
   @media (min-width: 576px) {

@@ -9,8 +9,10 @@ import palette from '../../lib/styles/palette';
 const MainTemplateBlock = styled.section`
   position: relative;
   display: block;
-  background-color: ${palette.main} !important;
-  background-image: url('../../../public/img/bg_image.jpg');
+  background-image: url('bg_image.jpg');
+  background-size: 100% 140%;
+  background-repeat: no-repeat;
+  background-position: center;
   padding-top: 3rem;
   padding-bottom: 3rem;
   overflow: hidden;
@@ -18,19 +20,13 @@ const MainTemplateBlock = styled.section`
   width: 100%;
 `;
 
-const Container = styled(Responsive)`
-  @media (min-width: 576px) {
-    margin-right: auto;
-    margin-left: auto;
-  }
-`;
+const Container = styled(Responsive)``;
 
 const FlexBox = styled.div`
   @media (min-width: 576px) {
     flex-wrap: wrap;
     display: flex;
     align-items: center;
-    justify-content: center;
   }
 `;
 

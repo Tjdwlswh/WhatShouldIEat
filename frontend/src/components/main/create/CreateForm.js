@@ -7,8 +7,10 @@ import CreateActionButtonContainer from '../../../container/create/Actionbutton'
 const CreateBlock = styled.div`
   display: flex;
 
+  color: white;
+
   .select {
-    background-color: #d4e2d4;
+    background: rgba(0, 0, 0, 0.25);
     padding: 1rem;
     border-radius: 5px;
     margin: 1rem;
@@ -16,7 +18,7 @@ const CreateBlock = styled.div`
   }
 
   h4 {
-    color: ${palette.gray[8]};
+    color: white;
     margin-top: 0;
     margin-bottom: 0.5rem;
   }
@@ -51,14 +53,14 @@ const CreateBlock = styled.div`
   }
 
   .inputbtn {
-    color: red;
+    color: white;
     font-weight: bold;
   }
 `;
 
 const Tag = styled.div`
   margin-right: 0.5rem;
-  color: ${palette.gray[7]};
+  color: white;
   cursor: pointer;
   &:hover {
     opacity: 0.5;
@@ -67,7 +69,7 @@ const Tag = styled.div`
 const Ingredient = styled.div`
   padding: 0.5rem;
   border-radius: 5px;
-  background-color: #dbc4f0;
+  background-color: rgba(0, 0, 0, 0.5);
   font-size: 1.5rem;
   font-weight: bold;
   width: 100%;
@@ -77,18 +79,22 @@ const Ingredient = styled.div`
 
 const CheckInputbox = styled.div`
   padding: 1rem;
-  margin-top: 3rem;
   width: 100%;
+  height: 200px;
+  .divide {
+  }
 
   .check {
     margin-right: 0.5rem;
+    width: 2rem;
   }
 
   .ischecked {
-    height: 2rem;
-    color: red;
+    height: 3rem;
+    color: white;
     font-weight: bold;
-    font-size: 1rem;
+    font-size: 1.5;
+    margin-top: 1rem;
   }
 
   label {
@@ -213,29 +219,31 @@ const CreateForm = ({ ingredients, onChangeTags, onChangeCheck }) => {
             <Button type="submit">추가 버튼</Button>
 
             <CheckInputbox>
-              <div className="ischecked">{!check && <div>***type을 체크해주세요***</div>}</div>
-              <label>
-                <input
-                  type="checkbox"
-                  name="fixed"
-                  className="check"
-                  value="fixed"
-                  onChange={onHandleChange}
-                  checked={isFixedChecked}
-                ></input>
-                재료 고정
-              </label>
-              <label>
-                <input
-                  type="checkbox"
-                  name="flexible"
-                  value="flexible"
-                  className="check"
-                  onChange={onHandleChange}
-                  checked={isFlexibleChecked}
-                ></input>
-                재료 추가 기능
-              </label>
+              <div className="divide">
+                <label>
+                  <input
+                    type="checkbox"
+                    name="fixed"
+                    className="check"
+                    value="fixed"
+                    onChange={onHandleChange}
+                    checked={isFixedChecked}
+                  ></input>
+                  재료 고정
+                </label>
+                <label>
+                  <input
+                    type="checkbox"
+                    name="flexible"
+                    value="flexible"
+                    className="check"
+                    onChange={onHandleChange}
+                    checked={isFlexibleChecked}
+                  ></input>
+                  재료 추가 기능
+                </label>
+              </div>
+              <div className="ischecked">{!check && <div>type을 체크해주세요</div>}</div>
             </CheckInputbox>
           </form>
         </div>

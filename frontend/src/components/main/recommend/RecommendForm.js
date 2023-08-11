@@ -41,6 +41,7 @@ const Description = styled.div`
   display: flex;
   gap: 8px;
   align-items: center;
+  flex: 1;
 `;
 
 const Like = styled.div`
@@ -50,10 +51,12 @@ const Like = styled.div`
   height: 20px;
   background-image: url('${process.env.PUBLIC_URL}/heart.png');
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: contain;
+  background-position: center;
 `;
 
 const LikeCount = styled.div`
+  font-size: 0.8rem;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -149,13 +152,17 @@ const ItemList = ({ post, user }) => {
   );
 };
 
-const RecommendForm = ({ recommend, loading, error, user }) => {
+const RecommendForm = ({ totalItemsCount, page, setPage, recommend, loading, error, user }) => {
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [page]);
+
   if (error) {
     return <div> 에러가 발생했습니다. </div>;
   }
 
   return (
-    <div style={{ marginTop: 50 }}>
+    <div style={{ marginTop: 10 }}>
       <RecipeGroup>
         {!loading && recommend && (
           <div className="flex">
@@ -165,7 +172,7 @@ const RecommendForm = ({ recommend, loading, error, user }) => {
           </div>
         )}
       </RecipeGroup>
-      {/* <PaginationBox page={page} setPage={setPage} totalItemsCount={} */}
+      <PaginationBox page={page} setPage={setPage} totalItemsCount={totalItemsCount} />
     </div>
   );
 };

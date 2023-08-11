@@ -11,7 +11,7 @@ const MyRecipeListPage = () => {
         <title>나의레시피 목록 - 뭐해먹지?</title>
       </Helmet>
       <PostListContainer />
-      <PaginationContainer />
+      {/* <PaginationContainer /> */}
     </>
   );
 };
