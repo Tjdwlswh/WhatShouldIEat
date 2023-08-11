@@ -48,7 +48,7 @@ const userService = {
         delete data[key];
       }
     }
-    data.password = await bcrypt.hash(data.password, 12);
+    if (data.password) data.password = await bcrypt.hash(data.password, 12);
 
     if (data.image === 'delete') {
       data.profileImg = '';
