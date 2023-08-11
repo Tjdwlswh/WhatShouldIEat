@@ -8,12 +8,12 @@ const recipeModel = {
   findMyRecipe: async ({ userId, pageNum }) => {
     let offset = 0;
     if (pageNum) {
-      offset = 8 * (pageNum - 1);
+      offset = 10 * (pageNum - 1);
     }
     const { count, rows } = await db.Recipe.findAndCountAll({
       where: { userId: userId },
       offset: offset,
-      limit: 8,
+      limit: 10,
       include: [
         {
           model: db.User,
@@ -44,11 +44,11 @@ const recipeModel = {
   findAll: async pageNum => {
     let offset = 0;
     if (pageNum) {
-      offset = 8 * (pageNum - 1);
+      offset = 10 * (pageNum - 1);
     }
     const { count, rows } = await db.Recipe.findAndCountAll({
       offset: offset,
-      limit: 8,
+      limit: 10,
       include: [
         {
           model: db.User,

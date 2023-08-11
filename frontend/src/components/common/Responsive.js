@@ -5,7 +5,8 @@ const ResponsiveBlock = styled.div`
   padding-right: 1rem;
   max-width: 1024px;
   margin: 0 auto;
-
+  font-family: 'Bricolage Grotesque', sans-serif !important;
+  font-family: 'Noto Sans KR', sans-serif !important;
   @media (max-width: 1024px) {
     max-width: 100%;
   }

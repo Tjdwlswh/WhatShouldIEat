@@ -17,6 +17,7 @@ import { startLoading, finishLoading } from '../../../modules/loading';
 import CommentTemp from '../../common/comment/CommentTemp';
 import AskRemoveModal from './AskRemoveModal';
 import { removePost } from '../../../lib/api/posts';
+import { Helmet } from 'react-helmet-async';
 
 const SubInfo = styled.div`
   margin-top: 1rem;
