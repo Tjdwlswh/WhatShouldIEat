@@ -142,7 +142,7 @@ const MyRecipeForm = ({ post, error, loading, user, recipeId, token, like, setLi
         <AiReturnbox>
           <SubInfo>
             <span>
-              <b>{User.nickName}</b>
+              <b>{User ? User.nickName : '탈퇴한 회원입니다'}</b>
             </span>
             <span>{new Date(createdAt).toLocaleDateString()}</span>
           </SubInfo>
