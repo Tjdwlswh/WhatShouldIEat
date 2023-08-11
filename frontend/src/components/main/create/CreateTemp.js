@@ -8,7 +8,7 @@ const CreateTempBlock = styled.section`
   background-image: url('recipe.jpg');
   background-size: cover;
   background-repeat: no-repeat;
-  background-position: center;
+  background-position: center 60%;
 `;
 
 const Container = styled(Responsive)``;
