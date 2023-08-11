@@ -67,7 +67,7 @@ const ThumbnailCard = ({ imgSrc, tags, foodname, recipeId }) => {
   const hashTags = tags ? tags.match(/[^#]+/g) : [];
 
   const [imageError, setImageError] = useState(false);
-  const imgAttribute = imgSrcConverter(imgSrc, imageError, setImageError);
+  const imgAttribute = imgSrcConverter(imgSrc, imageError, setImageError, 'food');
 
   return (
     <Thumbnail>

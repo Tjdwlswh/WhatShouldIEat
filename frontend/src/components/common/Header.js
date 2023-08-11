@@ -21,16 +21,37 @@ const Wrapper = styled(Responsive)`
     font-size: 1.5rem;
     font-weight: 800;
     letter-spacing: 2px;
+    margin-right: 2rem;
   }
 
   .link {
     font-size: 1.125rem;
     font-weight: bold;
+    margin-right: 2rem;
   }
 
   .right {
     display: flex;
-    align-items: center;
+    align-items: flex-end;
+    flex-direction: row;
+    justify-content: center;
+    margin-left: 0.8rem;
+  }
+
+  .one {
+    width: 70%;
+  }
+
+  .two {
+    justify-self: flex-end;
+    width: 30%;
+  }
+
+  .userone {
+    margin-right: 2rem;
+    margin-bottom: 0.25rem;
+  }
+  .usertwo {
   }
 `;
 
@@ -49,33 +70,41 @@ const Header = ({ user, onLogout, handleEmailClick }) => {
     <>
       <HeaderBlock>
         <Wrapper>
-          <Link to="/" className="logo">
-            뭐해먹지?
-          </Link>
-          <Link to="/create" className="link">
-            레시피 생성
-          </Link>
-          {user && (
-            <Link to={`/myrecipes`} className="link">
-              나의 레시피
+          <div className="one">
+            <Link to="/" className="logo">
+              뭐해먹지?
             </Link>
-          )}
-          <Link to="/recipes" className="link">
-            추천 레시피
-          </Link>
-          <Link to="/review" className="link">
-            후기 모아보기
-          </Link>
-          {user ? (
-            <div className="right">
-              <UserInfo onClick={handleEmailClick}>{user.nickName}</UserInfo>
-              <Button onClick={onLogout}>로그아웃</Button>
-            </div>
-          ) : (
-            <div className="right">
-              <Button to="/login">로그인</Button>
-            </div>
-          )}
+            <Link to="/create" className="link">
+              레시피 생성
+            </Link>
+            {user && (
+              <Link to={`/myrecipes`} className="link">
+                나의 레시피
+              </Link>
+            )}
+            <Link to="/recipes" className="link">
+              추천 레시피
+            </Link>
+            <Link to="/review" className="link">
+              후기 모아보기
+            </Link>
+          </div>
+          <div className="two">
+            {user ? (
+              <div className="right">
+                <div className="userone">
+                  <UserInfo onClick={handleEmailClick}>{user.nickName}</UserInfo>
+                </div>
+                <div className="usertwo">
+                  <Button onClick={onLogout}>로그아웃</Button>
+                </div>
+              </div>
+            ) : (
+              <div className="right">
+                <Button to="/login">로그인</Button>
+              </div>
+            )}
+          </div>
         </Wrapper>
       </HeaderBlock>
       <Spacer />

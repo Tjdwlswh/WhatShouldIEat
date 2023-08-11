@@ -108,7 +108,7 @@ const ItemList = ({ post, user }) => {
   const tagArray = tags.split('#');
   const dispatch = useDispatch();
   const [imageError, setImageError] = useState(false);
-  const imgAttribute = imgSrcConverter(foodImg, imageError, setImageError);
+  const imgAttribute = imgSrcConverter(foodImg, imageError, setImageError, 'food');
   const likeCount = numberToUnit(post.likeCount);
 
   const newArray = tagArray.filter(item => item !== '');
