@@ -41,6 +41,7 @@ const Description = styled.div`
   display: flex;
   gap: 8px;
   align-items: center;
+  flex: 1;
 `;
 
 const Like = styled.div`
@@ -50,10 +51,12 @@ const Like = styled.div`
   height: 20px;
   background-image: url('${process.env.PUBLIC_URL}/heart.png');
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: contain;
+  background-position: center;
 `;
 
 const LikeCount = styled.div`
+  font-size: 0.8rem;
   position: absolute;
   top: 50%;
   left: 50%;

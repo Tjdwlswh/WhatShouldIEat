@@ -8,6 +8,7 @@ import { setOriginalPost } from '../../../modules/update';
 import { unloadUpdate } from '../../../modules/update';
 import imgSrcConverter from '../../../lib/utils/imgSrcConverter';
 import numberToUnit from '../../../lib/utils/numberToUnit';
+import PaginationBox from '../../common/PaginationBox';
 
 const RecipeGroup = styled(Responsive)`
   gap: 8px;
@@ -40,19 +41,22 @@ const Description = styled.div`
   display: flex;
   gap: 8px;
   align-items: center;
+  flex: 1;
 `;
 
 const Like = styled.div`
   position: relative;
   border-radius: 4px;
-  width: 30px;
-  height: 30px;
+  width: 20px;
+  height: 20px;
   background-image: url('${process.env.PUBLIC_URL}/heart.png');
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: contain;
+  background-position: center;
 `;
 
 const LikeCount = styled.div`
+  font-size: 0.8rem;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -149,7 +153,11 @@ const ItemList = ({ post, user }) => {
   );
 };
 
-const MyRecipeList = ({ posts, loading, error, user }) => {
+const MyRecipeList = ({ totalItemsCount, page, setPage, posts, loading, error, user }) => {
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [page]);
+
   if (error) {
     return <div> 에러가 발생했습니다. </div>;
   }
@@ -165,6 +173,7 @@ const MyRecipeList = ({ posts, loading, error, user }) => {
           </div>
         )}
       </RecipeGroup>
+      <PaginationBox page={page} setPage={setPage} totalItemsCount={totalItemsCount} />
     </div>
   );
 };

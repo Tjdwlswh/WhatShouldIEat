@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import MyRecipeList from '../../components/main/myrecipe/MyRecipeList';
 import { listPosts } from '../../modules/myrecipelist';
@@ -8,15 +8,21 @@ const PostListContainer = () => {
   const dispatch = useDispatch();
   const { email } = useParams();
   const [searchParams] = useSearchParams();
+  const [page, setPage] = useState(1);
 
-  const { posts, error, loading, user, lastPost } = useSelector(({ posts, loading, user }) => ({
-    posts: posts.posts,
-    error: posts.error,
-    loading: loading['posts/LIST_POSTS'],
-    user: user.user,
-    lastPost: posts.lastPost,
-  }));
+  const { totalItemsCount, posts, error, loading, user, lastPost } = useSelector(
+    ({ posts, loading, user }) => ({
+      posts: posts.posts,
+      totalItemsCount: posts.totalItemsCount,
+      error: posts.error,
+      loading: loading['posts/LIST_POSTS'],
+      user: user.user,
+      lastPost: posts.lastPost,
+    }),
+  );
   const { token } = useSelector(state => state.user);
+
+  console.log(totalItemsCount);
 
   useEffect(() => {
     const tag = searchParams.get('tag');
@@ -24,7 +30,17 @@ const PostListContainer = () => {
     dispatch(listPosts(token, email, tag, page));
   }, [dispatch, token, email, searchParams]);
 
-  return <MyRecipeList loading={loading} error={error} posts={posts} user={user} />;
+  return (
+    <MyRecipeList
+      totalItemsCount={totalItemsCount}
+      page={page}
+      setPage={setPage}
+      loading={loading}
+      error={error}
+      posts={posts}
+      user={user}
+    />
+  );
 };
 
 export default PostListContainer;

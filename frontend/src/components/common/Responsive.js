@@ -13,6 +13,10 @@ const ResponsiveBlock = styled.div`
   @media (max-width: 768px) {
     max-width: 100%;
   }
+  @media (min-width: 576px) {
+    margin-right: auto;
+    margin-left: auto;
+  }
 `;
 
 const Responsive = ({ children, ...rest }) => {

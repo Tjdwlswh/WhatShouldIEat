@@ -13,7 +13,7 @@ const RecommendRecipe = () => {
       <RecommendTemp>
         <RecommendContainer />
       </RecommendTemp>
-      <PaginationContainer2 />
+      {/* <PaginationContainer2 /> */}
     </div>
   );
 };

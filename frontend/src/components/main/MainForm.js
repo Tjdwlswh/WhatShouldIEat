@@ -2,33 +2,33 @@ import styled from 'styled-components';
 import Button from '../common/Button';
 import palette from '../../lib/styles/palette';
 
-const StyleImgBox = styled.div`
-  flex: 0 0 auto;
-  width: 41.66667%;
-  box-sizing: border-box;
-  padding-right: 1rem;
-  padding-left: 1rem;
-  order: 1;
-  cursor: pointer;
-  a {
-    color: black;
-    display: block;
-  }
-  img {
-    width: 100%;
-    height: auto;
-    vertical-align: middle;
-    &:hover {
-      transition: transform 0.4s ease;
-      transform: translateY(-3rem);
-    }
-  }
-`;
+// const StyleImgBox = styled.div`
+//   flex: 0 0 auto;
+//   width: 41.66667%;
+//   box-sizing: border-box;
+//   padding-right: 1rem;
+//   padding-left: 1rem;
+//   order: 1;
+//   cursor: pointer;
+//   a {
+//     color: black;
+//     display: block;
+//   }
+//   img {
+//     width: 100%;
+//     height: auto;
+//     vertical-align: middle;
+//     &:hover {
+//       transition: transform 0.4s ease;
+//       transform: translateY(-3rem);
+//     }
+//   }
+// `;
 
 const StyleForm = styled.div`
   text-align: left;
-  padding-top: 7.5rem;
-  padding-bottom: 7.5rem;
+  padding: 10rem 5rem 4rem 5rem;
+
   flex: 0 0 auto;
   width: 58.33333%;
   box-sizing: border-box;
@@ -46,14 +46,14 @@ const StyleForm = styled.div`
     'Segoe UI Symbol';
   .logo {
     font-size: 2rem;
-    color: #f9fafd;
+    color: black;
     font-weight: 900;
     line-height: 1;
     margin-top: 0;
     margin-bottom: 0.8rem;
   }
   .description {
-    color: #616161;
+    color: black;
     font-size: 1.5736rem;
     margin-top: 0;
     margin-bottom: 0.3rem;
@@ -191,11 +191,11 @@ const InputButton = styled.button`
 const MainForm = () => {
   return (
     <>
-      <StyleImgBox>
+      {/* <StyleImgBox>
         <a href="#!">
           <img src="img/hero-header.png" alt="hero-header" />
         </a>
-      </StyleImgBox>
+      </StyleImgBox> */}
       <StyleForm>
         <h1 className="logo">요리하실려구요?</h1>
         <h1 className="description">오늘은 뭐해먹지 고민하지 마시고</h1>

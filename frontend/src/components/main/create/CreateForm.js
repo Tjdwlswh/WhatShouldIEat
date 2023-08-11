@@ -94,6 +94,7 @@ const CheckInputbox = styled.div`
     color: white;
     font-weight: bold;
     font-size: 1.5;
+    margin-top: 1rem;
   }
 
   label {
