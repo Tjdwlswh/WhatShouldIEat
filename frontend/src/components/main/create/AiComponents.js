@@ -82,13 +82,12 @@ export const AiReturnbox = styled.div`
 
   .one {
     min-height: 3rem;
-    margin-top: 2rem;
+
     width: 100%;
     background-color: #e8eaf6;
   }
 
   .two {
-    margin-top: 3rem;
     min-height: 6rem;
     width: 100%;
     background-color: #e8eaf6;
@@ -101,11 +100,14 @@ export const AiReturnbox = styled.div`
     justify-content: center;
   }
 
+  .mar {
+    margin-top: 1rem;
+  }
   .divbox {
-    display: flex;
+    /* display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+    align-items: center; */
     border: 0 solid #e0e0e0;
   }
 
