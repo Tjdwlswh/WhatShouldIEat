@@ -29,7 +29,8 @@ const posts = handleActions(
   {
     [LIST_POSTS_SUCCESS]: (state, { payload: posts, meta: response }) => ({
       ...state,
-      posts,
+      posts: posts.recipes,
+      totalItemsCount: posts.totalItemsCount,
       error: null,
       lastPage: parseInt(response.headers['last-page'], 10),
     }),
