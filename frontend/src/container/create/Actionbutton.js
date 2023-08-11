@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import Button from '../../components/common/Button';
 
-import { createPost } from '../../modules/create';
+import { createPost, unloadcreate } from '../../modules/create';
 import { useDispatch, useSelector } from 'react-redux';
 import React from 'react';
 
@@ -16,6 +16,7 @@ const CreateActionButtonContainer = () => {
   const { token } = useSelector(state => state.user);
 
   const onPublish = () => {
+    dispatch(unloadcreate());
     dispatch(
       createPost({
         ingredients,
