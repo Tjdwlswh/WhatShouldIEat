@@ -155,7 +155,7 @@ const RecommendForm = ({ recommend, loading, error, user }) => {
   }
 
   return (
-    <div style={{ marginTop: 50 }}>
+    <div style={{ marginTop: 10 }}>
       <RecipeGroup>
         {!loading && recommend && (
           <div className="flex">

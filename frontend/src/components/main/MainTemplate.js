@@ -9,7 +9,6 @@ import palette from '../../lib/styles/palette';
 const MainTemplateBlock = styled.section`
   position: relative;
   display: block;
-  background-color: ${palette.main} !important;
   background-image: url('bg_image.jpg');
   background-size: cover;
   background-repeat: no-repeat;
