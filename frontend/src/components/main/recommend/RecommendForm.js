@@ -8,14 +8,14 @@ import { setOriginalPost } from '../../../modules/update';
 import { unloadUpdate } from '../../../modules/update';
 import imgSrcConverter from '../../../lib/utils/imgSrcConverter';
 import numberToUnit from '../../../lib/utils/numberToUnit';
+import PaginationBox from '../../common/PaginationBox';
 
 const RecipeGroup = styled(Responsive)`
-  display: flex;
-  flex-wrap: wrap;
   gap: 8px;
   padding: 8px;
   .flex {
     display: flex;
+    flex-wrap: wrap;
   }
 `;
 
@@ -108,7 +108,7 @@ const ItemList = ({ post, user }) => {
   const imgAttribute = imgSrcConverter(foodImg, imageError, setImageError);
   const likeCount = numberToUnit(post.likeCount);
 
-  tagArray.shift('');
+  const newArray = tagArray.filter(item => item !== '');
 
   useEffect(() => {
     return () => {
@@ -134,7 +134,7 @@ const ItemList = ({ post, user }) => {
               </SubInfo>
               <TagGruop>
                 <Tags>
-                  {tagArray.map(tag => (
+                  {newArray.map(tag => (
                     <Link className="tags" to={`/?tag=${tag}`} key={tag}>
                       #{tag}
                     </Link>
@@ -165,6 +165,7 @@ const RecommendForm = ({ recommend, loading, error, user }) => {
           </div>
         )}
       </RecipeGroup>
+      {/* <PaginationBox page={page} setPage={setPage} totalItemsCount={} */}
     </div>
   );
 };

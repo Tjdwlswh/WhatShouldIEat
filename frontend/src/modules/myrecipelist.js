@@ -22,7 +22,6 @@ export function* postsSaga() {
 const initialState = {
   posts: null,
   error: null,
-  lastPage: 1,
 };
 
 const posts = handleActions(
@@ -32,7 +31,6 @@ const posts = handleActions(
       posts: posts.recipes,
       totalItemsCount: posts.totalItemsCount,
       error: null,
-      lastPage: parseInt(response.headers['last-page'], 10),
     }),
     [LIST_POST_FAILURE]: (state, { payload: error }) => ({
       ...state,

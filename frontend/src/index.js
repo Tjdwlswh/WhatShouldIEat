@@ -12,6 +12,7 @@ import { CookiesProvider } from 'react-cookie';
 import HeaderContainer from './container/common/HeaderContainer';
 import Loading from './components/common/Loading';
 import ProfileCardContainer from './container/common/ProfileCardContainer';
+import { HelmetProvider } from 'react-helmet-async';
 
 const sagaMiddleware = createSagaMiddleware();
 const store = configureStore({
@@ -25,12 +26,14 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Provider store={store}>
     <BrowserRouter>
-      <CookiesProvider>
-        <Loading />
-        <HeaderContainer />
-        <ProfileCardContainer />
-        <App />
-      </CookiesProvider>
+      <HelmetProvider>
+        <CookiesProvider>
+          <Loading />
+          <HeaderContainer />
+          <ProfileCardContainer />
+          <App />
+        </CookiesProvider>
+      </HelmetProvider>
     </BrowserRouter>
   </Provider>,
 );

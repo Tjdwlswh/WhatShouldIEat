@@ -23,7 +23,6 @@ const initialState = {
   posts: null,
   error: null,
   totalItemsCount: null,
-  lastPage: 1,
 };
 
 const recommend = handleActions(
@@ -33,7 +32,6 @@ const recommend = handleActions(
       posts: posts.recipes,
       totalItemsCount: posts.totalItemsCount,
       error: null,
-      lastPage: parseInt(response.headers['last-page'], 10),
     }),
     [LIST_RECOMMEND_FAILURE]: (state, { payload: error }) => ({
       ...state,

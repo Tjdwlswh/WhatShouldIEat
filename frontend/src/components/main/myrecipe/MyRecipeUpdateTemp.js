@@ -17,8 +17,7 @@ const Container = styled(Responsive)`
 const FlexBox = styled.div`
   @media (min-width: 576px) {
     flex-wrap: wrap;
-    display: flex;
-    align-items: center;
+
     justify-content: center;
   }
 `;
