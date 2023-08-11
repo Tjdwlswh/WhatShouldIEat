@@ -34,4 +34,9 @@ const MainPage = () => {
   );
 };
 
+// background-position: center 70%
+//color : rgba(255,255,255,0.9)
+//background-size : cover
+//color : white
+
 export default MainPage;
