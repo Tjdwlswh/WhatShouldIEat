@@ -240,10 +240,18 @@ const CreateForm = ({ ingredients, onChangeTags, onChangeCheck }) => {
                     onChange={onHandleChange}
                     checked={isFlexibleChecked}
                   ></input>
-                  재료 추가 기능
+                  재료 추가
                 </label>
               </div>
-              <div className="ischecked">{!check && <div>type을 체크해주세요</div>}</div>
+              <div className="ischecked">
+                {!check && (
+                  <div>
+                    재료 고정 : 입력한 재료만 가지고 레시피를 만들어요.
+                    <br />
+                    재료 추가 : 입력하지 않은 재료도 인공지능이 만들어줘요.
+                  </div>
+                )}
+              </div>
             </CheckInputbox>
           </form>
         </div>

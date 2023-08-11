@@ -27,7 +27,7 @@ const Recipe = styled.div`
 `;
 
 const Thumbnail = styled.div`
-  width: 100%;
+  width: 200px;
   height: 200px;
 
   img {
@@ -107,7 +107,7 @@ const ItemList = ({ post, user }) => {
   const tagArray = tags.split('#');
   const dispatch = useDispatch();
   const [imageError, setImageError] = useState(false);
-  const imgAttribute = imgSrcConverter(foodImg, imageError, setImageError);
+  const imgAttribute = imgSrcConverter(foodImg, imageError, setImageError, 'food');
   const likeCount = numberToUnit(post.likeCount);
 
   const newArray = tagArray.filter(tag => {

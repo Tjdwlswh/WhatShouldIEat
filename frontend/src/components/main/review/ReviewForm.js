@@ -67,8 +67,13 @@ const ReviewForm = ({ page, setPage, reviews, myComment, setMyComment }) => {
           />
           <ReviewBox>
             {review.commenterId !== review.recipeUserId ? (
+              // myComment ? (
+              //   <MiniProfileCardContainer userId={review.recipeUserId} />
+              // ) : (
+              //   <MiniProfileCardContainer userId={review.commenterId} />
+              // )
               myComment ? (
-                <MiniProfileCardContainer userId={review.recipeUserId} />
+                <div></div>
               ) : (
                 <MiniProfileCardContainer userId={review.commenterId} />
               )

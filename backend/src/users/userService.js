@@ -48,6 +48,8 @@ const userService = {
         delete data[key];
       }
     }
+    if (data.password) data.password = await bcrypt.hash(data.password, 12);
+
     if (data.image === 'delete') {
       data.profileImg = '';
       const { profileImg } = await UserModel.findByEmail(email);
