@@ -22,13 +22,15 @@ export function* recommendSaga() {
 const initialState = {
   posts: null,
   error: null,
+  totalItemsCount: null,
 };
 
 const recommend = handleActions(
   {
     [LIST_RECOMMEND_SUCCESS]: (state, { payload: posts, meta: response }) => ({
       ...state,
-      posts,
+      posts: posts.recipes,
+      totalItemsCount: posts.totalItemsCount,
       error: null,
     }),
     [LIST_RECOMMEND_FAILURE]: (state, { payload: error }) => ({
