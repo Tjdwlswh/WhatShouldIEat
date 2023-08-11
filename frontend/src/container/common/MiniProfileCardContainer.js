@@ -5,7 +5,7 @@ import authAPI from '../../lib/api/auth';
 import ProfileCardContainer from './ProfileCardContainer';
 import styled from 'styled-components';
 
-const ModalWrapper = styled.div`
+export const ModalWrapper = styled.div`
   position: fixed;
   top: 0;
   left: 0;

@@ -18,6 +18,9 @@ import CommentTemp from '../../common/comment/CommentTemp';
 import AskRemoveModal from './AskRemoveModal';
 import { removePost } from '../../../lib/api/posts';
 import { Helmet } from 'react-helmet-async';
+import { ModalWrapper } from '../../../container/common/MiniProfileCardContainer';
+import ProfileCardContainer from '../../../container/common/ProfileCardContainer';
+import imgSrcConverter from '../../../lib/utils/imgSrcConverter';
 
 const SubInfo = styled.div`
   margin-top: 1rem;
@@ -25,6 +28,7 @@ const SubInfo = styled.div`
   display: flex;
   justify-content: end;
   margin-bottom: 0.5rem;
+  cursor: pointer;
   span + span:before {
     color: ${palette.gray[5]};
     padding-left: 0.25rem;
@@ -66,10 +70,23 @@ const LikeButton = styled.div`
   }
 `;
 
+const FoodImgBox = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+`;
+
+const FoodImg = styled.img`
+  width: 300px;
+  height: 300px;
+  object-fit: cover;
+`;
+
 const MyRecipeForm = ({ post, error, loading, user, recipeId, token, like, setLike }) => {
-  console.log('like', like);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [showModal, setShowModal] = useState(false);
+  const [imageError, setImageError] = useState(false);
   const { lastpost } = useSelector(({ update, loading, user }) => ({
     lastpost: update.lastpost,
     loading: loading['update/UPDATE_POST'],
@@ -94,7 +111,8 @@ const MyRecipeForm = ({ post, error, loading, user, recipeId, token, like, setLi
     return null;
   }
 
-  const { foodname, ingredients, recipe, createdAt, tags, User, userId } = post.recipe;
+  const { foodname, ingredients, recipe, createdAt, tags, User, userId, foodImg } = post.recipe;
+  const imgAttribute = imgSrcConverter(foodImg, imageError, setImageError, 'food');
 
   const tagArray = tags.split('#');
 
@@ -136,16 +154,32 @@ const MyRecipeForm = ({ post, error, loading, user, recipeId, token, like, setLi
     setLike(!like);
   };
 
+  const handleClose = () => {
+    setShowModal(false);
+  };
+
+  const handleClickNickname = () => {
+    if (User) setShowModal(true);
+  };
+
   return (
     <>
       <CreateAireturnBlock>
         <AiReturnbox>
           <SubInfo>
             <span>
-              <b>{User ? User.nickName : '탈퇴한 회원입니다'}</b>
+              <div onClick={handleClickNickname}>{User ? User.nickName : '탈퇴한 회원입니다'}</div>
             </span>
+            {showModal && (
+              <ModalWrapper onClick={handleClose}>
+                <ProfileCardContainer userId={userId} onClickClose={handleClose} />
+              </ModalWrapper>
+            )}
             <span>{new Date(createdAt).toLocaleDateString()}</span>
           </SubInfo>
+          <FoodImgBox>
+            <FoodImg {...imgAttribute} alt="요리 사진" />
+          </FoodImgBox>
           <h5>요리이름</h5>
           <h3>{lastpost ? lastpost.foodname : foodname}</h3>
           <label className="divbox">
@@ -158,9 +192,7 @@ const MyRecipeForm = ({ post, error, loading, user, recipeId, token, like, setLi
           </label>
           <Tags>
             {newArray.map(tag => (
-              <div contentEditable="true" className="tag">
-                #{tag}
-              </div>
+              <div className="tag">#{tag}</div>
             ))}
           </Tags>
           <ButtonBox>

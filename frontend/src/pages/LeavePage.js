@@ -13,6 +13,7 @@ const Container = styled(Responsive)`
     margin-right: auto;
     margin-left: auto;
   }
+  margin-top: 3rem;
   border: solid 1px ${palette.accent};
   border-radius: 5px;
   padding: 2rem;
