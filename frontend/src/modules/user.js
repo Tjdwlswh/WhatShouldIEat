@@ -37,6 +37,9 @@ function* logoutFailureSaga(action) {
 
 function* getUserSaga(action) {
   try {
+    if (!action.payload) {
+      return;
+    }
     const response = yield call(authAPI.getUser, action.payload); // authAPI.getUser.getUser에 토큰을 전달
     yield put({ type: GET_USER_SUCCESS, payload: response.data }); // 성공 액션을 디스패치
   } catch (error) {
