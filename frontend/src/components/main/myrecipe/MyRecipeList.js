@@ -10,12 +10,11 @@ import imgSrcConverter from '../../../lib/utils/imgSrcConverter';
 import numberToUnit from '../../../lib/utils/numberToUnit';
 
 const RecipeGroup = styled(Responsive)`
-  display: flex;
-  flex-wrap: wrap;
   gap: 8px;
   padding: 8px;
   .flex {
     display: flex;
+    flex-wrap: wrap;
   }
 `;
 
@@ -156,7 +155,7 @@ const MyRecipeList = ({ posts, loading, error, user }) => {
   }
 
   return (
-    <div style={{ marginTop: 50 }}>
+    <div style={{ marginTop: 100 }}>
       <RecipeGroup>
         {!loading && posts && (
           <div className="flex">

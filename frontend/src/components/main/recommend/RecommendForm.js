@@ -11,12 +11,11 @@ import numberToUnit from '../../../lib/utils/numberToUnit';
 import PaginationBox from '../../common/PaginationBox';
 
 const RecipeGroup = styled(Responsive)`
-  display: flex;
-  flex-wrap: wrap;
   gap: 8px;
   padding: 8px;
   .flex {
     display: flex;
+    flex-wrap: wrap;
   }
 `;
 
