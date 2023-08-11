@@ -102,8 +102,8 @@ const recipeService = {
       return recipeData;
     });
 
-    recipesJSON.totalItemsCount = totalItemsCount;
-    return recipesJSON;
+    const result = { recipes: recipesJSON, totalItemsCount };
+    return result;
   },
   getRecipe: async recipeId => {
     const recipe = await recipeModel.findOne(recipeId);
@@ -137,8 +137,8 @@ const recipeService = {
   },
   getRecipes: async pageNum => {
     const { totalItemsCount, recipes } = await recipeModel.findAll(pageNum);
-    recipes.totalItemsCount = totalItemsCount;
-    return recipes;
+    const result = { totalItemsCount, recipes };
+    return result;
   },
   updateMyRecipe: async ({ recipeId, userId, foodImg, toUpdate }) => {
     //업데이트 전 자료 찾아옴
