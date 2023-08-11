@@ -27,7 +27,7 @@ const Recipe = styled.div`
 `;
 
 const Thumbnail = styled.div`
-  width: 100%;
+  width: 200px;
   height: 200px;
 
   img {
@@ -105,13 +105,11 @@ const Tags = styled.span`
 
 const ItemList = ({ post, user }) => {
   const { foodname, tags, foodImg } = post;
-  const tagArray = tags.split('#');
   const dispatch = useDispatch();
   const [imageError, setImageError] = useState(false);
   const imgAttribute = imgSrcConverter(foodImg, imageError, setImageError, 'food');
   const likeCount = numberToUnit(post.likeCount);
-
-  const newArray = tagArray.filter(item => item !== '');
+  const newArray = tags ? tags.match(/[^#]+/g) : [];
 
   useEffect(() => {
     return () => {
@@ -137,7 +135,7 @@ const ItemList = ({ post, user }) => {
               </SubInfo>
               <TagGruop>
                 <Tags>
-                  {newArray.map(tag => (
+                  {newArray?.map(tag => (
                     <Link className="tags" to={`/?tag=${tag}`} key={tag}>
                       #{tag}
                     </Link>

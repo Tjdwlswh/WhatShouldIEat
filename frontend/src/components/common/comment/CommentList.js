@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import palette from '../../../lib/styles/palette';
 import MiniProfileCardContainer from '../../../container/common/MiniProfileCardContainer';
+import AskModal from '../AskModal';
 
 const CommentBox = styled.div`
   position: relative;
@@ -40,7 +41,7 @@ const DeleteButton = styled.div`
   cursor: pointer;
 `;
 
-const CommentList = ({ comments, userId, onClickDelete }) => {
+const CommentList = ({ comments, userId, onClickDelete, visible, onConfirm, onCancel }) => {
   return (
     <>
       {comments.map(comment => (
@@ -57,6 +58,14 @@ const CommentList = ({ comments, userId, onClickDelete }) => {
           </CommentConfigBox>
         </CommentBox>
       ))}
+      <AskModal
+        visible={visible}
+        title="후기 삭제"
+        description="후기를 정말 삭제하시겠습니까?"
+        confirmText="삭제"
+        onConfirm={onConfirm}
+        onCancel={onCancel}
+      />
     </>
   );
 };

@@ -77,7 +77,7 @@ const FoodImgBox = styled.div`
 `;
 
 const FoodImg = styled.img`
-  width: 300px;
+  max-width: 600px;
   height: 300px;
   object-fit: cover;
 `;
