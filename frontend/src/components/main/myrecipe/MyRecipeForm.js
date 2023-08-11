@@ -21,6 +21,7 @@ import { Helmet } from 'react-helmet-async';
 import { ModalWrapper } from '../../../container/common/MiniProfileCardContainer';
 import ProfileCardContainer from '../../../container/common/ProfileCardContainer';
 import imgSrcConverter from '../../../lib/utils/imgSrcConverter';
+import { postLike } from '../../../modules/myrecipe';
 
 const SubInfo = styled.div`
   margin-top: 1rem;
@@ -151,6 +152,7 @@ const MyRecipeForm = ({ post, error, loading, user, recipeId, token, like, setLi
   };
 
   const handleClickHeart = () => {
+    dispatch(postLike({ recipeId, token, like }));
     setLike(!like);
   };
 

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
-import { postLike, readPost, unloadPost } from '../../modules/myrecipe';
+import { useSearchParams } from 'react-router-dom';
+import { readPost, unloadPost } from '../../modules/myrecipe';
 import MyRecipeForm from '../../components/main/myrecipe/MyRecipeForm';
 
 const MyRecipeContainer = () => {
@@ -9,7 +9,6 @@ const MyRecipeContainer = () => {
   const [searchParams] = useSearchParams();
   const postId = searchParams.get('postId');
 
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { post, error, loading, token, user, commentInfo } = useSelector(
     ({ post, loading, user, review }) => ({
@@ -29,10 +28,6 @@ const MyRecipeContainer = () => {
       console.log(post.recipe.Likers);
     }
   }, [post, user]);
-
-  useEffect(() => {
-    dispatch(postLike({ recipeId, token, like }));
-  }, [dispatch, like, recipeId, token]);
 
   useEffect(() => {
     dispatch(readPost({ recipeId, token }));
