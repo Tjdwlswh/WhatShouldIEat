@@ -24,14 +24,11 @@ const PostListContainer = () => {
 
   console.log(totalItemsCount);
 
-  useEffect(
-    page => {
-      const tag = searchParams.get('tag');
+  useEffect(() => {
+    const tag = searchParams.get('tag');
 
-      dispatch(listPosts({ token, email, tag, page }));
-    },
-    [dispatch, token, email, searchParams, page],
-  );
+    dispatch(listPosts({ token, email, tag, page }));
+  }, [dispatch, token, email, searchParams, page]);
 
   return (
     <MyRecipeList

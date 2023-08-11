@@ -21,15 +21,10 @@ const RecommendContainer = () => {
   );
   const { token } = useSelector(state => state.user);
 
-  useEffect(
-    page => {
-      const tag = searchParams.get('tag');
-      dispatch(recommendPosts({ token, userId, tag, page }));
-    },
-    [dispatch, token, userId, searchParams, page],
-  );
-
-  console.log(totalItemsCount);
+  useEffect(() => {
+    const tag = searchParams.get('tag');
+    dispatch(recommendPosts({ token, userId, tag, page }));
+  }, [dispatch, token, userId, searchParams, page]);
 
   return (
     <RecommendForm
