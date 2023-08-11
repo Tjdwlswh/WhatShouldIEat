@@ -6,7 +6,6 @@
  */
 const imgSrcConverter = (imgSrc, imageError, setImageError, category = 'user') => {
   let imgUrl;
-  console.log(category);
   if (imgSrc) {
     if (imgSrc.startsWith('http') || imgSrc.startsWith('blob:')) {
       imgUrl = imgSrc;
