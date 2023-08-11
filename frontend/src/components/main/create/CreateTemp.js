@@ -5,14 +5,13 @@ const CreateTempBlock = styled.section`
   background-color: #eee;
   width: 100%;
   padding: 3rem;
+  background-image: url('recipe.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
 `;
 
-const Container = styled(Responsive)`
-  @media (min-width: 576px) {
-    margin-right: auto;
-    margin-left: auto;
-  }
-`;
+const Container = styled(Responsive)``;
 
 const FlexBox = styled.div`
   @media (min-width: 576px) {

@@ -68,7 +68,7 @@ const recipeController = {
   getMyrecipes: async (req, res, next) => {
     try {
       const userId = req.user.id;
-      const pageNum = req.query.pageNum;
+      const pageNum = req.query.page;
       const myRecipe = await recipeService.myRecipe({ userId, pageNum });
 
       return res.status(200).json(myRecipe);
@@ -93,7 +93,7 @@ const recipeController = {
   getRecipes: async (req, res, next) => {
     try {
       const userId = req.query?.userId;
-      const pageNum = parseInt(req.query.pageNum, 10);
+      const pageNum = parseInt(req.query.page, 10);
       //좋아요 순으로 ->최신순 && 페이지네이션 무한스크롤 적용
       if (userId) {
         //userId가 쿼리로 들어올 경우:다른사람의 레시피 목록
