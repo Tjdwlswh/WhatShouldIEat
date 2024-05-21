@@ -7,8 +7,9 @@ import passport from 'passport';
 const loginRequired = (req, res, next) => {
   passport.authenticate('jwt', { sessions: false }, (error, user, info) => {
     //user를 찾았다면 서버에게 요청하는 req객체의 user에 담아서 서버에게 넘겨줌
+    console.log(req.headers.authenticate)
     if (error) {
-      next(error);
+     return next(error);
     }
     if (info) {
       throw new Error(info);

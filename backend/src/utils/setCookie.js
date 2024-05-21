@@ -2,7 +2,7 @@ const setCookie = (res, token, refreshToken) => {
   res.clearCookie('refreshToken');
 
   res.cookie('token', token, {
-    httpOnly: false,
+    httpOnly: true,
     maxAge: 1000 * 60,
     secure: true,
     sameSite: 'strict',

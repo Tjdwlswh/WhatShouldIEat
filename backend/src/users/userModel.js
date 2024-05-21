@@ -20,6 +20,7 @@ const UserModel = {
     return user;
   },
 
+  
   findByEmail: async email => {
     const user = await db.User.findOne({ where: { email } });
     return user;

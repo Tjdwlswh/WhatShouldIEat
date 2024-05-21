@@ -26,7 +26,7 @@ const recipeModel = {
     return { totalItemsCount: count, myRecipe: rows };
   },
 
-  findMyRecipeCount: async userId => {
+  findMyRecipeCount: async userId => { 
     return await db.Recipe.count({ where: { userId } });
   },
 
